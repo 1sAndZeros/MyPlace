@@ -1,0 +1,24 @@
+const User = require("../models/user");
+const TokenGenerator = require("../lib/tokenGenerator");
+
+const AuthenticationController = {
+  Authenticate: (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    User.findOne({ email: email }).then((user) => {
+      if (!user) {
+        console.log("auth error: user not found");
+        res.status(401).json({ message: "Please enter vaild Email" });
+      } else if (user.password !== password) {
+        console.log("auth error: passwords do not match");
+        res.status(401).json({ message: "Password is incorrect" });
+      } else {
+        const token = TokenGenerator.jsonwebtoken(user.id);
+        res.status(201).json({ token: token, message: "OK" });
+      }
+    });
+  },
+};
+
+module.exports = AuthenticationController;
