@@ -10,25 +10,27 @@ const UsersController = {
         .status(400)
         .json({ message: "Email exist in the system. Please login" });
     } else {
-      user.save((err) => {
-        if (err) {
+      user.save().then((savedUser) => {
+        if (user !== savedUser) {
           console.log(err);
           res.status(400).json({ message: "Bad request" });
         } else {
-          res.status(201).json({ message: "OK" });
+          res.status(201).json({ message: "OK", user: savedUser });
         }
       });
     }
   },
 
   Index: (req, res) => {
-    User.find().exec((err, users) => {
-      if (err) {
-        throw err;
-      }
-      const token = TokenGenerator.jsonwebtoken(req.user_id); // creates a new refresh token
-      res.status(200).json({ token, users });
-    });
+    User.find()
+      .populate()
+      .exec((err, users) => {
+        if (err) {
+          throw err;
+        }
+        const token = TokenGenerator.jsonwebtoken(req.user_id); // creates a new refresh token
+        res.status(200).json({ token, users });
+      });
   },
 
   IndexUser: (req, res) => {

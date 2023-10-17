@@ -1,0 +1,69 @@
+{
+	"info": {
+		"_postman_id": "2cfc5fc8-819c-4705-b557-1e1d878f32a4",
+		"name": "MyPlace",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21878808"
+	},
+	"item": [
+		{
+			"name": "Signup User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"username\":\"exampleuser\", \"email\": \"example@email.com\", \"password\": \"examplepassword\" }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Log in an existing user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"email\": \"example@email.com\", \"password\": \"examplepassword\" }"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/tokens",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"tokens"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
