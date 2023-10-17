@@ -1,22 +1,31 @@
+const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const TokenGenerator = require("../lib/tokenGenerator");
 
 const UsersController = {
   Create: async (req, res) => {
-    const user = new User(req.body);
     const foundUser = await User.find({ email: req.body.email });
     if (foundUser.length > 0) {
       res
         .status(400)
         .json({ message: "Email exist in the system. Please login" });
     } else {
-      user.save().then((savedUser) => {
-        if (user !== savedUser) {
-          console.log(err);
-          res.status(400).json({ message: "Bad request" });
+      const saltRounds = 10;
+      bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
+        if (err) {
+          res.status(401).json({ message: "Password encryption error" });
         } else {
-          res.status(201).json({ message: "OK", user: savedUser });
+          req.body.password = hash;
         }
+        const user = new User(req.body);
+        user.save().then((savedUser) => {
+          if (user !== savedUser) {
+            console.log(err);
+            res.status(400).json({ message: "Bad request" });
+          } else {
+            res.status(201).json({ message: "OK", user: savedUser });
+          }
+        });
       });
     }
   },
