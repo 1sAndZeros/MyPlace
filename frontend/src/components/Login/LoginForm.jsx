@@ -35,31 +35,28 @@ function LoginForm({ onLogIn }) {
 
   return (
     <>
-    {/* <Navbar/> */}
-    <div className="d-flex justify-content-center align-items-center vh-100">
-      <form onSubmit={handleSubmit}>
-        <h1 className="success">Login</h1>
-        {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">email</label>
-          <input type="text" className="form-control" id="email" value={email} onChange={handleEmailChange} required />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">Password</label>
-          <div className="input-group">
-            <input type={showPassword ? "text" : "password"} className="form-control" id="password" value={password} onChange={handlePasswordChange} required />
-            <button type="button" className="btn btn-outline-secondary" onClick={handleShowPassword}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eye" viewBox="0 0 16 16">
-                <path d="M8 4s4 0 4 4-4 4-4 4-4-2-4-4 4-4 4-4zm0 6c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm0-5a2 2 0 1 1 0 4 2 2 0 0 1 0-4z" />
-              </svg>
-            </button>
+    <div className="container">
+      <div className="container-panel container-panel_left">
+      </div>
+      <div className="container-panel container-panel_right">
+        <form className="form" onSubmit={handleSubmit}>
+          <h2 className="form__title">
+            Log In
+          </h2>
+          <div className="form__input-box">
+            <label className="form__label">Email</label>
+            <input type="text" className="form__input" id="email" value={email} onChange={handleEmailChange} />
           </div>
-        </div>
-        <button type="submit" className="btn btn-success me-2">Login</button>
-        <Link to="/" className="btn btn-dark">Home</Link>
-      </form>
+          <div className="form__input-box">
+            <label className="form__label">Password</label>
+            <input type={showPassword ? "text" : "password"} className="form__input" id="password" value={password} onChange={handlePasswordChange} />
+          </div>
+          <button className="form__button" id='submit' type="submit">Log In</button>
+          <p>Don`t have an account? Please, <Link to="/signup" className="form__link">Sign up</Link></p>
+        </form>
+      </div>
     </div>
-
+    {/* <Navbar/> */}
     </>
   );
 }

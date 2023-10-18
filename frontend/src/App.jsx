@@ -11,17 +11,16 @@ function App() {
   function onSignUp(data){
     authApi.signUp(data)
       .then(() => {
-        console.log("success")
+        navigate("/login")
       })
       .catch((err) => {
-        console.log(`Error: ${err}`)
+        console.log(`Error: ${err.message}`)
       })
   }
 
   function onLogIn(data) {
     authApi.logIn(data)
     .then((res) => {
-      console.log(res)
       localStorage.setItem('token', res.token)
     })
     .then(()=> {
