@@ -53,6 +53,27 @@ const UsersController = {
       res.status(200).json({ token, user: foundUser });
     });
   },
+
+  Update: (req, res) => {
+    const userId = req.params.id;
+    let photo = "";
+    if (req.file) {
+      photo = req.file.filename;
+    }
+    User.findByIdAndUpdate(
+      userId,
+      { photo: photo },
+      { new: true },
+      (err, updatedUser) => {
+        if (err) {
+          throw err;
+        }
+        res
+          .status(200)
+          .json({ message: "Avatar photo updated!", newUser: updatedUser });
+      }
+    );
+  },
 };
 
 module.exports = UsersController;

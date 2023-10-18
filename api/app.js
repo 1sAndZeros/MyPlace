@@ -6,6 +6,7 @@ const createError = require("http-errors");
 const tokenChecker = require("./lib/tokenChecker");
 const authenticationRouter = require("./routes/authentication");
 const usersRouter = require("./routes/users");
+const imagesRouter = require("./cloudinary/images");
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(express.static(path.join(__dirname, "public"))); // folder path for stat
 // route setup
 app.use("/tokens", authenticationRouter);
 app.use("/users", usersRouter);
+app.use("/avatar", imagesRouter)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
