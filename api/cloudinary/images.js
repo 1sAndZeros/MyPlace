@@ -39,7 +39,7 @@ const config = {
 };
 
 
-router.put("/users", handler);//to update user or PATCH
+router.patch("/users", handler);//put to update user or PATCH
 
 
 module.exports = router;

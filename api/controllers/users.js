@@ -57,8 +57,8 @@ const UsersController = {
   Update: (req, res) => {
     const userId = req.params.id;
     let photo = "";
-    if (req.file) {
-      photo = req.file.filename;
+    if (req.body.url) {
+      photo = req.body.url;
     }
     User.findByIdAndUpdate(
       userId,
