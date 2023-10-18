@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
+import SlideShow from '../SlideShow/SlideShow';
 
 const SignupForm = ({ onSignUp }) => {
   const [username, setUsername] = useState('');
@@ -120,6 +121,7 @@ const SignupForm = ({ onSignUp }) => {
     {/* <Navbar /> */}
       <div className="container">
         <div className="container-panel container-panel_left">
+          <SlideShow />
         </div>
         <div className="container-panel container-panel_right">
           <form className="form" onSubmit={handleSubmit}>

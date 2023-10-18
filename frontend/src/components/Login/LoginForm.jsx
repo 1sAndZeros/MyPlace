@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
+import SlideShow from '../SlideShow/SlideShow';
 
 function LoginForm({ onLogIn }) {
   const [email, setEmail] = React.useState('');
@@ -37,6 +38,7 @@ function LoginForm({ onLogIn }) {
     <>
     <div className="container">
       <div className="container-panel container-panel_left">
+        <SlideShow />
       </div>
       <div className="container-panel container-panel_right">
         <form className="form" onSubmit={handleSubmit}>
