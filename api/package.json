@@ -10,7 +10,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:test": "MONGODB_URL='mongodb://0.0.0.0/MyPlace_test' npm start",
+    "test": "jest"
   },
   "repository": {
     "type": "git",

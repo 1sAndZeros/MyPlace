@@ -15,19 +15,28 @@ const AuthenticationController = {
             "User email does not exist. Please sign up or use the correct email",
         });
       } else {
-        bcrypt.compare(password, user.password, async (err, result) => {
-          if (err) {
-            res.status(401).json({ message: "Password encryption error" });
-          } else if (result === false) {
-            res.status(402).json({ message: "Incorrect password" });
-          } else {
-            const token = await TokenGenerator.jsonwebtoken(user.id);
-            res.status(201).json({ token: token, message: "OK" });
-          }
-        });
+        if (password === user.password) {
+          const token = TokenGenerator.jsonwebtoken(user.id);
+          res.status(201).json({ token: token, message: "OK" });
+        } else {
+          res.status(402).json({ message: "Incorrect password" });
+        }
+        // bcrypt.compare(password, user.password, async (err, result) => {
+        //   console.log(password)
+        //   console.log(user.password)
+        // if (err) {
+        //   res.status(401).json({ message: "Password encryption error" });
+        // } else if (result === false) {
+        //   console.log(res)
+        //   res.status(402).json({ message: "Incorrect password" });
+        // } else {
+        //   const token = await TokenGenerator.jsonwebtoken(user.id);
+        //   res.status(201).json({ token: token, message: "OK" });
+        // }
       }
+      //   }
+      // });
     });
   },
 };
-
 module.exports = AuthenticationController;
