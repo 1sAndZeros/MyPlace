@@ -34,7 +34,6 @@
 }
 
 .form__input {
-    width: 100%;
     padding: 12px 16px;
     border: 1.5px solid #ecedec;
     border-radius: 10px;
@@ -76,12 +75,39 @@
 }
 
 .form__button-ghost {
-	background-color: transparent;
-	border-color: #c3c3c3;
+    background-color: transparent;
+    border-color: #c3c3c3;
 }
 
 .form__link {
     color: #111111;
+}
+
+.form__password__label {
+    display: flex;
+}
+
+.form__password__label>label {
+    flex-grow: 1;
+}
+
+.form__password__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    cursor: pointer;
+    font-size: .9rem;
+    color: #666;
+    padding-bottom: .4rem;
+}
+
+.form__password__wrapper svg {
+    fill: none;
+}
+
+.form__password__wrapper p {
+    min-width: 3em;
 }
 
 .form__error-container {

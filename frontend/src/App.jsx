@@ -36,11 +36,8 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<Homepage navigate={useNavigate()} />} />
-      <Route
-        path="/welcome"
-        element={<WelcomePage navigate={useNavigate()} />}
-      />
+      <Route path="/" element={<WelcomePage navigate={useNavigate()} />} />
+      <Route path="/home" element={<Homepage navigate={useNavigate()} />} />
       <Route
         path="/login"
         element={<LoginForm onLogIn={onLogIn} navigate={useNavigate()} />}
@@ -50,7 +47,7 @@ function App() {
         element={<SignUpForm onSignUp={onSignUp} navigate={useNavigate()} />}
       />
       <Route path="/map" element={<MapComponent />} />
-      <Route path="*" element={<Navigate to="/login" />} />
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 }
