@@ -16,6 +16,10 @@
   /* min-height: 100vh; */
 }
 
+img {
+  width: 100%;
+}
+
 h1 {
   font-size: 3.2rem;
   line-height: 1.1;

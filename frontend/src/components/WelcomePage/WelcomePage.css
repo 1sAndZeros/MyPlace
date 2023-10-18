@@ -1,0 +1,36 @@
+#welcome-page {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    place-items: center;
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+.bg-main {
+    background: linear-gradient(180deg, #111 -60.19%, rgba(64, 65, 96, 0.75) 33.26%, rgba(65, 66, 99, 0.04) 100%);
+}
+
+.welcome-page__message {
+    text-align: center;
+    max-width: 650px;
+    padding: 1em;
+    color: #111;
+}
+
+.welcome-page__heading {
+    font-size: 3rem;
+    font-weight: 900;
+}
+
+.welcome-page__map {
+    text-align: center;
+    justify-self: flex-start;
+    max-width: 600px;
+    padding: 1em;
+}
+
+.welcome-page__map img {
+    width: 100%;
+    border-radius: 1.5rem;
+    box-shadow: 5px 5px 10px 2px #111;
+}
