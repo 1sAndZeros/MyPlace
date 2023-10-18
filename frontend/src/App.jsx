@@ -1,4 +1,3 @@
-import "./App.css";
 import LoginForm from "./components/Login/LoginForm";
 import SignUpForm from "./components/Signup/SignupForm";
 import Homepage from "./components/Homepage/Homepage";
@@ -11,7 +10,6 @@ function App() {
     authApi.signUp(data)
     .then(() => {
       console.log("success")
-      // history.push('./login')
     })
     .catch((err) => {
       console.log(`Error: ${err}`)
