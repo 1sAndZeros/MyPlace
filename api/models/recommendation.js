@@ -6,12 +6,7 @@ const RecommendationSchema = new mongoose.Schema({
         ref: "User"
     },
     visitedDate: { type: Date, required: true },
-    rating: {
-        range: {
-            min: { type: Number, min: 0 },
-            max: { type: Number, max: 5 }
-        }
-    },
+    rating: { type: Number },
     pin: {
         coordinates: {
             lat: { type: Number },

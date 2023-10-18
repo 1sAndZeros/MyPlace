@@ -16,12 +16,7 @@ const CitySchema = new mongoose.Schema({
     ],
     visited: { type: Boolean, required: true },
     visitedDate: { type: Date, required: true },
-    rating: {
-        range: {
-            min: { type: Number, min: 0 },
-            max: { type: Number, max: 5 }
-        }
-    }
+    rating: { type: Number }
 })
 
 const City = mongoose.model("City", CitySchema);
