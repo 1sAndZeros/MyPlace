@@ -2,14 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 
-function LoginForm() {
-  const [username, setUsername] = React.useState('');
+function LoginForm({ onLogIn }) {
+  const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState('');
   const [showPassword, setShowPassword] = React.useState(false);
 
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
   };
 
   const handlePasswordChange = (event) => {
@@ -23,23 +23,26 @@ function LoginForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    
+    onLogIn({
+      email,
+      password
+    })
 
-    setUsername('');
+    setEmail('');
     setPassword('');
     setErrorMessage('');
   };
 
   return (
     <>
-    <Navbar/>
+    {/* <Navbar/> */}
     <div className="d-flex justify-content-center align-items-center vh-100">
       <form onSubmit={handleSubmit}>
         <h1 className="success">Login</h1>
         {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
         <div className="mb-3">
-          <label htmlFor="username" className="form-label">Username</label>
-          <input type="text" className="form-control" id="username" value={username} onChange={handleUsernameChange} required />
+          <label htmlFor="email" className="form-label">email</label>
+          <input type="text" className="form-control" id="email" value={email} onChange={handleEmailChange} required />
         </div>
         <div className="mb-3">
           <label htmlFor="password" className="form-label">Password</label>

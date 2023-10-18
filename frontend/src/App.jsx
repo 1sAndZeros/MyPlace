@@ -8,8 +8,22 @@ function App() {
 
   function onSignUp(data){
     authApi.signUp(data)
-    .then(() => {
-      console.log("success")
+      .then(() => {
+        console.log("success")
+      })
+      .catch((err) => {
+        console.log(`Error: ${err}`)
+      })
+  }
+
+  function onLogIn(data) {
+    authApi.logIn(data)
+    .then((res) => {
+      console.log(res)
+      localStorage.setItem('token', res.token)
+    })
+    .then(()=> {
+      history.push("/")
     })
     .catch((err) => {
       console.log(`Error: ${err}`)
@@ -19,7 +33,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Homepage navigate={useNavigate()} />} />
-      <Route path="/login" element={<LoginForm navigate={useNavigate()} />} />
+      <Route path="/login" element={<LoginForm onLogIn={onLogIn} navigate={useNavigate()} />} />
       <Route path="/signup" element={<SignUpForm onSignUp={onSignUp} navigate={useNavigate()} />} />
       <Route path="*" element={<Navigate to="/login" />} />
     </Routes>
