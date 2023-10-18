@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
+import SlideShow from '../SlideShow/SlideShow';
 
 const SignupForm = ({ onSignUp }) => {
   const [username, setUsername] = useState('');
@@ -120,6 +121,7 @@ const SignupForm = ({ onSignUp }) => {
     {/* <Navbar /> */}
       <div className="container">
         <div className="container-panel container-panel_left">
+          <SlideShow />
         </div>
         <div className="container-panel container-panel_right">
           <form className="form" onSubmit={handleSubmit}>
@@ -162,10 +164,12 @@ const SignupForm = ({ onSignUp }) => {
               <input type={showRepeatPassword ? "text" : "password"} className="form__input" id="repeatPassword" value={repeatPassword} onChange={handleRepeatPasswordChange} />
               {/* <button type="button" className="btn btn-outline-secondary" onClick={handleShowRepeatPassword}>
               </button> */}
+              <div className="form__error-container">
                 {errors.repeatPassword ? (
-                  <p className="error__error-message">
-                    {errors.repeatPassword}
-                  </p>) : null}
+                    <p className="error__error-message">
+                      {errors.repeatPassword}
+                    </p>) : null}
+              </div>
             </div>
             <button disabled={hasErrors(email, password, errors)} className={`form__button form__ghost ${hasErrors(email, password, errors) ? 'disabled__auth' : ''}`} id='submit' type="submit">Sign Up
             </button>

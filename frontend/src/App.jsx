@@ -7,14 +7,30 @@ import { authApi } from "../src/utils/api";
 import MapComponent from "./components/MapComponent/MapComponent";
 
 function App() {
+  const navigate = useNavigate();
+
   function onSignUp(data) {
     authApi
       .signUp(data)
       .then(() => {
-        console.log("success");
+        navigate("/login");
       })
       .catch((err) => {
-        console.log(`Error: ${err}`);
+        console.log(`Error: ${err.message}`);
+      });
+  }
+
+  function onLogIn(data) {
+    authApi
+      .logIn(data)
+      .then((res) => {
+        localStorage.setItem("token", res.token);
+      })
+      .then(() => {
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(`Error: ${err.message}`);
       });
   }
 
@@ -25,7 +41,10 @@ function App() {
         path="/welcome"
         element={<WelcomePage navigate={useNavigate()} />}
       />
-      <Route path="/login" element={<LoginForm navigate={useNavigate()} />} />
+      <Route
+        path="/login"
+        element={<LoginForm onLogIn={onLogIn} navigate={useNavigate()} />}
+      />
       <Route
         path="/signup"
         element={<SignUpForm onSignUp={onSignUp} navigate={useNavigate()} />}
