@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import Logo from "../../assets/pin.svg?react";
+import "./Navbar.css";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,30 +11,20 @@ function Navbar() {
   };
 
   return (
-    <nav className="navbar navbar-expand-sm navbar-light bg-light">
-      
-        <Link to="/" className="navbar-brand">
-        <img src="https://www.reshot.com/preview-assets/icons/TZCXQGV5F4/maps-TZCXQGV5F4.svg" alt="logo" className="img-fluid" />
-        <h4 className="text-center text-bold">MyPlace</h4>
-          
-        </Link>
-        <button className="navbar-toggler" type="button" onClick={toggleMenu}>
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`}>
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <Link to="/" className="nav-link text-primary"><i><strong>Home</strong></i></Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/login" className="nav-link">Log In</Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/signup" className="nav-link">Sign Up</Link>
-            </li>
-          </ul>
-        </div>
-      
+    <nav id="navbar" className="navbar">
+      <h4 className="navbar__link">About</h4>
+      <Link to="/" className="navbar__brand">
+        <Logo />
+        <h3 className="navbar__brand__heading">MyPlace.</h3>
+      </Link>
+      <ul className="navbar-nav">
+        <li className="navbar__link">
+          <Link to="/login">Log In</Link>
+        </li>
+        <li className="navbar__link">
+          <Link to="/signup">Sign Up</Link>
+        </li>
+      </ul>
     </nav>
   );
 }

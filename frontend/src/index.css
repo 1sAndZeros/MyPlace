@@ -1,4 +1,6 @@
 @import url('../src/styles/container/container.css');
+@import 'https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.css';
+@import 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css';
 @import url('../src/styles/slideshow/slideshow.css');
 
 
@@ -17,4 +19,17 @@
 * {
   padding: 0;
   margin: 0;
+}
+
+img {
+  width: 100%;
+}
+
+svg {
+  fill: currentColor;
+}
+
+h1 {
+  font-size: 3.2rem;
+  line-height: 1.1;
 }
