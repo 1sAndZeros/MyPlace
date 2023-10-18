@@ -4,6 +4,7 @@ import Homepage from "./components/Homepage/Homepage";
 import WelcomePage from "./components/WelcomePage/WelcomePage";
 import { useNavigate, Routes, Route, Navigate } from "react-router-dom";
 import { authApi } from "../src/utils/api";
+import MapComponent from "./components/MapComponent/MapComponent";
 
 function App() {
   function onSignUp(data) {
@@ -29,6 +30,7 @@ function App() {
         path="/signup"
         element={<SignUpForm onSignUp={onSignUp} navigate={useNavigate()} />}
       />
+      <Route path="/map" element={<MapComponent />} />
       <Route path="*" element={<Navigate to="/login" />} />
     </Routes>
   );
