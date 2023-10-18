@@ -6,6 +6,8 @@ import {authApi} from '../src/utils/api';
 
 function App() {
 
+  const navigate = useNavigate();
+
   function onSignUp(data){
     authApi.signUp(data)
       .then(() => {
@@ -23,10 +25,10 @@ function App() {
       localStorage.setItem('token', res.token)
     })
     .then(()=> {
-      history.push("/")
+      navigate("/")
     })
     .catch((err) => {
-      console.log(`Error: ${err}`)
+      console.log(`Error: ${err.message}`)
     })
   }
 

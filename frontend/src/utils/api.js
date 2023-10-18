@@ -6,7 +6,10 @@ class Api {
 
     _getResponseData(res){
         if (!res.ok) {
-            return Promise.reject(`Error: ${res.message}`); 
+            return res.json()
+                .then(err => {
+                    return Promise.reject(err);
+                })
         }
         return res.json();
     }
