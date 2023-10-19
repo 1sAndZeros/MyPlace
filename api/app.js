@@ -6,7 +6,7 @@ const createError = require("http-errors");
 const tokenChecker = require("./lib/tokenChecker");
 const authenticationRouter = require("./routes/authentication");
 const usersRouter = require("./routes/users");
-const imagesRouter = require("./cloudinary/images");
+const imagesRouter = require("./routes/images");
 
 const app = express();
 
