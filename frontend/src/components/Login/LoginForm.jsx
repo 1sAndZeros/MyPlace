@@ -61,8 +61,9 @@ function LoginForm({ onLogIn, authError, setAuthError, handleCloseError }) {
             <div className="error-auth__box">
               <img className="error-auth__icon" src={errorImg} alt="error icon"/>
               <p className="error-auth__message">{authError}</p>
+              <img className="error-auth__icon error-auth__icon--close" src={errorClose} alt="error close" onClick={handleCloseError} />
             </div>
-            <img className="error-auth__icon error-auth__icon--close" src={errorClose} alt="error close" onClick={handleCloseError} />
+            
         </div> : null}
       </div>
     </div>

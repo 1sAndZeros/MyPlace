@@ -1,14 +1,8 @@
-.error-auth {
-    margin-left: 1.5rem;
-    display: flex;
-    flex-direction: row-reverse;
-}
-
 .error-auth__box {
-    margin-top: 1rem;
+    margin: 1rem auto;
     display: flex;
     align-items: center;
-    padding: .5rem .2rem;
+    padding: .7rem .2rem;
     background: #FCE8DB;
     border-radius: 8px;
     box-shadow: 0px 0px 5px -3px #111;
@@ -27,6 +21,5 @@
 }
 
 .error-auth__icon--close {
-    position: absolute;
-    transform: translatex(1rem);
+    transform: translateY(-.7rem);
 }
