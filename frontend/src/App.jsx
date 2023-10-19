@@ -27,7 +27,7 @@ function App() {
         localStorage.setItem("token", res.token);
       })
       .then(() => {
-        navigate("/");
+        navigate("/home");
       })
       .catch((err) => {
         console.log(`Error: ${err.message}`);

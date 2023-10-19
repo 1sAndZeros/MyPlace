@@ -21,6 +21,11 @@
     width: 60vw;
 }
 
+#new-city-form {
+    display: flex;
+    flex-direction: column;
+}
+
 .form {
     display: flex;
     flex-direction: column;
@@ -118,4 +123,9 @@
     position: absolute;
     font-size: 12px;
     color: #FF4B2B;
+}
+
+.new-city-form {
+    width: 20em;
+    height: 50em;
 }
