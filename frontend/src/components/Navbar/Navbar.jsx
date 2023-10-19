@@ -1,10 +1,13 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Logo from "../../assets/pin.svg?react";
+import Profile from "../Profile/Profile";
 import "./Navbar.css";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+  const path = location.pathname;
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -25,6 +28,9 @@ function Navbar() {
           <Link to="/signup">Sign Up</Link>
         </li>
       </ul>
+      {
+        path === "/" ? <Profile /> : null
+      }
     </nav>
   );
 }

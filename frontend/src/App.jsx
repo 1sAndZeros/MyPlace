@@ -10,8 +10,7 @@ function App() {
   const navigate = useNavigate();
 
   function onSignUp(data) {
-    authApi
-      .signUp(data)
+    authApi.signUp(data)
       .then(() => {
         navigate("/login");
       })
@@ -21,8 +20,7 @@ function App() {
   }
 
   function onLogIn(data) {
-    authApi
-      .logIn(data)
+    authApi.logIn(data)
       .then((res) => {
         localStorage.setItem("token", res.token);
       })
