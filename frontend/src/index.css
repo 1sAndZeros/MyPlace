@@ -3,6 +3,7 @@
 @import 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css';
 @import url('../src/styles/slideshow/slideshow.css');
 @import url('../src/styles/profile/profile.css');
+@import url('../src/styles/error/error.css');
 
 
 :root {

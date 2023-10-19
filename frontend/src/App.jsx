@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 
 function App() {
   const navigate = useNavigate();
+  const [authError, setAuthError] = useState('')
   const [currentUser, setCurrentUser] = useState({
     name: "",
     image: ""
@@ -21,6 +22,8 @@ function App() {
         navigate("/login");
       })
       .catch((err) => {
+        let errMessage = err.message
+        setAuthError(errMessage)
         console.log(`Error: ${err.message}`);
       });
   }
@@ -35,7 +38,9 @@ function App() {
         authApi.getInfo()
       })
       .catch((err) => {
-        console.log(`Error: ${err.message}`);
+        let errMessage = err.message
+        setAuthError(errMessage)
+        console.log(`Error: ${errMessage}`)
       });
   }
 
@@ -53,6 +58,10 @@ function App() {
         }
     }, [])
 
+    const handleCloseError = () => {
+      setAuthError('')
+    }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Routes>
@@ -63,11 +72,11 @@ function App() {
         />
         <Route
           path="/login"
-          element={<LoginForm onLogIn={onLogIn} navigate={useNavigate()} />}
+          element={<LoginForm onLogIn={onLogIn} authError={authError} handleCloseError={handleCloseError} setAuthError={setAuthError} navigate={useNavigate()} />}
         />
         <Route
           path="/signup"
-          element={<SignUpForm onSignUp={onSignUp} navigate={useNavigate()} />}
+          element={<SignUpForm onSignUp={onSignUp} authError={authError} handleCloseError={handleCloseError} setAuthError={setAuthError} navigate={useNavigate()} />}
         />
         <Route path="/map" element={<MapComponent />} />
         <Route path="*" element={<Navigate to="/login" />} />

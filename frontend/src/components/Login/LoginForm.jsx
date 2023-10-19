@@ -2,11 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import SlideShow from '../SlideShow/SlideShow';
+import errorImg from '../../assets/error.svg';
+import errorClose from '../../assets/Close_square.svg';
 
-function LoginForm({ onLogIn }) {
+function LoginForm({ onLogIn, authError, setAuthError, handleCloseError }) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [errorMessage, setErrorMessage] = React.useState('');
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleEmailChange = (event) => {
@@ -31,7 +32,7 @@ function LoginForm({ onLogIn }) {
 
     setEmail('');
     setPassword('');
-    setErrorMessage('');
+    setAuthError('');
   };
 
   return (
@@ -56,6 +57,13 @@ function LoginForm({ onLogIn }) {
           <button className="form__button" id='submit' type="submit">Log In</button>
           <p>Don`t have an account? Please, <Link to="/signup" className="form__link">Sign up</Link></p>
         </form>
+        {authError ? <div className="error-auth">
+            <div className="error-auth__box">
+              <img className="error-auth__icon" src={errorImg} alt="error icon"/>
+              <p className="error-auth__message">{authError}</p>
+            </div>
+            <img className="error-auth__icon error-auth__icon--close" src={errorClose} alt="error close" onClick={handleCloseError} />
+        </div> : null}
       </div>
     </div>
     {/* <Navbar/> */}

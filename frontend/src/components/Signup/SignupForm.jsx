@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import SlideShow from '../SlideShow/SlideShow';
+import errorImg from '../../assets/error.svg';
+import errorClose from '../../assets/Close_square.svg';
 
-const SignupForm = ({ onSignUp }) => {
+const SignupForm = ({ onSignUp, authError, setAuthError, handleCloseError }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -114,6 +116,7 @@ const SignupForm = ({ onSignUp }) => {
     setEmail('');
     setPassword('');
     setRepeatPassword('');
+    setAuthError('');
   };
 
   return (
@@ -175,6 +178,13 @@ const SignupForm = ({ onSignUp }) => {
             </button>
             <p>Already have an account? <Link to="/login" className="form__link">Log In</Link></p>
           </form>
+          {authError ? <div className="error-auth">
+            <div className="error-auth__box">
+              <img className="error-auth__icon" src={errorImg} alt="error icon"/>
+              <p className="error-auth__message">{authError}</p>
+            </div>
+            <img className="error-auth__icon error-auth__icon--close" src={errorClose} alt="error close" onClick={handleCloseError} />
+        </div> : null}
         </div>
       </div>
     </>
