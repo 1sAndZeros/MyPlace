@@ -11,8 +11,8 @@ import { useState, useEffect } from "react";
 function App() {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({
-    name: "",
-    image: ""
+    username: "",
+    profileImage: ""
   })
 
   function onSignUp(data) {
