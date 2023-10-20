@@ -12,8 +12,8 @@ function App() {
   const navigate = useNavigate();
   const [authError, setAuthError] = useState("");
   const [currentUser, setCurrentUser] = useState({
-    name: "",
-    image: "",
+    username: "",
+    profileImage: "",
   });
 
   function onSignUp(data) {
