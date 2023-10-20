@@ -79,6 +79,17 @@ class Api {
     });
   }
 
+  getMyCityPins() {
+    return fetch(`${this._baseUrl}/cities/me`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }).then((res) => {
+      return this._getResponseData(res);
+    });
+  }
+
   isAuthorised() {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",

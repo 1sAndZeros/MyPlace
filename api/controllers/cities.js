@@ -46,15 +46,43 @@ const CitiesController = {
       });
   },
 
-  // IndexUser: (req, res) => {
-  //   User.findById(req.user_id).exec((err, foundUser) => {
-  //     if (err) {
-  //       throw err;
-  //     }
-  //     const token = TokenGenerator.jsonwebtoken(req.user_id); // creates a new refresh token
-  //     res.status(200).json({ token, user: foundUser });
-  //   });
-  // },
+  IndexMyCities: async (req, res) => {
+    City.find({ user: req.user_id })
+      .populate({
+        path: "user",
+        model: "User",
+        select: "-password",
+      })
+      .then((cities) => {
+        const token = TokenGenerator.jsonwebtoken(req.user_id); // creates a new refresh token
+        res.status(200).json({ token, cities });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(400).json({
+          message: "Something went wrong. Please contact the MyPlace Team.",
+        });
+      });
+  },
+
+  IndexUserCities: async (req, res) => {
+    City.find({ user: req.params.id })
+      .populate({
+        path: "user",
+        model: "User",
+        select: "-password",
+      })
+      .then((cities) => {
+        const token = TokenGenerator.jsonwebtoken(req.user_id); // creates a new refresh token
+        res.status(200).json({ token, cities });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(400).json({
+          message: "Something went wrong. Please contact the MyPlace Team.",
+        });
+      });
+  },
 };
 
 module.exports = CitiesController;

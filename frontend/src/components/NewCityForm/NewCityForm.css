@@ -1,3 +1,12 @@
+#new-city-form {
+    display: flex;
+    align-items: center;
+}
+
+#new-city-form>* {
+    width: 100%;
+}
+
 #new-city-form input[type="checkbox"] {
     /* ...existing styles */
 }

@@ -1,9 +1,18 @@
 import { useEffect, useState } from "react";
-import Map, { Marker, Popup } from "react-map-gl";
+import { useNavigate } from "react-router-dom";
+import Map, {
+  Marker,
+  Popup,
+  useMap,
+  FullscreenControl,
+  NavigationControl,
+  GeolocateControl,
+  AttributionControl,
+} from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import GeocoderControl from "./GeocoderControl";
 import NewCityForm from "../NewCityForm/NewCityForm";
 import { authApi } from "../../utils/api";
+import "./Map.css";
 
 // get request for cities / regions https://api.mapbox.com/geocoding/v5/mapbox.places/{searchString}.json?fuzzyMatch=false&limit=10&types=region%2Cdistrict&autocomplete=true&access_token=pk.eyJ1IjoiaW15cGxhY2UiLCJhIjoiY2xudTViMGp3MGNwYTJsbzVtdnNxZ3NvOCJ9.j49LvpTufygf0Cx9HhldIg
 
@@ -11,12 +20,13 @@ const MapView = () => {
   const MAPBOX_ACCESS_TOKEN =
     "pk.eyJ1IjoiaW15cGxhY2UiLCJhIjoiY2xudTViMGp3MGNwYTJsbzVtdnNxZ3NvOCJ9.j49LvpTufygf0Cx9HhldIg";
 
+  const navigate = useNavigate();
   const [viewport, setViewport] = useState({
     width: "100%",
     height: "100%",
-    latitude: 37.7577,
-    longitude: -122.4376,
-    zoom: 8,
+    latitude: 51.523375519247345,
+    longitude: -0.0835492028568628,
+    zoom: 4,
   });
   const [marker, setMarker] = useState({
     latitude: null,
@@ -26,22 +36,40 @@ const MapView = () => {
   const [placeName, setPlaceName] = useState(null);
   const [cityPins, setCityPins] = useState([]);
 
+  const myMap = useMap();
+
   useEffect(() => {
-    authApi.getCityPins().then((data) => {
-      console.log(data);
-      setCityPins(data.cities);
-    });
+    authApi
+      .getMyCityPins()
+      .then((data) => {
+        console.log(data);
+        localStorage.setItem("token", data.token);
+        setCityPins(data.cities);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.message === "auth error") {
+          navigate("/");
+        }
+      });
   }, []);
 
   const handleClick = async (e) => {
-    setShowPopup(() => false);
+    e.preventDefault();
+    myMap.current.flyTo({
+      center: [e.lngLat.lng, e.lngLat.lat],
+      duration: 3000, // Animate over 12 seconds
+      essential: true, // This animation is considered essential with
+      //respect to prefers-reduced-motion
+      curve: 2,
+    });
     setMarker(() => {
       return {
         latitude: e.lngLat.lat,
         longitude: e.lngLat.lng,
       };
     });
-    setShowPopup(true);
+    setShowPopup(() => true);
     const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.lngLat.lng},${e.lngLat.lat}.json?limit=1&types=region%2Cdistrict&access_token=${MAPBOX_ACCESS_TOKEN}`;
     const response = await fetch(url);
     const data = await response.json();
@@ -49,23 +77,32 @@ const MapView = () => {
   };
 
   const handleMarkerClick = (e) => {
-    console.log(e);
+    e.originalEvent.stopPropagation();
+  };
+
+  const closePopup = () => {
+    setMarker({
+      latitude: null,
+      longitude: null,
+    });
+    setShowPopup(false);
   };
 
   return (
     <>
       <Map
+        ref={myMap}
+        id="myMap"
         onViewportChange={setViewport}
         onClick={handleClick}
         initialViewState={{ ...viewport }}
         mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
         mapStyle="mapbox://styles/mapbox/streets-v9"
+        customAttribution="Brought to you by the MyPlace team"
       >
-        <GeocoderControl
-          mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
-          position="top-right"
-        />
-
+        <NavigationControl />
+        <GeolocateControl />
+        <FullscreenControl />
         {cityPins.length > 0 &&
           cityPins.map((cityPin) => {
             return (
@@ -73,6 +110,8 @@ const MapView = () => {
                 key={cityPin._id}
                 latitude={cityPin.location.lat}
                 longitude={cityPin.location.lng}
+                color={cityPin.visited ? "#007d02" : "#f4f439"}
+                onClick={handleMarkerClick}
               />
             );
           })}
@@ -89,10 +128,12 @@ const MapView = () => {
           <Popup
             longitude={marker.longitude}
             latitude={marker.latitude}
-            anchor="bottom-left"
-            onClose={() => setShowPopup(false)}
+            anchor="left"
+            onClose={closePopup}
             className="popup-container"
             offset={[15, -25]}
+            maxWidth="1000px"
+            closeOnClick={false}
           >
             <NewCityForm
               marker={marker}

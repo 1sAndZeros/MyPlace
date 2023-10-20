@@ -4,6 +4,11 @@
   grid-template-rows: auto 1fr;
 }
 
+#home.bg-main {
+  background: linear-gradient(180deg, #111 -60.19%, rgba(64, 65, 96, 0.75) 33.26%, rgba(65, 66, 99, 0.04) 100%);
+  ;
+}
+
 .home__container {
   display: flex;
   height: 100%;
@@ -59,13 +64,6 @@
 .text-center {
   transition: all 400ms ease-in-out;
   text-align: center;
-}
-
-.img-fluid {
-  border-radius: 50%;
-
-  /* height: 9em;
-    width: 9em; */
 }
 
 .control-panel {
