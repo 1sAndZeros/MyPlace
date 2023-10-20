@@ -143,6 +143,7 @@ const MapView = () => {
             latitude={marker.latitude}
             anchor="left"
             onClose={closePopup}
+            closeButton={false}
             className="popup-container"
             offset={[15, -25]}
             maxWidth="1000px"
