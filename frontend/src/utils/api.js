@@ -100,6 +100,19 @@ class Api {
     });
   }
 
+  updateProfile(image) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({ profileImage: image })
+    }).then((res) => {
+      return this._getResponseData(res);
+    });
+  }
+
   isAuthorised() {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
