@@ -7,6 +7,7 @@ const tokenChecker = require("./lib/tokenChecker");
 const authenticationRouter = require("./routes/authentication");
 const usersRouter = require("./routes/users");
 const citiesRouter = require("./routes/cities");
+const imagesRouter = require("./routes/images");
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, "public"))); // folder path for stat
 app.use("/tokens", authenticationRouter);
 app.use("/users", usersRouter);
 app.use("/cities", tokenChecker, citiesRouter);
+app.use("/avatar", imagesRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

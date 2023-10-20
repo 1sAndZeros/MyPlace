@@ -44,14 +44,45 @@ const UsersController = {
       });
   },
 
-  IndexUser: (req, res) => {
-    User.findById(req.user_id).exec((err, foundUser) => {
-      if (err) {
-        throw err;
+  // IndexUser: (req, res) => {
+  //   User.findById(req.user_id).exec((err, foundUser) => {
+  //     if (err) {
+  //       throw err;
+  //     }
+  //     const token = TokenGenerator.jsonwebtoken(req.user_id); // creates a new refresh token
+  //     res.status(200).json({ token, user: foundUser });
+  //   });
+  // },
+
+  CurrentUser: (req, res) => {
+    User.findOne({_id: req.user_id}).then((user) => {
+      if (user) {
+        res.status(200).json({user: { username: user.username, picture: user.picture }})
+      } else {
+        res.status(400).json({message: 'Can`t find user'})
       }
-      const token = TokenGenerator.jsonwebtoken(req.user_id); // creates a new refresh token
-      res.status(200).json({ token, user: foundUser });
-    });
+    })
+  },
+
+  Update: (req, res) => {
+    const userId = req.params.id;
+    let photo = "";
+    if (req.body.url) {
+      photo = req.body.url;
+    }
+    User.findByIdAndUpdate(
+      userId,
+      { photo: photo },
+      { new: true },
+      (err, updatedUser) => {
+        if (err) {
+          throw err;
+        }
+        res
+          .status(200)
+          .json({ message: "Avatar photo updated!", newUser: updatedUser });
+      }
+    );
   },
 };
 

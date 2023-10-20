@@ -3,8 +3,15 @@ import { Link } from "react-router-dom";
 import SlideShow from "../SlideShow/SlideShow";
 import EyeOpen from "../../assets/icons/eye-open.svg?react";
 import EyeClosed from "../../assets/icons/eye-closed.svg?react";
+import errorImg from "../../assets/error.svg";
+import errorClose from "../../assets/Close_square.svg";
 
-const SignupForm = ({ onSignUp }) => {
+const SignupForm = ({
+  onSignUp,
+  authError,
+  setAuthError,
+  handleCloseError,
+}) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -118,6 +125,7 @@ const SignupForm = ({ onSignUp }) => {
     setEmail("");
     setPassword("");
     setRepeatPassword("");
+    setAuthError("");
   };
 
   return (
@@ -233,6 +241,24 @@ const SignupForm = ({ onSignUp }) => {
               </Link>
             </p>
           </form>
+          {authError ? (
+            <div className="error-auth">
+              <div className="error-auth__box">
+                <img
+                  className="error-auth__icon"
+                  src={errorImg}
+                  alt="error icon"
+                />
+                <p className="error-auth__message">{authError}</p>
+              </div>
+              <img
+                className="error-auth__icon error-auth__icon--close"
+                src={errorClose}
+                alt="error close"
+                onClick={handleCloseError}
+              />
+            </div>
+          ) : null}
         </div>
       </div>
     </>

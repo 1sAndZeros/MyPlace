@@ -1,7 +1,6 @@
 class Api {
   constructor(config) {
     this._baseUrl = config.baseUrl;
-    this._token = config.headers.authorization;
   }
 
   _getResponseData(res) {

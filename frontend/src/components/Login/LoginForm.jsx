@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 import SlideShow from "../SlideShow/SlideShow";
 import EyeOpen from "../../assets/icons/eye-open.svg?react";
 import EyeClosed from "../../assets/icons/eye-closed.svg?react";
+import errorImg from "../../assets/error.svg";
+import errorClose from "../../assets/Close_square.svg";
 
-function LoginForm({ onLogIn }) {
+function LoginForm({ onLogIn, authError, setAuthError, handleCloseError }) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [errorMessage, setErrorMessage] = React.useState("");
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleEmailChange = (event) => {
@@ -32,7 +33,7 @@ function LoginForm({ onLogIn }) {
 
     setEmail("");
     setPassword("");
-    setErrorMessage("");
+    setAuthError("");
   };
 
   return (
@@ -84,6 +85,24 @@ function LoginForm({ onLogIn }) {
               </Link>
             </p>
           </form>
+          {authError ? (
+            <div className="error-auth">
+              <div className="error-auth__box">
+                <img
+                  className="error-auth__icon"
+                  src={errorImg}
+                  alt="error icon"
+                />
+                <p className="error-auth__message">{authError}</p>
+                <img
+                  className="error-auth__icon error-auth__icon--close"
+                  src={errorClose}
+                  alt="error close"
+                  onClick={handleCloseError}
+                />
+              </div>
+            </div>
+          ) : null}
         </div>
       </div>
       {/* <Navbar/> */}
