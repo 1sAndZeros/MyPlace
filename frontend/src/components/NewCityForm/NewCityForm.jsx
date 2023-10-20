@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./NewCityForm.css";
 import { authApi } from "../../utils/api";
 import PropTypes from "prop-types";
@@ -22,23 +22,38 @@ function NewCityForm({
   };
   const [rating, setRating] = useState(0);
   const [memory, setMemory] = useState("");
+  const [image, setImage] = useState("");
   const [visited, setVisited] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("")
   const [visitedDate, setVisitedDate] = useState(
     new Date().toISOString().split("T")[0]
   );
+  
+  useEffect(() => {
+    setErrorMessage("")
+  },[rating])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (rating < 1 || rating > 5) {
-      console.log("Rating must be between 1 and 5");
+      setErrorMessage("Rating must be between 1 and 5")
       return;
     }
+    let newImage = await authApi.uploadPhoto(image)
+      .then((data) => {
+        return data.secure_url
+      })
+      .catch((err) => {
+        console.log(`Error in uploadPhoto: ${err}`);
+      });
+
     const data = {
       rating: rating,
       visited: visited,
       visitedDate: visitedDate,
       memory: memory,
       name: placeName,
+      photos: [newImage],
       location: {
         lat: marker.latitude,
         lng: marker.longitude,
@@ -85,6 +100,10 @@ function NewCityForm({
   function handleMemoryChange(e) {
     setMemory(e.target.value);
   }
+
+  const handleImageChange = (event) => {
+    setImage(() => event.target.files[0]);
+  };
 
   return (
     <form id="new-city-form" onSubmit={handleSubmit}>
@@ -135,6 +154,14 @@ function NewCityForm({
         value={memory}
         onChange={handleMemoryChange}
       />
+      <input
+        id="fileUpload"
+        type="file"
+        accept=".png, .jpg, .jpeg"
+        name="image"
+        onChange={handleImageChange}
+      />
+      <p>{errorMessage}</p>
       <div className="form__button--container">
         <button
           onClick={closeAndResetForm}
