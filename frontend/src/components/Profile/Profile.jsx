@@ -8,13 +8,19 @@ import signOut from "../../assets/sign-out.svg";
 const Profile = () => {
   const [showSettings, setShowSettings] = useState(false);
   const [image, setImage] = useState("");
-  const currentUser = useContext(CurrentUserContext);
+  const {currentUser, setCurrentUser} = useContext(CurrentUserContext);
+  const [newImage, setNewImage] = useState('');
 
   // const [loading, setLoading] = useState(false);
 
   const handleClick = () => {
     setShowSettings(!showSettings);
   };
+
+  useEffect(() => {
+      uploadFile();
+  }, [])
+
 
   const handleImageChange = (event) => {
     setImage(() => event.target.files[0]);
@@ -29,7 +35,7 @@ const Profile = () => {
     })
       .then((res) => {
         if (!res.ok) {
-          return Promise.reject("can`t add post");
+          return Promise.reject("can`t add image");
         }
         res.json().then((data) => {
           let newImage = (data.secure_url)
@@ -56,12 +62,14 @@ const Profile = () => {
         }
         res.json().then((data) => {
           console.log(data)
+          setCurrentUser(data.newUser)
         });
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
 
   return (
     <>

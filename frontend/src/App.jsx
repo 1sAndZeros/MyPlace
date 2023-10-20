@@ -65,7 +65,7 @@ function App() {
   };
 
   return (
-    <CurrentUserContext.Provider value={currentUser}>
+    <CurrentUserContext.Provider value={{currentUser, setCurrentUser}}>
       <Routes>
         <Route path="/" element={<WelcomePage navigate={useNavigate()} />} />
         <Route path="/home" element={<Homepage navigate={useNavigate()} />} />
