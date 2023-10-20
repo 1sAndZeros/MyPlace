@@ -5,6 +5,12 @@ const UsersController = require("../controllers/users");
 
 router.post("/", UsersController.Create); // Creates new user
 router.get("/", tokenChecker, UsersController.Index); // Gets all users
-router.get("/me", tokenChecker, UsersController.IndexUser); // Gets logged in user
+router.get("/me", tokenChecker, UsersController.CurrentUser); // Gets logged in user
+// router.patch(
+//     "/:id",
+//     tokenChecker,
+//     upload.single("avatar"),
+//     UsersController.Update
+// );
 
 module.exports = router;

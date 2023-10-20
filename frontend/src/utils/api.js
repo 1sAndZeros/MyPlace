@@ -1,7 +1,6 @@
 class Api {
     constructor(config) {
         this._baseUrl = config.baseUrl;
-        this._token = config.headers.authorization;
     }
 
     _getResponseData(res){
@@ -51,7 +50,7 @@ class Api {
         return fetch(`${this._baseUrl}/users/me`, {
             method: 'GET',
             headers: {
-                authorization: this._token
+                'Authorization' : `Bearer ${localStorage.getItem('token')}`
             }
         })
         .then(res => {
@@ -59,15 +58,15 @@ class Api {
         })
     }
 
-    isAuthorised() {
-        return fetch(`${this._baseUrl}/users/me`,{
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization' : `Bearer ${localStorage.getItem('token')}`
-            }
-        })
-    }
+    // isAuthorised() {
+    //     return fetch(`${this._baseUrl}/users/me`,{
+    //         method: 'GET',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Authorization' : `Bearer ${localStorage.getItem('token')}`
+    //         }
+    //     })
+    // }
 }
 
 export const authApi = new Api({
