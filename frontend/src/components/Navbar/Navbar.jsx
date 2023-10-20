@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import Logo from "../../assets/pin.svg?react";
+import Logo from "../../assets/icons/pin.svg?react";
 import Profile from "../Profile/Profile";
 import "./Navbar.css";
 
@@ -28,9 +28,7 @@ function Navbar() {
           <Link to="/signup">Sign Up</Link>
         </li>
       </ul>
-      {
-        path === "/" ? <Profile /> : null
-      }
+      {path === "/" ? <Profile /> : null}
     </nav>
   );
 }
