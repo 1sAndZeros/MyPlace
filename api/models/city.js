@@ -13,11 +13,9 @@ const CitySchema = new mongoose.Schema({
       ref: "Recommendation",
     },
   ],
-  memories: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Memory",
-    },
+  memory: { type: String },
+  photos: [
+    String
   ],
   location: {
     lng: { type: Number, required: true },

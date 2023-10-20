@@ -89,6 +89,17 @@ class Api {
     });
   }
 
+  uploadPhoto(image) {
+    const formData = new FormData();
+    formData.set("sample_file", image);
+    return fetch(`${this._baseUrl}/avatar`, {
+      method: "POST",
+      body: formData,
+    }).then((res) => {
+      return this._getResponseData(res);
+    });
+  }
+
   isAuthorised() {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",

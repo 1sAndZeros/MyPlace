@@ -26,14 +26,14 @@
 }
 
 .rate>input:checked~label {
-    /* color: #ffc700; */
-    color: #86e7fc;
+    color: #ffc700;
+    /* color: #86e7fc; */
 }
 
 .rate:not(:checked)>label:hover,
 .rate:not(:checked)>label:hover~label {
-    /* color: #deb217; */
-    color: #6abab4;
+    color: #deb217;
+    /* color: #6abab4; */
 }
 
 .rate>input:checked+label:hover,
@@ -41,8 +41,8 @@
 .rate>input:checked~label:hover,
 .rate>input:checked~label:hover~label,
 .rate>label:hover~input:checked~label {
-    /* color: #c59b08; */
-    color: #7dc4d4;
+    color: #c59b08;
+    /* color: #7dc4d4; */
 }
 
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */

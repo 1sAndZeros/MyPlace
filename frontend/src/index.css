@@ -4,7 +4,7 @@
 @import url('../src/styles/slideshow/slideshow.css');
 @import url('../src/styles/profile/profile.css');
 @import url('../src/styles/error/error.css');
-
+@import url('../src/styles/form/form.css');
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
