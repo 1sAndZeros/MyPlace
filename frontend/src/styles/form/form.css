@@ -122,7 +122,7 @@
     background-color: #F4F4F4;
     padding: 1em;
     border-radius: 1em;
-    margin-top: 1em;
+    margin: 1em 0 1em;
 }
 
 .form__date {
@@ -151,4 +151,22 @@
     font-size: 0.7rem;
     padding: 1em 0.5em;
     flex: 1;
+}
+
+.form__button--label {
+	display: flex;
+	align-items: center;
+    color: #c3c3c3;
+    width: 14rem;
+}
+
+.form__button--img {
+    width: 2em;
+    margin-right: .5em;
+}
+
+input[type=file]::file-selector-button {
+	background-color: unset;
+	border: none;
+	display: none;
 }

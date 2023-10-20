@@ -3,6 +3,7 @@ import "./NewCityForm.css";
 import { authApi } from "../../utils/api";
 import PropTypes from "prop-types";
 import StarRating from "../StarRating/StarRating";
+import addImg from "../../assets/icons/add-image.svg"
 
 function NewCityForm({
   marker,
@@ -28,10 +29,10 @@ function NewCityForm({
   const [visitedDate, setVisitedDate] = useState(
     new Date().toISOString().split("T")[0]
   );
-  
+
   useEffect(() => {
     setErrorMessage("")
-  },[rating])
+  }, [rating])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -154,14 +155,19 @@ function NewCityForm({
         value={memory}
         onChange={handleMemoryChange}
       />
-      <input
-        id="fileUpload"
-        type="file"
-        accept=".png, .jpg, .jpeg"
-        name="image"
-        onChange={handleImageChange}
-      />
-      <p>{errorMessage}</p>
+      <label className="form__button--label" htmlFor="fileUpload">
+        <img className="form__button--img" src={addImg} alt="choose file" />
+        <input
+          id="fileUpload"
+          type="file"
+          accept=".png, .jpg, .jpeg"
+          name="image"
+          onChange={handleImageChange}
+        />
+      </label>
+      <div>
+        <p className="error__error-message">{errorMessage}</p>
+      </div>
       <div className="form__button--container">
         <button
           onClick={closeAndResetForm}
