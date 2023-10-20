@@ -36,7 +36,7 @@ function App() {
         localStorage.setItem("token", res.token);
       })
       .then(() => {
-        navigate("/");
+        navigate("/home");
         authApi.getInfo();
       })
       .catch((err) => {
