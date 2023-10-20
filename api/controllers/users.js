@@ -55,9 +55,9 @@ const UsersController = {
   // },
 
   CurrentUser: (req, res) => {
-    User.findOne({_id: req.user_id}).then((user) => {
+    User.findOne({_id: req.user_id}).populate().then((user) => {
       if (user) {
-        res.status(200).json({user: { username: user.username, picture: user.picture }})
+        res.status(200).json({user: user})
       } else {
         res.status(400).json({message: 'Can`t find user'})
       }
@@ -65,24 +65,18 @@ const UsersController = {
   },
 
   Update: (req, res) => {
-    const userId = req.params.id;
-    let photo = "";
-    if (req.body.url) {
-      photo = req.body.url;
-    }
     User.findByIdAndUpdate(
-      userId,
-      { photo: photo },
-      { new: true },
-      (err, updatedUser) => {
-        if (err) {
-          throw err;
-        }
+      req.user_id,
+      { profileImage: req.body.profileImage },
+      { new: true }).then(
+      (updatedUser) => {
         res
           .status(200)
           .json({ message: "Avatar photo updated!", newUser: updatedUser });
       }
-    );
+    ).catch((err) => {
+      res.status(400).json({message: "something went wrong"})
+    })
   },
 };
 
