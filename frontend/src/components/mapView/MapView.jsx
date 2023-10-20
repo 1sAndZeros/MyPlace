@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Map, {
   Marker,
@@ -7,8 +7,8 @@ import Map, {
   FullscreenControl,
   NavigationControl,
   GeolocateControl,
-  AttributionControl,
 } from "react-map-gl";
+import { AddressAutofill, SearchBox } from "@mapbox/search-js-react";
 import "mapbox-gl/dist/mapbox-gl.css";
 import NewCityForm from "../NewCityForm/NewCityForm";
 import { authApi } from "../../utils/api";
@@ -35,8 +35,10 @@ const MapView = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [placeName, setPlaceName] = useState(null);
   const [cityPins, setCityPins] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
 
   const myMap = useMap();
+  const mapRef = useRef();
 
   useEffect(() => {
     authApi
@@ -93,6 +95,7 @@ const MapView = () => {
       <Map
         ref={myMap}
         id="myMap"
+        padding={{ top: 50, left: 50, right: 50, bottom: 50 }}
         onViewportChange={setViewport}
         onClick={handleClick}
         initialViewState={{ ...viewport }}
@@ -103,6 +106,16 @@ const MapView = () => {
         <NavigationControl />
         <GeolocateControl />
         <FullscreenControl />
+        {/* <AddressAutofill accessToken={MAPBOX_ACCESS_TOKEN}> */}
+        <SearchBox
+          accessToken={MAPBOX_ACCESS_TOKEN}
+          placeholder="Search Places"
+          value={searchValue}
+          marker={true}
+          mapboxgl={mapRef}
+          // map={mapRef.current}
+        />
+        {/* </AddressAutofill> */}
         {cityPins.length > 0 &&
           cityPins.map((cityPin) => {
             return (

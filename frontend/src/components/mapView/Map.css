@@ -8,3 +8,8 @@
     /* margin-right: 0.5em; */
     color: red;
 }
+
+mapbox-search-box {
+    display: block;
+    width: 300px;
+}
