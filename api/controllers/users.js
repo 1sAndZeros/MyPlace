@@ -68,15 +68,14 @@ const UsersController = {
     User.findByIdAndUpdate(
       req.user_id,
       { profileImage: req.body.profileImage },
-      { new: true }).then(
-      (updatedUser) => {
-        res
-          .status(200)
-          .json({ message: "Avatar photo updated!", newUser: updatedUser });
-      }
-    ).catch((err) => {
+      { new: true })
+      .then((updatedUser) => {
+          const token = TokenGenerator.jsonwebtoken(req.user_id);
+          res.status(200).json({ message: "Avatar photo updated!", token: token, newUser: updatedUser });
+      })
+      .catch((err) => {
       res.status(400).json({message: "something went wrong"})
-    })
+      })
   },
 };
 
