@@ -14,6 +14,8 @@ import NewCityForm from "../NewCityForm/NewCityForm";
 import { authApi } from "../../utils/api";
 import "./Map.css";
 import { MapboxSearchBox } from "@mapbox/search-js-web";
+import SearchMarker from "./SearchMarker";
+import ClickMarker from "./ClickMarker";
 
 // get request for cities / regions https://api.mapbox.com/geocoding/v5/mapbox.places/{searchString}.json?fuzzyMatch=false&limit=10&types=region%2Cdistrict&autocomplete=true&access_token=pk.eyJ1IjoiaW15cGxhY2UiLCJhIjoiY2xudTViMGp3MGNwYTJsbzVtdnNxZ3NvOCJ9.j49LvpTufygf0Cx9HhldIg
 
@@ -25,23 +27,16 @@ const MapView = () => {
   const [viewport, setViewport] = useState({
     width: "100%",
     height: "100%",
-    latitude: 51.523375519247345,
-    longitude: -0.0835492028568628,
+    latitude: 51.523375519247345, // Makers office lat
+    longitude: -0.0835492028568628, // Makers office lng
     zoom: 4,
   });
-  const [marker, setMarker] = useState({
-    latitude: null,
-    longitude: null,
-  });
+  const [marker, setMarker] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
   const [placeName, setPlaceName] = useState(null);
   const [cityPins, setCityPins] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [searchMarker, setSearchMarker] = useState(null);
-
-  useEffect(() => {
-    console.log(searchValue);
-  }, [searchValue]);
 
   const myMap = useMap();
   const mapRef = useRef();
@@ -67,8 +62,6 @@ const MapView = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    console.log(searchRef.current);
-    searchRef.current.focus();
     myMap.current.flyTo({
       center: [e.lngLat.lng, e.lngLat.lat],
       duration: 3000, // Animate over 12 seconds
@@ -76,14 +69,14 @@ const MapView = () => {
       //respect to prefers-reduced-motion
       curve: 2,
     });
-    setSearchMarker(() => null);
+    setSearchMarker(null);
     setMarker(() => {
       return {
         latitude: e.lngLat.lat,
         longitude: e.lngLat.lng,
       };
     });
-    setShowPopup(() => true);
+    // setShowPopup(() => true);
     const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.lngLat.lng},${e.lngLat.lat}.json?limit=1&types=region%2Cdistrict&access_token=${MAPBOX_ACCESS_TOKEN}`;
     const response = await fetch(url);
     const data = await response.json();
@@ -95,10 +88,7 @@ const MapView = () => {
   };
 
   const closePopup = () => {
-    setMarker({
-      latitude: null,
-      longitude: null,
-    });
+    setMarker(null);
     setShowPopup(false);
   };
 
@@ -125,10 +115,6 @@ const MapView = () => {
     console.log(searchMarker);
   }, [searchMarker]);
 
-  useEffect(() => {
-    console.log(searchValue);
-  }, [searchValue]);
-
   return (
     <>
       <Map
@@ -147,7 +133,6 @@ const MapView = () => {
         <NavigationControl />
         <GeolocateControl />
         <FullscreenControl />
-        {/* <AddressAutofill accessToken={MAPBOX_ACCESS_TOKEN}> */}
         <SearchBox
           accessToken={MAPBOX_ACCESS_TOKEN}
           placeholder="Search Places"
@@ -157,15 +142,17 @@ const MapView = () => {
           mapboxgl={mapRef}
           ref={searchRef}
         />
-        {searchMarker && (
-          <Marker
-            longitude={searchMarker.geometry.coordinates[0]}
-            latitude={searchMarker.geometry.coordinates[1]}
-            // onClick={handleMarkerClick}
-            color="#9319cc"
-          />
-        )}
-        {/* </AddressAutofill> */}
+        <SearchMarker
+          searchMarker={searchMarker}
+          setSearchMarker={setSearchMarker}
+          setCityPins={setCityPins}
+        />
+        <ClickMarker
+          clickMarker={marker}
+          setClickMarker={setMarker}
+          setCityPins={setCityPins}
+          placeName={placeName}
+        />
         {cityPins.length > 0 &&
           cityPins.map((cityPin) => {
             return (
@@ -178,37 +165,6 @@ const MapView = () => {
               />
             );
           })}
-
-        {marker.latitude && (
-          <Marker
-            latitude={marker.latitude}
-            longitude={marker.longitude}
-            onClick={handleMarkerClick}
-            color="#ff0000"
-          />
-        )}
-        {showPopup && (
-          <Popup
-            longitude={marker.longitude}
-            latitude={marker.latitude}
-            anchor="left"
-            onClose={closePopup}
-            closeButton={false}
-            className="popup-container"
-            offset={[15, -25]}
-            maxWidth="1000px"
-            closeOnClick={false}
-          >
-            <NewCityForm
-              marker={marker}
-              setMarker={setMarker}
-              placeName={placeName}
-              setPlaceName={setPlaceName}
-              setShowPopup={setShowPopup}
-              setCityPins={setCityPins}
-            />
-          </Popup>
-        )}
       </Map>
     </>
   );

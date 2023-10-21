@@ -3,46 +3,32 @@ import "./NewCityForm.css";
 import { authApi } from "../../utils/api";
 import PropTypes from "prop-types";
 import StarRating from "../StarRating/StarRating";
-import addImg from "../../assets/icons/add-image.svg"
+import addImg from "../../assets/icons/add-image.svg";
 
-function NewCityForm({
-  marker,
-  setMarker,
-  placeName,
-  setPlaceName,
-  setShowPopup,
-  setCityPins,
-}) {
-  NewCityForm.propTypes = {
-    marker: PropTypes.object.isRequired,
-    setMarker: PropTypes.func.isRequired,
-    placeName: PropTypes.string,
-    setPlaceName: PropTypes.func.isRequired,
-    setShowPopup: PropTypes.func.isRequired,
-    setCityPins: PropTypes.func.isRequired,
-  };
+function NewCityForm({ marker, setMarker, location, setCityPins }) {
   const [rating, setRating] = useState(0);
   const [memory, setMemory] = useState("");
   const [image, setImage] = useState("");
   const [visited, setVisited] = useState(true);
-  const [errorMessage, setErrorMessage] = useState("")
+  const [errorMessage, setErrorMessage] = useState("");
   const [visitedDate, setVisitedDate] = useState(
     new Date().toISOString().split("T")[0]
   );
 
   useEffect(() => {
-    setErrorMessage("")
-  }, [rating])
+    setErrorMessage("");
+  }, [rating]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (rating < 1 || rating > 5) {
-      setErrorMessage("Rating must be between 1 and 5")
+      setErrorMessage("Rating must be between 1 and 5");
       return;
     }
-    let newImage = await authApi.uploadPhoto(image)
+    let newImage = await authApi
+      .uploadPhoto(image)
       .then((data) => {
-        return data.secure_url
+        return data.secure_url;
       })
       .catch((err) => {
         console.log(`Error in uploadPhoto: ${err}`);
@@ -53,11 +39,11 @@ function NewCityForm({
       visited: visited,
       visitedDate: visitedDate,
       memory: memory,
-      name: placeName,
+      name: location.name,
       photos: [newImage],
       location: {
-        lat: marker.latitude,
-        lng: marker.longitude,
+        lat: location.lat,
+        lng: location.lng,
       },
     };
     authApi
@@ -75,15 +61,10 @@ function NewCityForm({
   };
 
   function closeAndResetForm() {
-    setPlaceName(null);
-    setMarker({
-      latitude: null,
-      longitude: null,
-    });
+    setMarker(null);
     setVisited(true);
     setVisitedDate(new Date().toISOString().split("T")[0]);
-    setRating(5);
-    setShowPopup(false);
+    setRating(0);
   }
 
   function handleRatingChange(e) {
