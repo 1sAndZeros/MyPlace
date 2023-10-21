@@ -7,32 +7,34 @@ import edit from "../../assets/Edit.svg";
 import signOut from "../../assets/sign-out.svg";
 
 const Profile = () => {
-    const [showSettings, setShowSettings] = useState(false);
-    const [image, setImage] = useState("");
-    const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+  const [showSettings, setShowSettings] = useState(false);
+  const [image, setImage] = useState("");
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 
-    const handleClick = () => {
-        setShowSettings(!showSettings);
-    };
+  const handleClick = () => {
+    setShowSettings(!showSettings);
+  };
 
-    const handleImageChange = (event) => {
-        setImage(() => event.target.files[0]);
-    };
+  const handleImageChange = (event) => {
+    setImage(() => event.target.files[0]);
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        authApi.uploadPhoto(image)
-            .then((data) => {
-                return authApi.updateProfile(data.secure_url)
-            })
-            .then((data) => {
-                setCurrentUser(data.newUser)
-            })
-            .catch((err) => {
-                console.log(`Error in uploadPhoto: ${err}`);
-            });
-            setShowSettings(!showSettings)
-    }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    authApi
+      .uploadPhoto(image)
+      .then((data) => {
+        return authApi.updateProfile(data.secure_url);
+      })
+      .then((data) => {
+        setCurrentUser(data.newUser);
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log(`Error in uploadPhoto: ${err.message}`);
+      });
+    setShowSettings(!showSettings);
+  };
 
     return (
         <>

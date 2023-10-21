@@ -1,18 +1,10 @@
-
 #myMap {
-    z-index:1;
-    
+    z-index: 1;
+    padding: 1em !important;
 }
 
 .mapboxgl-popup-content {
     width: 300px;
-}
-
-.mapboxgl-popup-close-button {
-    font-size: 2rem;
-    padding: 0.5em;
-    /* margin-right: 0.5em; */
-    color: red;
 }
 
 mapbox-search-box {
