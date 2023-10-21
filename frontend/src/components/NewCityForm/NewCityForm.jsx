@@ -19,9 +19,20 @@ function NewCityForm({ marker, setMarker, location, setCityPins }) {
     setErrorMessage("");
   }, [rating]);
 
+  useEffect(() => {
+    setMemory("")
+    setErrorMessage("");
+    if(!visited) {
+      setRating(0)
+      setVisitedDate(null)
+      setImage("")
+      setMemory("")
+    }
+  }, [visited]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (rating < 1 || rating > 5) {
+    if ((rating < 1 || rating > 5) && visited) {
       setErrorMessage("Rating must be between 1 and 5");
       return;
     }
@@ -136,7 +147,7 @@ function NewCityForm({ marker, setMarker, location, setCityPins }) {
         value={memory}
         onChange={handleMemoryChange}
       />
-      <label className="form__button--label" htmlFor="fileUpload">
+      { visited && (<label className="form__button--label" htmlFor="fileUpload">
         <img className="form__button--img" src={addImg} alt="choose file" />
         <input
           id="fileUpload"
@@ -145,7 +156,7 @@ function NewCityForm({ marker, setMarker, location, setCityPins }) {
           name="image"
           onChange={handleImageChange}
         />
-      </label>
+      </label>)}
       <div>
         <p className="error__error-message">{errorMessage}</p>
       </div>

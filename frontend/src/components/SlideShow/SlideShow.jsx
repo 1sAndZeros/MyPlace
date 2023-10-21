@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import firstImg from '../../assets/alex-azabache-V83v-MYB_Z8-unsplash.jpg';
 import secImg from '../../assets/ian-dooley-hpTH5b6mo2s-unsplash.jpg';
 import thirdImg from '../../assets/tom-barrett-M0AWNxnLaMw-unsplash.jpg';
@@ -7,8 +7,8 @@ const images = [firstImg, secImg, thirdImg];
 const delay = 2500;
 
 function SlideShow() {
-    const [index, setIndex] = React.useState(0);
-    const timeoutRef = React.useRef(null);
+    const [index, setIndex] = useState(0);
+    const timeoutRef = useRef(null);
 
     function resetTimeout() {
         if (timeoutRef.current) {

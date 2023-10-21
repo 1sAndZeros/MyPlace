@@ -1,5 +1,6 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
+import { useNavigate } from "react-router-dom";
 import { authApi } from "../../utils/api";
 import arrowDown from "../../assets/chevron-down.svg";
 import arrowUp from "../../assets/chevron-up.svg";
@@ -7,9 +8,22 @@ import edit from "../../assets/Edit.svg";
 import signOut from "../../assets/sign-out.svg";
 
 const Profile = () => {
+  const navigate = useNavigate();
   const [showSettings, setShowSettings] = useState(false);
   const [image, setImage] = useState("");
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+
+  useEffect(() => {
+    const userInfo = localStorage.getItem("userInfo");
+    if (userInfo) {
+      setCurrentUser(JSON.parse(userInfo));
+    }
+  }, []);
+
+  function onLogOut(){
+    localStorage.removeItem('token')
+    navigate("/")
+  }
 
   const handleClick = () => {
     setShowSettings(!showSettings);
@@ -28,6 +42,7 @@ const Profile = () => {
       })
       .then((data) => {
         setCurrentUser(data.newUser);
+        localStorage.setItem("userInfo", JSON.stringify(data.newUser));
       })
       .catch((err) => {
         console.log(err);
@@ -69,7 +84,7 @@ const Profile = () => {
                             </button>
                         </label>
                     </div>
-                    <div className="profile__settings-element">
+                    <div className="profile__settings-element" onClick={onLogOut}>
                         <img className="profile__settings__icon" src={signOut} />
                         <p>Sign Out</p>
                     </div>

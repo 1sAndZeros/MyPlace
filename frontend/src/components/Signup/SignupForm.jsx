@@ -175,7 +175,7 @@ const SignupForm = ({
             </div>
             <div className="form__input-box">
               <div className="form__password__label">
-                <label className="form__label">Password</label>
+                <label htmlFor="password" className="form__label">Password</label>
                 <div
                   className="form__password__wrapper"
                   onClick={handleShowPassword}
@@ -200,7 +200,7 @@ const SignupForm = ({
             </div>
             <div className="form__input-box">
               <div className="form__password__label">
-                <label className="form__label">Password</label>
+                <label htmlFor="repeat-password" className="form__label">Password</label>
                 <div
                   className="form__password__wrapper"
                   onClick={handleShowRepeatPassword}
@@ -213,7 +213,7 @@ const SignupForm = ({
               <input
                 type={showRepeatPassword ? "text" : "password"}
                 className="form__input"
-                id="password"
+                id="repeat-password"
                 value={repeatPassword}
                 onChange={handleRepeatPasswordChange}
               />
