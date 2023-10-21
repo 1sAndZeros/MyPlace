@@ -16,12 +16,7 @@ const ClickMarker = ({
     const lat = clickMarker.latitude;
     return (
       <>
-        <Marker
-          longitude={lng}
-          latitude={lat}
-          // onClick={handleMarkerClick}
-          color="#ff0000"
-        />
+        <Marker longitude={lng} latitude={lat} color="#ff0000" />
         <Popup
           longitude={lng}
           latitude={lat}

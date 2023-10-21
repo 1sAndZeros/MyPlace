@@ -5,9 +5,10 @@
 @import url('../src/styles/profile/profile.css');
 @import url('../src/styles/error/error.css');
 @import url('../src/styles/form/form.css');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700&display=swap');
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -34,4 +35,8 @@ svg {
 h1 {
   font-size: 3.2rem;
   line-height: 1.1;
+}
+
+.bold {
+  font-weight: 700;
 }
