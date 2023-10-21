@@ -35,10 +35,13 @@ const MarkerDetails = ({ details, setDetails }) => {
           </h2>
         </div>
         <div className="marker-details--scroll">
-          {visited && <h2>Visited: {vistedDate}</h2>}
+          {visited && <h3>Visited: {vistedDate}</h3>}
           <p className="marker-details__memory">{memory}</p>
         </div>
-        <img src="https://images.unsplash.com/photo-1683009686716-ac2096a5a73b?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+        <img
+          className="marker-details__photo"
+          src="https://images.unsplash.com/photo-1683009686716-ac2096a5a73b?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        />
         <div className="form__button--container">
           <button
             onClick={closeDetails}

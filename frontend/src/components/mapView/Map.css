@@ -1,6 +1,7 @@
 #myMap {
     z-index: 1;
     padding: 1em !important;
+    font-family: 'Poppins', sans-serif;
 }
 
 .mapboxgl-popup-content {
@@ -23,7 +24,7 @@ mapbox-search-box {
     width: 300px;
     height: 600px;
     border-radius: 1em;
-    border: 1px solid black;
+    box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.2);
     font-size: 1.2em;
     padding: 1em;
 }
@@ -45,10 +46,11 @@ mapbox-search-box {
     align-items: center;
     gap: 1em;
     margin-bottom: 1em;
+    font-size: 1.25rem;
 }
 
 .marker-details__user img {
-    width: 3.5em;
+    width: 2.5em;
     border-radius: 50%;
     border: 1px solid rgba(0, 0, 0, 0.8);
 }
@@ -78,4 +80,8 @@ mapbox-search-box {
 
 .marker-details__name {
     flex-grow: 1;
+}
+
+.marker-details__photo {
+    border-radius: 0.5em;
 }
