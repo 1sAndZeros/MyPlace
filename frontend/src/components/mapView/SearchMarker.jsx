@@ -11,12 +11,7 @@ const SearchMarker = ({ searchMarker, setSearchMarker, setCityPins }) => {
     const lat = searchMarker.geometry.coordinates[1];
     return (
       <>
-        <Marker
-          longitude={lng}
-          latitude={lat}
-          // onClick={handleMarkerClick}
-          color="#9319cc"
-        />
+        <Marker longitude={lng} latitude={lat} color="#9319cc" />
         <Popup
           longitude={lng}
           latitude={lat}

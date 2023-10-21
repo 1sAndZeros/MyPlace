@@ -16,6 +16,8 @@ import "./Map.css";
 import { MapboxSearchBox } from "@mapbox/search-js-web";
 import SearchMarker from "./SearchMarker";
 import ClickMarker from "./ClickMarker";
+import MarkerIcon from "../../assets/icons/pin.svg?react";
+import MarkerDetails from "./MarkerDetails";
 
 // get request for cities / regions https://api.mapbox.com/geocoding/v5/mapbox.places/{searchString}.json?fuzzyMatch=false&limit=10&types=region%2Cdistrict&autocomplete=true&access_token=pk.eyJ1IjoiaW15cGxhY2UiLCJhIjoiY2xudTViMGp3MGNwYTJsbzVtdnNxZ3NvOCJ9.j49LvpTufygf0Cx9HhldIg
 
@@ -37,11 +39,13 @@ const MapView = () => {
   const [cityPins, setCityPins] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [searchMarker, setSearchMarker] = useState(null);
+  const [details, setDetails] = useState(null);
 
   const myMap = useMap();
   const mapRef = useRef();
   const searchRef = useRef();
   const search = new MapboxSearchBox();
+  const markerDetailsPopupRef = useRef();
 
   useEffect(() => {
     console.log(mapRef.current);
@@ -76,7 +80,6 @@ const MapView = () => {
         longitude: e.lngLat.lng,
       };
     });
-    // setShowPopup(() => true);
     const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.lngLat.lng},${e.lngLat.lat}.json?limit=1&types=region%2Cdistrict&access_token=${MAPBOX_ACCESS_TOKEN}`;
     const response = await fetch(url);
     const data = await response.json();
@@ -85,11 +88,16 @@ const MapView = () => {
 
   const handleMarkerClick = (e) => {
     e.originalEvent.stopPropagation();
-  };
-
-  const closePopup = () => {
-    setMarker(null);
-    setShowPopup(false);
+    const location = e.target._lngLat;
+    const cityPin = cityPins.find((pin) => {
+      return (
+        pin.location.lat === location.lat && pin.location.lng === location.lng
+      );
+    });
+    console.log(cityPin);
+    setDetails(cityPin);
+    // setMarker(null);
+    // setSearchMarker(null);
   };
 
   const handleSelection = (res) => {
@@ -101,7 +109,7 @@ const MapView = () => {
     if (!searchMarker) {
       return;
     }
-    closePopup();
+    setMarker(null);
     let coordinates = searchMarker.geometry.coordinates;
     console.log(coordinates);
     myMap.current.flyTo({
@@ -157,14 +165,31 @@ const MapView = () => {
           cityPins.map((cityPin) => {
             return (
               <Marker
+                test="test"
                 key={cityPin._id}
                 latitude={cityPin.location.lat}
                 longitude={cityPin.location.lng}
                 color={cityPin.visited ? "#007d02" : "#f4f439"}
                 onClick={handleMarkerClick}
-              />
+                popup={markerDetailsPopupRef.current}
+              >
+                {/* <MarkerIcon /> */}
+              </Marker>
             );
           })}
+        <Popup
+          ref={markerDetailsPopupRef}
+          longitude={0}
+          latitude={0}
+          anchor="left"
+          className="marker-details"
+          offset={[15, -25]}
+          maxWidth="1000px"
+          closeOnClick={false}
+        >
+          <h1>Detials</h1>
+        </Popup>
+        <MarkerDetails details={details} setDetails={setDetails} />
       </Map>
     </>
   );

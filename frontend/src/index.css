@@ -35,3 +35,7 @@ h1 {
   font-size: 3.2rem;
   line-height: 1.1;
 }
+
+.bold {
+  font-weight: 700;
+}
