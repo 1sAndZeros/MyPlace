@@ -1,12 +1,13 @@
+import { CurrentUserContext } from "./context/CurrentUserContext";
+import { useNavigate, Routes, Route, Navigate } from "react-router-dom";
+import { authApi } from "../src/utils/api";
+import { useState } from "react";
 import LoginForm from "./components/Login/LoginForm";
 import SignUpForm from "./components/Signup/SignupForm";
 import Homepage from "./components/Homepage/Homepage";
 import WelcomePage from "./components/WelcomePage/WelcomePage";
-import { CurrentUserContext } from "./context/CurrentUserContext";
-import { useNavigate, Routes, Route, Navigate } from "react-router-dom";
-import { authApi } from "../src/utils/api";
 import MapComponent from "./components/MapComponent/MapComponent";
-import { useState, useEffect } from "react";
+
 
 function App() {
   const navigate = useNavigate();
@@ -36,8 +37,13 @@ function App() {
         localStorage.setItem("token", res.token);
       })
       .then(() => {
-        navigate("/home");
-        authApi.getInfo();
+        authApi.getInfo()
+          .then((data) => {
+            let userInfo = data.user;
+            setCurrentUser(userInfo);
+            localStorage.setItem("userInfo", JSON.stringify(userInfo));
+          })
+          navigate("/home");
       })
       .catch((err) => {
         let errMessage = err.message;
@@ -46,26 +52,12 @@ function App() {
       });
   }
 
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      authApi
-        .getInfo()
-        .then(async (data) => {
-          let userInfo = data.user;
-          setCurrentUser(userInfo);
-        })
-        .catch((err) => {
-          console.log(`Error ${err}`);
-        });
-    }
-  }, []);
-
   const handleCloseError = () => {
     setAuthError("");
   };
 
   return (
-    <CurrentUserContext.Provider value={{currentUser, setCurrentUser}}>
+    <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
       <Routes>
         <Route path="/" element={<WelcomePage navigate={useNavigate()} />} />
         <Route path="/home" element={<Homepage navigate={useNavigate()} />} />

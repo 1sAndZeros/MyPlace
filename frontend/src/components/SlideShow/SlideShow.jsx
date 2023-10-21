@@ -1,21 +1,22 @@
-import React, { useEffect } from 'react';
-import firstImg from '../../assets/alex-azabache-V83v-MYB_Z8-unsplash.jpg';
-import secImg from '../../assets/ian-dooley-hpTH5b6mo2s-unsplash.jpg';
-import thirdImg from '../../assets/tom-barrett-M0AWNxnLaMw-unsplash.jpg';
+import { useEffect, useState, useRef } from 'react';
+import firstImg from '../../assets/slideshow/zero-take-Mpa3_xioTRQ-unsplash.jpg';
+import secImg from '../../assets/slideshow/neom-p4q-Ra__g8M-unsplash.jpg';
+import thirdImg from '../../assets/slideshow/neom-z-8M8NQgMdA-unsplash.jpg';
+import fourthImg from '../../assets/slideshow/redd-f-Dl_Ya8eNRpk-unsplash.jpg';
+import fifthdImg from '../../assets/slideshow/toms-rits-ryfptJi3fAM-unsplash.jpg';
 
-const images = [firstImg, secImg, thirdImg];
+const images = [firstImg, secImg, thirdImg, fourthImg, fifthdImg];
 const delay = 2500;
 
 function SlideShow() {
-    const [index, setIndex] = React.useState(0);
-    const timeoutRef = React.useRef(null);
+    const [index, setIndex] = useState(0);
+    const timeoutRef = useRef(null);
 
     function resetTimeout() {
         if (timeoutRef.current) {
             clearTimeout(timeoutRef.current);
         }
     }
-
 
     useEffect(() => {
         resetTimeout();
@@ -31,7 +32,9 @@ function SlideShow() {
 
     return (
         <div className="slideshow">
-            <div className="slideshowSlider" style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}>
+            <div
+                className="slideshowSlider"
+                style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}>
                 {images.map((img, index) => (
                     <img className="slide" key={index} src={img} />
                 ))}

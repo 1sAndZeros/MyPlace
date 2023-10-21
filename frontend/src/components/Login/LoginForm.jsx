@@ -6,7 +6,13 @@ import EyeClosed from "../../assets/icons/eye-closed.svg?react";
 import errorImg from "../../assets/error.svg";
 import errorClose from "../../assets/Close_square.svg";
 
-function LoginForm({ onLogIn, authError, setAuthError, handleCloseError }) {
+const LoginForm = ({
+  onLogIn,
+  authError,
+  setAuthError,
+  handleCloseError
+}) => {
+  
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [showPassword, setShowPassword] = React.useState(false);

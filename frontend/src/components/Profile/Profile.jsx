@@ -1,16 +1,29 @@
 import { useState, useContext, useEffect } from "react";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
+import { useNavigate } from "react-router-dom";
 import { authApi } from "../../utils/api";
 import arrowDown from "../../assets/chevron-down.svg";
 import arrowUp from "../../assets/chevron-up.svg";
 import edit from "../../assets/Edit.svg";
 import signOut from "../../assets/sign-out.svg";
-import addImg from "../../assets/icons/add-image.svg";
 
 const Profile = () => {
+  const navigate = useNavigate();
   const [showSettings, setShowSettings] = useState(false);
   const [image, setImage] = useState("");
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+
+  useEffect(() => {
+    const userInfo = localStorage.getItem("userInfo");
+    if (userInfo) {
+      setCurrentUser(JSON.parse(userInfo));
+    }
+  }, []);
+
+  function onLogOut(){
+    localStorage.removeItem('token')
+    navigate("/")
+  }
 
   const handleClick = () => {
     setShowSettings(!showSettings);
@@ -29,6 +42,7 @@ const Profile = () => {
       })
       .then((data) => {
         setCurrentUser(data.newUser);
+        localStorage.setItem("userInfo", JSON.stringify(data.newUser));
       })
       .catch((err) => {
         console.log(err);
@@ -37,56 +51,47 @@ const Profile = () => {
     setShowSettings(!showSettings);
   };
 
-  return (
-    <>
-      <section className="profile">
-        <div className="profile__info">
-          <img
-            className="profile__icon"
-            src={!showSettings ? arrowDown : arrowUp}
-            onClick={handleClick}
-          />
-          <p className="profile__username">{currentUser.username}</p>
-          <img
-            className="profile__img"
-            alt="user pic"
-            src={currentUser.profileImage}
-          />
-        </div>
-        <div
-          className={`profile__settings ${
-            !showSettings ? "hidden" : "visible"
-          }`}
-        >
-          <p>Edit profile picture</p>
-          <div className="profile__settings-element">
-            <label className="form__button--label" htmlFor="fileUpload">
-              <img className="profile__settings__icon" src={edit} />
-              <input
-                id="fileUpload"
-                type="file"
-                accept=".png, .jpg, .jpeg"
-                name="image"
-                onChange={handleImageChange}
-              />
-              <button
-                type="button"
-                className="form__button--cancel"
-                onClick={handleSubmit}
-              >
-                Submit
-              </button>
-            </label>
-          </div>
-
-          <div className="profile__settings-element">
-            <img className="profile__settings__icon" src={signOut} />
-            <p>Sign Out</p>
-          </div>
-        </div>
-      </section>
-    </>
-  );
+    return (
+        <>
+            <section className="profile">
+                <div className="profile__info">
+                    <img
+                        className="profile__icon"
+                        src={!showSettings ? arrowDown : arrowUp}
+                        onClick={handleClick}
+                    />
+                    <p className="profile__username">{currentUser.username}</p>
+                    <img className="profile__img" alt="user pic"
+                        src={currentUser.profileImage} />
+                </div>
+                <div className={`profile__settings ${!showSettings ? "hidden" : "visible"}`}>
+                    <p>Edit profile picture</p>
+                    <div className="profile__settings-element">
+                        <label className="form__button--label" htmlFor="fileUpload">
+                            <img className="profile__settings__icon" src={edit} />
+                            <input
+                                id="fileUpload"
+                                type="file"
+                                accept=".png, .jpg, .jpeg"
+                                name="image"
+                                onChange={handleImageChange}
+                            />
+                            <button
+                                type="button"
+                                className="form__button--cancel"
+                                onClick={handleSubmit}>
+                                Submit
+                            </button>
+                        </label>
+                    </div>
+                    <div className="profile__settings-element" onClick={onLogOut}>
+                        <img className="profile__settings__icon" src={signOut} />
+                        <p>Sign Out</p>
+                    </div>
+                </div>
+            </section>
+        </>
+    );
 };
 
 export default Profile;
