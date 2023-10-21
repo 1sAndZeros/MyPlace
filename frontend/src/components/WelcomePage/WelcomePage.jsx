@@ -1,7 +1,7 @@
 import "./WelcomePage.css";
 import Navbar from "../Navbar/Navbar";
 
-function App() {
+function WelcomePage() {
   return (
     <>
       <main id="welcome-page" className="bg-main">
@@ -26,4 +26,4 @@ function App() {
   );
 }
 
-export default App;
+export default WelcomePage;

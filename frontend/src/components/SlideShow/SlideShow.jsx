@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import firstImg from '../../assets/alex-azabache-V83v-MYB_Z8-unsplash.jpg';
 import secImg from '../../assets/ian-dooley-hpTH5b6mo2s-unsplash.jpg';
 import thirdImg from '../../assets/tom-barrett-M0AWNxnLaMw-unsplash.jpg';
@@ -16,7 +16,6 @@ function SlideShow() {
         }
     }
 
-
     useEffect(() => {
         resetTimeout();
         timeoutRef.current = setTimeout(() =>
@@ -31,7 +30,9 @@ function SlideShow() {
 
     return (
         <div className="slideshow">
-            <div className="slideshowSlider" style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}>
+            <div
+                className="slideshowSlider"
+                style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}>
                 {images.map((img, index) => (
                     <img className="slide" key={index} src={img} />
                 ))}

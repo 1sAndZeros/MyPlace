@@ -1,11 +1,10 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { authApi } from "../../utils/api";
 import arrowDown from "../../assets/chevron-down.svg";
 import arrowUp from "../../assets/chevron-up.svg";
 import edit from "../../assets/Edit.svg";
 import signOut from "../../assets/sign-out.svg";
-import addImg from "../../assets/icons/add-image.svg"
 
 const Profile = () => {
     const [showSettings, setShowSettings] = useState(false);
@@ -60,13 +59,14 @@ const Profile = () => {
                                 name="image"
                                 onChange={handleImageChange}
                             />
-                            <button type="button" className="form__button--cancel" onClick={handleSubmit}>
+                            <button
+                                type="button"
+                                className="form__button--cancel"
+                                onClick={handleSubmit}>
                                 Submit
                             </button>
                         </label>
                     </div>
-
-
                     <div className="profile__settings-element">
                         <img className="profile__settings__icon" src={signOut} />
                         <p>Sign Out</p>
