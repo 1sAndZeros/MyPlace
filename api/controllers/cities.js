@@ -83,6 +83,22 @@ const CitiesController = {
         });
       });
   },
+
+  Update: (req, res) => {
+    console.log("body", req.body);
+    City.findByIdAndUpdate(req.params.id, req.body, { new: true })
+      .then((updatedCity) => {
+        const token = TokenGenerator.jsonwebtoken(req.user_id);
+        res.status(200).json({
+          message: "City entry has been updated!",
+          token: token,
+          city: updatedCity,
+        });
+      })
+      .catch((err) => {
+        res.status(400).json({ message: "Error updating city entry" });
+      });
+  },
 };
 
 module.exports = CitiesController;

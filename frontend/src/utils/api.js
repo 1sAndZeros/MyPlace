@@ -78,6 +78,19 @@ class Api {
     });
   }
 
+  updateCity(update, id) {
+    return fetch(`${this._baseUrl}/cities/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({ visited: true }),
+    }).then((res) => {
+      return this._getResponseData(res);
+    });
+  }
+
   getMyCityPins() {
     return fetch(`${this._baseUrl}/cities/me`, {
       method: "GET",
@@ -107,7 +120,7 @@ class Api {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-      body: JSON.stringify({ profileImage: image })
+      body: JSON.stringify({ profileImage: image }),
     }).then((res) => {
       return this._getResponseData(res);
     });

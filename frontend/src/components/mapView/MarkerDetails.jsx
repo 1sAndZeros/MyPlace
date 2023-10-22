@@ -1,5 +1,6 @@
 import StarRating from "../StarRating/StarRating";
 import StarIcon from "../../assets/icons/star.svg?react";
+import { authApi } from "../../utils/api";
 
 const MarkerDetails = ({ details, setDetails }) => {
   const closeDetails = () => {
@@ -12,6 +13,18 @@ const MarkerDetails = ({ details, setDetails }) => {
     const vistedDate = new Date(details.visitedDate).toLocaleDateString(
       "en-gb"
     );
+
+    const setToVisited = () => {
+      const update = { visited: true };
+      authApi
+        .updateCity(update, details._id)
+        .then((data) => {
+          console.log("success", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
 
     return (
       <section id="marker-details">
@@ -50,7 +63,11 @@ const MarkerDetails = ({ details, setDetails }) => {
           >
             close
           </button>
-          <button className="form__button form__button--add" type="submit">
+          <button
+            onClick={setToVisited}
+            className="form__button form__button--add"
+            type="submit"
+          >
             visited
           </button>
         </div>
