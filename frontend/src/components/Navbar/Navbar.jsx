@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "../../assets/icons/pin.svg?react";
 import Profile from "../Profile/Profile";
-import "./Navbar.css";
+// import "./Navbar.css";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,7 +15,9 @@ function Navbar() {
 
   return (
     <nav id="navbar" className="navbar">
-      <p className="navbar__link"><Link to="/signup">About</Link></p>
+      <p className="navbar__link">
+        <Link to="/signup">About</Link>
+      </p>
       <Link to="/home" className="navbar__brand">
         <Logo />
         <p className="navbar__brand__heading">MyPlace.</p>

@@ -20,9 +20,9 @@ const Profile = () => {
     }
   }, []);
 
-  function onLogOut(){
-    localStorage.removeItem('token')
-    navigate("/")
+  function onLogOut() {
+    localStorage.removeItem("token");
+    navigate("/");
   }
 
   const handleClick = () => {
@@ -51,47 +51,59 @@ const Profile = () => {
     setShowSettings(!showSettings);
   };
 
-    return (
-        <>
-            <section className="profile">
-                <div className="profile__info">
-                    <img
-                        className="profile__icon"
-                        src={!showSettings ? arrowDown : arrowUp}
-                        onClick={handleClick}
-                    />
-                    <p className="profile__username">{currentUser.username}</p>
-                    <img className="profile__img" alt="user pic"
-                        src={currentUser.profileImage} />
-                </div>
-                <div className={`profile__settings ${!showSettings ? "hidden" : "visible"}`}>
-                    <p>Edit profile picture</p>
-                    <div className="profile__settings-element">
-                        <label className="form__button--label" htmlFor="fileUpload">
-                            <img className="profile__settings__icon" src={edit} />
-                            <input
-                                id="fileUpload"
-                                type="file"
-                                accept=".png, .jpg, .jpeg"
-                                name="image"
-                                onChange={handleImageChange}
-                            />
-                            <button
-                                type="button"
-                                className="form__button--cancel"
-                                onClick={handleSubmit}>
-                                Submit
-                            </button>
-                        </label>
-                    </div>
-                    <div className="profile__settings-element" onClick={onLogOut}>
-                        <img className="profile__settings__icon" src={signOut} />
-                        <p>Sign Out</p>
-                    </div>
-                </div>
-            </section>
-        </>
-    );
+  return (
+    <>
+      <section className="profile">
+        <div className="profile__info">
+          <img
+            className="profile__icon"
+            src={!showSettings ? arrowDown : arrowUp}
+            onClick={handleClick}
+          />
+          <p className="profile__username">{currentUser.username}</p>
+          <img
+            className="profile__img"
+            alt="avatar"
+            src={
+              currentUser.profileImage
+                ? currentUser.profileImage
+                : `https://eu.ui-avatarss.com/api/?length=1&name=${currentUser.username}`
+            }
+          />
+        </div>
+        <div
+          className={`profile__settings ${
+            !showSettings ? "hidden" : "visible"
+          }`}
+        >
+          <p>Edit profile picture</p>
+          <div className="profile__settings-element">
+            <label className="form__button--label" htmlFor="fileUpload">
+              <img className="profile__settings__icon" src={edit} />
+              <input
+                id="fileUpload"
+                type="file"
+                accept=".png, .jpg, .jpeg"
+                name="image"
+                onChange={handleImageChange}
+              />
+              <button
+                type="button"
+                className="form__button--cancel"
+                onClick={handleSubmit}
+              >
+                Submit
+              </button>
+            </label>
+          </div>
+          <div className="profile__settings-element" onClick={onLogOut}>
+            <img className="profile__settings__icon" src={signOut} />
+            <p>Sign Out</p>
+          </div>
+        </div>
+      </section>
+    </>
+  );
 };
 
 export default Profile;

@@ -18,6 +18,8 @@ import SearchMarker from "./SearchMarker";
 import ClickMarker from "./ClickMarker";
 import MarkerIcon from "../../assets/icons/pin.svg?react";
 import MarkerDetails from "./MarkerDetails";
+import Key from "./Key";
+import keys from "../../data/keys";
 
 // get request for cities / regions https://api.mapbox.com/geocoding/v5/mapbox.places/{searchString}.json?fuzzyMatch=false&limit=10&types=region%2Cdistrict&autocomplete=true&access_token=pk.eyJ1IjoiaW15cGxhY2UiLCJhIjoiY2xudTViMGp3MGNwYTJsbzVtdnNxZ3NvOCJ9.j49LvpTufygf0Cx9HhldIg
 
@@ -62,7 +64,7 @@ const MapView = () => {
           navigate("/");
         }
       });
-  }, []);
+  }, [details]);
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -169,11 +171,17 @@ const MapView = () => {
                 key={cityPin._id}
                 latitude={cityPin.location.lat}
                 longitude={cityPin.location.lng}
-                color={cityPin.visited ? "#007d02" : "#f4f439"}
+                color={
+                  cityPin.visited
+                    ? keys.find((key) => key.text === "Visited").color
+                    : keys.find((key) => key.text === "Want to visit").color
+                }
                 onClick={handleMarkerClick}
                 popup={markerDetailsPopupRef.current}
               >
-                {/* <MarkerIcon /> */}
+                {/* {cityPin.visited
+                  ? keys.find((key) => key.text === "Visited").icon
+                  : keys.find((key) => key.text === "Want to visit").icon} */}
               </Marker>
             );
           })}
@@ -190,6 +198,7 @@ const MapView = () => {
           <h1>Detials</h1>
         </Popup>
         <MarkerDetails details={details} setDetails={setDetails} />
+        <Key />
       </Map>
     </>
   );

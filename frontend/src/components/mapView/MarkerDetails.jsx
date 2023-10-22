@@ -1,5 +1,8 @@
 import StarRating from "../StarRating/StarRating";
 import StarIcon from "../../assets/icons/star.svg?react";
+import HeartIcon from "../../assets/icons/heart-fill.svg?react";
+import TrashIcon from "../../assets/icons/trash.svg?react";
+import EditIcon from "../../assets/Edit.svg?react";
 import { authApi } from "../../utils/api";
 
 const MarkerDetails = ({ details, setDetails }) => {
@@ -19,7 +22,8 @@ const MarkerDetails = ({ details, setDetails }) => {
       authApi
         .updateCity(update, details._id)
         .then((data) => {
-          console.log("success", data);
+          console.log("city updated to visited");
+          setDetails(data.city);
         })
         .catch((error) => {
           console.log(error);
@@ -28,6 +32,11 @@ const MarkerDetails = ({ details, setDetails }) => {
 
     return (
       <section id="marker-details">
+        <div className="marker-details__options">
+          <EditIcon />
+          <HeartIcon />
+          <TrashIcon />
+        </div>
         <div className="marker-details__user">
           <img
             src={`${

@@ -3,47 +3,30 @@ import PinIcon from "../../assets/icons/pin2.svg?react";
 import ChevronIcon from "../../assets/icons/chevron-down.svg?react";
 import LogoutIcon from "../../assets/icons/sign-out.svg?react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import FavouritePlaces from "./FavouritePlaces";
+import Friends from "./Friends";
+import Key from "../mapView/Key";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
   const [hidden, setHidden] = useState(true);
+
+  const onLogOut = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
   const handleClick = (e) => {
     setHidden(!hidden);
   };
   return (
     <>
       <ul>
-        <li className={`sidebar__item ${hidden ? "" : "active"}`}>
-          <div className="sidebar__item--heading" onClick={handleClick}>
-            <PinIcon />
-            <h3>Favourite Places</h3>
-            <ChevronIcon />
-          </div>
-          <ul className="sidebar__item__menu">
-            <li className="sidebar__item__menu--item">
-              <h4>Location 1</h4>
-            </li>
-            <li className="sidebar__item__menu--item">
-              <h4>Location 2</h4>
-            </li>
-          </ul>
-        </li>
-        <li className={`sidebar__item ${hidden ? "" : "active"}`}>
-          <div className="sidebar__item--heading" onClick={handleClick}>
-            <TeamIcon />
-            <h3>Friends</h3>
-            <ChevronIcon />
-          </div>
-          <ul className="sidebar__item__menu">
-            <li className="sidebar__item__menu--item">
-              <h4>Friend 1</h4>
-            </li>
-            <li className="sidebar__item__menu--item">
-              <h4>Friend 2</h4>
-            </li>
-          </ul>
-        </li>
+        <FavouritePlaces />
+        <Friends />
         <div className="home__sidebar__logout">
-          <button>
+          <button onClick={onLogOut}>
             <LogoutIcon />
             Logout
           </button>

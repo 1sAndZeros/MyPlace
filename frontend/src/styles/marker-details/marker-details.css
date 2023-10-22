@@ -1,0 +1,106 @@
+#marker-details {
+    position: absolute;
+    z-index: 999;
+    top: 1em;
+    right: 50px;
+    display: flex;
+    flex-direction: column;
+    background: rgba(244, 244, 244, 0.8);
+    width: 300px;
+    height: 600px;
+    border-radius: 1em;
+    box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.2);
+    font-size: 1.2em;
+    padding: 1em;
+}
+
+.marker-details--scroll {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    gap: 1em;
+    margin: 1em auto;
+    flex-direction: column;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.marker-details__user {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    gap: 1em;
+    margin-bottom: 1em;
+    font-size: 1.25rem;
+}
+
+.marker-details__user img {
+    width: 2.5em;
+    height: 2.5em;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.8);
+}
+
+.marker-details__rating {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    gap: 0.25em;
+}
+
+.marker-details__memory {
+    width: 100%;
+    flex-grow: 1;
+    font-size: 1.25rem;
+    padding: 0.5em;
+    text-align: left;
+    border-radius: 0.5em;
+}
+
+.marker-details__place {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.marker-details__name {
+    flex-grow: 1;
+}
+
+.marker-details__photo {
+    border-radius: 0.5em;
+}
+
+.marker-details__options {
+    gap: 0.5em;
+    position: absolute;
+    right: 0.75em;
+    top: 0.5em;
+    display: none;
+}
+
+#marker-details:hover .marker-details__options {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 0.25em 0.75em;
+    border-radius: 999px;
+}
+
+.marker-details__options svg {
+    cursor: pointer;
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.marker-details__options .bi-heart-fill {
+    color: tomato;
+}
+
+.marker-details__options .bi-trash3-fill {
+    color: red;
+}

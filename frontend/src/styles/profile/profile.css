@@ -27,7 +27,8 @@
     height: 3rem;
     /* margin-right: 1rem; */
     border: 1px solid;
-    background-color: brown;
+    background-color: rgba(0, 0, 0, 0.8);
+    font-size: 0.875rem;
 }
 
 .profile__settings {
@@ -50,6 +51,7 @@
     opacity: 1;
     transition: opacity .5s linear;
 }
+
 .hidden {
     visibility: hidden;
     opacity: 0;
