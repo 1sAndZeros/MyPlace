@@ -11,7 +11,7 @@ function Navbar() {
       {path === "/home" ?
         <Link
           to="/signup"
-          className={path === "/home" ? "navbar__brand--black" : "navbar__brand--white"}
+          className={path === "/home" ? "navbar__brand--black navbar__brand--right" : "navbar__brand--white"}
         >F.A.Q</Link>
         :
         <Link

@@ -9,7 +9,6 @@
 @import url('../src/styles/welcome-page/welcome-page.css');
 @import url('../src/styles/navbar/navbar.css');
 @import url('../src/styles/homepage/homepage.css');
-@import url('../src/styles/sidebar/sidebar.css');
 
 :root {
   font-family: 'Poppins', sans-serif;

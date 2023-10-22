@@ -1,8 +1,10 @@
 .profile {
     position: relative;
     display: flex;
+    justify-self: right;
     flex-direction: column;
     z-index: 3;
+    margin-right: 5rem;
 }
 
 .profile__info {
@@ -63,13 +65,14 @@
 }
 
 .profile__settings {
+    position: absolute;
+    top: 4rem;
+    right: 0.2rem;
     background-color: #fff;
     border-radius: .5rem;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     font-size: .8rem;
     width: fit-content;
-    position: absolute;
-    top: 4rem;
     padding: .5rem .5rem;
     display: flex;
     flex-direction: column;

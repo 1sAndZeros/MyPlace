@@ -2,8 +2,9 @@
     position: relative;
     width: 70%;
     margin: 0 auto;
-    display: flex;
+    display: grid;
     align-items: center;
+    grid-template-columns: 1fr 1fr 1fr;
     justify-content: space-between;
     background-color: transparent;
     border-bottom: 1px solid rgba(231, 231, 242, 0.8);
@@ -25,13 +26,14 @@
 
 .navbar a:hover {
     text-decoration: underline;
-    color: rgba(231, 231, 242, 0.8);
+    color: rgb(151, 151, 155);
 }
 
 .navbar-nav {
     display: flex;
     gap: 1em;
     list-style: none;
+    justify-self: right;
 }
 
 .navbar__brand--black {
@@ -40,6 +42,10 @@
 
 .navbar__brand--white {
     color: #fff;
+}
+
+.navbar__brand--right {
+    margin-left: 5rem;
 }
 
 .navbar .navbar__brand {
