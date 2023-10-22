@@ -1,0 +1,89 @@
+.welcome-page__container {
+    position: relative;
+    height: 100vh;
+    background-image: url('../../assets/nasa-Q1p7bh3SHj8-unsplash.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: content-box;
+}
+
+.welcome-page__container::before {
+    content: '';
+    position: absolute;
+    background: #2A2C2F;
+    opacity: 0.5;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.welcome-page__text {
+    margin: auto;
+    width: 70%;
+}
+
+.welcome-page__heading {
+    position: relative;
+    color: #FFFFFF;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 5rem;
+    line-height: 6rem;
+    text-align: left;
+    max-width: 50rem;
+    margin-bottom: 2rem;
+}
+
+@media screen and (max-width: 767px) {
+    .welcome-page__heading {
+        font-size: 3rem;
+        line-height: 1.1;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    .welcome-page__heading {
+        font-size: 2rem;
+        line-height: 2rem;
+        padding-bottom: 1rem;
+    }
+}
+
+.welcome-page__subtitle {
+    position: relative;
+    color: #FFFFFF;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1.3rem;
+    line-height: 1rem;
+    text-align: left;
+    max-width: 36rem;
+}
+
+@media screen and (max-width: 1023px) {
+    .welcome-page__subtitle {
+        margin-bottom: 5%;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .welcome-page__subtitle {
+        font-size: 1.1rem;
+        line-height: 1rem;
+        margin-bottom: 4%;
+        max-width: 90%;
+    }
+}
+
+.welcome-page__copyright {
+    color: rgba(231, 231, 242, 0.8);
+    font-size: .7rem;
+    padding-bottom: .3rem;
+}

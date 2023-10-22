@@ -15,10 +15,10 @@ function Navbar() {
 
   return (
     <nav id="navbar" className="navbar">
-      <h4 className="navbar__link">About</h4>
+      <p className="navbar__link"><Link to="/signup">About</Link></p>
       <Link to="/home" className="navbar__brand">
         <Logo />
-        <h3 className="navbar__brand__heading">MyPlace.</h3>
+        <p className="navbar__brand__heading">MyPlace.</p>
       </Link>
       {path === "/home" ? (
         <Profile />
