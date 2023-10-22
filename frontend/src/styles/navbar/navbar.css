@@ -1,7 +1,7 @@
 .navbar {
     position: relative;
     width: 70%;
-    margin-inline: 10%;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -10,12 +10,16 @@
     font-size: 1.25rem;
     height: 4rem;
     text-decoration: none;
-    color: #ffff;
+}
+
+.navbar--home {
+    width: 100%;
+    justify-content: space-around;
+
 }
 
 .navbar a {
     text-decoration: none;
-    color: #ffff;
     transition: all 200ms ease-in-out;
 }
 
@@ -30,14 +34,22 @@
     list-style: none;
 }
 
-#navbar .navbar__brand {
+.navbar__brand--black {
+    color: #000;
+}
+
+.navbar__brand--white {
+    color: #fff;
+}
+
+.navbar .navbar__brand {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0.5em;
 }
 
-#navbar .navbar__brand__logo {
+.navbar .navbar__brand__logo {
     width: 2.25em;
 }
 
@@ -47,7 +59,7 @@
 }
 
 @media screen and (max-width: 500px) {
-    #navbar {
+    .navbar {
         width: 100%;
         font-size: 1rem;
         margin-inline: 0;

@@ -1,14 +1,10 @@
 import { useState, useContext, useEffect } from "react";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
-import { useNavigate } from "react-router-dom";
 import { authApi } from "../../utils/api";
-import arrowDown from "../../assets/chevron-down.svg";
-import arrowUp from "../../assets/chevron-up.svg";
 import edit from "../../assets/Edit.svg";
 import signOut from "../../assets/sign-out.svg";
 
 const Profile = () => {
-  const navigate = useNavigate();
   const [showSettings, setShowSettings] = useState(false);
   const [image, setImage] = useState("");
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
@@ -19,11 +15,6 @@ const Profile = () => {
       setCurrentUser(JSON.parse(userInfo));
     }
   }, []);
-
-  function onLogOut(){
-    localStorage.removeItem('token')
-    navigate("/")
-  }
 
   const handleClick = () => {
     setShowSettings(!showSettings);
@@ -48,21 +39,30 @@ const Profile = () => {
         console.log(err);
         console.log(`Error in uploadPhoto: ${err.message}`);
       });
-    setShowSettings(!showSettings);
+      setShowSettings(!showSettings);
+    const fileInput = document.getElementById("fileUpload");
+    if (fileInput) {
+      fileInput.value = ""; // Reset the input field
+    }
   };
 
     return (
         <>
             <section className="profile">
                 <div className="profile__info">
-                    <img
-                        className="profile__icon"
-                        src={!showSettings ? arrowDown : arrowUp}
-                        onClick={handleClick}
-                    />
                     <p className="profile__username">{currentUser.username}</p>
-                    <img className="profile__img" alt="user pic"
-                        src={currentUser.profileImage} />
+                    <div className="profile__container">
+                      <img
+                        className="profile__img"
+                        alt="user pic"
+                        src={currentUser.profileImage}
+                      />
+                      <button
+                        className="profile__button-edit"
+                        type="button"
+                        onClick={handleClick}
+                        ></button>
+                    </div>
                 </div>
                 <div className={`profile__settings ${!showSettings ? "hidden" : "visible"}`}>
                     <p>Edit profile picture</p>
@@ -84,10 +84,10 @@ const Profile = () => {
                             </button>
                         </label>
                     </div>
-                    <div className="profile__settings-element" onClick={onLogOut}>
+                    {/* <div className="profile__settings-element" onClick={onLogOut}>
                         <img className="profile__settings__icon" src={signOut} />
                         <p>Sign Out</p>
-                    </div>
+                    </div> */}
                 </div>
             </section>
         </>
