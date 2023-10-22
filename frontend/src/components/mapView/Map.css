@@ -51,6 +51,7 @@ mapbox-search-box {
 
 .marker-details__user img {
     width: 2.5em;
+    height: 2.5em;
     border-radius: 50%;
     border: 1px solid rgba(0, 0, 0, 0.8);
 }

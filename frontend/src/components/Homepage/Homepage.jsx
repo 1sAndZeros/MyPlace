@@ -1,4 +1,3 @@
-import "./homepage.css";
 import Navbar from "../Navbar/Navbar";
 import MapView from "../mapView/mapView";
 import Sidebar from "../Sidebar/Sidebar";
