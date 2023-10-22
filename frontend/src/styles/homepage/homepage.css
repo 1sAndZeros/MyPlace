@@ -1,0 +1,23 @@
+#home {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+#home.bg-main {
+    background: #fff;
+}
+
+#home #navbar {
+    width: 100%;
+    margin: 0;
+}
+
+.home__container {
+    display: flex;
+    height: 100%;
+}
+
+.home__map-container {
+    flex-grow: 1;
+}

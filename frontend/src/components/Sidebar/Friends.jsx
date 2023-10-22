@@ -5,14 +5,14 @@ import { useState } from "react";
 
 const Friends = () => {
   const [hidden, setHidden] = useState(true);
-  const handleClick = (e) => {
+  const handleClick = () => {
     setHidden(!hidden);
   };
   return (
     <li className={`sidebar__item ${hidden ? "" : "active"}`}>
       <div className="sidebar__item--heading" onClick={handleClick}>
         <TeamIcon />
-        <h3>Friends</h3>
+        <p>Friends</p>
         <ChevronIcon />
       </div>
       <ul className="sidebar__item__menu">

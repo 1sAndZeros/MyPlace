@@ -4,14 +4,14 @@ import { useState } from "react";
 
 const FavouritePlaces = () => {
   const [hidden, setHidden] = useState(true);
-  const handleClick = (e) => {
+  const handleClick = () => {
     setHidden(!hidden);
   };
   return (
     <li className={`sidebar__item ${hidden ? "" : "active"}`}>
       <div className="sidebar__item--heading" onClick={handleClick}>
         <PinIcon />
-        <h3>Favourite Places</h3>
+        <p>Favourite Places</p>
         <ChevronIcon />
       </div>
       <ul className="sidebar__item__menu">

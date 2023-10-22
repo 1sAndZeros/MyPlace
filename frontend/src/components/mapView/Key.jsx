@@ -7,7 +7,11 @@ const Key = () => {
       <ul className="keys__list">
         {keys.map((key) => {
           return (
-            <li className="key__item" style={{ color: key.color }}>
+            <li
+              key={key.text}
+              className="key__item"
+              style={{ color: key.color }}
+            >
               {key.icon}
               <h5>{key.text}</h5>
             </li>

@@ -8,15 +8,13 @@ import Map, {
   NavigationControl,
   GeolocateControl,
 } from "react-map-gl";
-import { AddressAutofill, SearchBox } from "@mapbox/search-js-react";
+import { SearchBox } from "@mapbox/search-js-react";
 import "mapbox-gl/dist/mapbox-gl.css";
-import NewCityForm from "../NewCityForm/NewCityForm";
 import { authApi } from "../../utils/api";
 import "./Map.css";
 import { MapboxSearchBox } from "@mapbox/search-js-web";
 import SearchMarker from "./SearchMarker";
 import ClickMarker from "./ClickMarker";
-import MarkerIcon from "../../assets/icons/pin.svg?react";
 import MarkerDetails from "./MarkerDetails";
 import Key from "./Key";
 import keys from "../../data/keys";
@@ -36,7 +34,6 @@ const MapView = () => {
     zoom: 4,
   });
   const [marker, setMarker] = useState(null);
-  const [showPopup, setShowPopup] = useState(false);
   const [placeName, setPlaceName] = useState(null);
   const [cityPins, setCityPins] = useState([]);
   const [searchValue, setSearchValue] = useState("");
@@ -46,7 +43,7 @@ const MapView = () => {
   const myMap = useMap();
   const mapRef = useRef();
   const searchRef = useRef();
-  const search = new MapboxSearchBox();
+  // const search = new MapboxSearchBox();
   const markerDetailsPopupRef = useRef();
 
   useEffect(() => {
