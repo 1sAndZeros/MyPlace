@@ -1,14 +1,10 @@
 import { useState, useContext, useEffect } from "react";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
-import { useNavigate } from "react-router-dom";
 import { authApi } from "../../utils/api";
-import arrowDown from "../../assets/chevron-down.svg";
-import arrowUp from "../../assets/chevron-up.svg";
 import edit from "../../assets/Edit.svg";
 import signOut from "../../assets/sign-out.svg";
 
 const Profile = () => {
-  const navigate = useNavigate();
   const [showSettings, setShowSettings] = useState(false);
   const [image, setImage] = useState("");
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
@@ -49,6 +45,10 @@ const Profile = () => {
         console.log(`Error in uploadPhoto: ${err.message}`);
       });
     setShowSettings(!showSettings);
+    const fileInput = document.getElementById("fileUpload");
+    if (fileInput) {
+      fileInput.value = ""; // Reset the input field
+    }
   };
 
   return (

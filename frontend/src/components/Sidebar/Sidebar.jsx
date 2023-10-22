@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import TeamIcon from "../../assets/icons/team.svg?react";
 import PinIcon from "../../assets/icons/pin2.svg?react";
 import ChevronIcon from "../../assets/icons/chevron-down.svg?react";
@@ -20,13 +21,18 @@ const Sidebar = () => {
   const handleClick = (e) => {
     setHidden(!hidden);
   };
+
+  function onLogOut() {
+    localStorage.removeItem("token");
+    navigate("/");
+  }
   return (
     <>
       <ul>
         <FavouritePlaces />
         <Friends />
         <div className="home__sidebar__logout">
-          <button onClick={onLogOut}>
+          <button type="button" onClick={onLogOut}>
             <LogoutIcon />
             Logout
           </button>
