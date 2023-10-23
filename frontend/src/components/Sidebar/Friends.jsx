@@ -6,19 +6,20 @@ import FindFriendModal from "./FindFriendModal";
 
 const Friends = () => {
   const [hidden, setHidden] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const handleClick = () => {
     setHidden(!hidden);
   };
   return (
     <li className={`sidebar__item ${hidden ? "" : "active"}`}>
-      <FindFriendModal />
+      <FindFriendModal showModal={showModal} setShowModal={setShowModal} />
       <div className="sidebar__item--heading" onClick={handleClick}>
         <TeamIcon />
         <p>Friends</p>
         <ChevronIcon />
       </div>
       <ul className="sidebar__item__menu">
-        <button className="btn-ghost">
+        <button className="btn-ghost" onClick={() => setShowModal(true)}>
           <SearchIcon />
           Find Friends
         </button>

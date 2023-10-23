@@ -1,9 +1,13 @@
+import CrossIcon from '../../assets/icons/cross.svg?react';
 import {useState, useEffect, useContext} from 'react';
 import {authApi} from '../../utils/api';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
-const FindFriendModal = () => {
+
+const FindFriendModal = ({showModal, setShowModal}) => {
     const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
     const [allUsers, setAllUsers] = useState([]);
+    
+    
  
 
     useEffect(() => {
@@ -34,9 +38,23 @@ const FindFriendModal = () => {
         .catch(err => console.log(err))
 
     }
+
+    const truncate =  (str, maxLength) => {
+        if (str.length <= maxLength) {
+          return str;
+        }
+        
+        return str.slice(0, maxLength) + '...';
+      }
+      if (!showModal) {
+        return null;
+      }
     return(
 
         <div className='friend-modal'>
+            <div onClick={() => setShowModal(false)}>
+            <CrossIcon />
+            </div>
             <h3>
                 Search For Friends
             </h3>
@@ -45,11 +63,11 @@ const FindFriendModal = () => {
                     return(
                         <li className="user" key={user._id}>
                             <img className="user-img" src={user.profileImage ? user.profileImage : `https://eu.ui-avatars.com/api/?name=${user.username}&length=1`} alt={user.username} />
-                            <p className="user-name">{user.username}</p>
+                            <p className="user-name">{truncate(user.username, 15)}</p>
                             {
                             (currentUser.friends.find((friend) => friend._id === user._id) ? 
-                            <button className="add-friend" onClick={() => removeFriend(user._id)}>Remove Friend</button>:
-                            <button className="add-friend" onClick={() => addFriend(user._id)}>Add Friend</button> 
+                            <button className="add-friend" onClick={() => removeFriend(user._id)}>Unfriend</button>:
+                            <button className="add-friend" onClick={() => addFriend(user._id)}>Friend</button> 
                                 )
                             }
 
