@@ -23,7 +23,7 @@
     width: 1.5rem;
 }
 
-.profile__container{
+.profile__container {
     position: relative;
     box-sizing: content-box;
     border-radius: 50%;
@@ -36,7 +36,7 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,.8) url('../../assets/icons/edit-w.svg') 50%;
+    background: rgba(0, 0, 0, .8) url('../../assets/icons/edit-w.svg') 50%;
     background-repeat: no-repeat;
     left: 0;
     top: 0;
@@ -45,7 +45,7 @@
     box-shadow: none;
     border-radius: 50%;
     overflow: hidden;
-    transition: .5s,opacity .5s linear;
+    transition: .5s, opacity .5s linear;
 }
 
 .profile__img {
@@ -85,6 +85,7 @@
     opacity: 1;
     transition: opacity .5s linear;
 }
+
 .hidden {
     visibility: hidden;
     opacity: 0;

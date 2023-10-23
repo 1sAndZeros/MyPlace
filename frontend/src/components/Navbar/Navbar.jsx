@@ -7,21 +7,36 @@ function Navbar() {
   const path = location.pathname;
 
   return (
-    <nav id="navbar" className={`navbar ${path === "/home" ? "navbar--home" : ""}`}>
-      {path === "/home" ?
+    <nav
+      id="navbar"
+      className={`navbar ${path === "/home" ? "navbar--home" : ""}`}
+    >
+      {path === "/home" ? (
         <Link
           to="/signup"
-          className={path === "/home" ? "navbar__brand--black navbar__brand--right" : "navbar__brand--white"}
-        >F.A.Q</Link>
-        :
+          className={
+            path === "/home"
+              ? "navbar__brand--black navbar__brand--right"
+              : "navbar__brand--white"
+          }
+        >
+          F.A.Q
+        </Link>
+      ) : (
         <Link
           to="/signup"
-          className={path === "/home" ? "navbar__brand--black" : "navbar__brand--white"}
-        >About</Link>
-      }
+          className={
+            path === "/home" ? "navbar__brand--black" : "navbar__brand--white"
+          }
+        >
+          About
+        </Link>
+      )}
       <Link
         to="/home"
-        className={`navbar__brand ${path === "/home" ? "navbar__brand--black" : "navbar__brand--white"}`}
+        className={`navbar__brand ${
+          path === "/home" ? "navbar__brand--black" : "navbar__brand--white"
+        }`}
       >
         <Logo className="navbar__brand__heading" />
         <p className="navbar__brand__heading">MyPlace.</p>
@@ -31,10 +46,14 @@ function Navbar() {
       ) : (
         <ul className="navbar-nav">
           <li>
-            <Link to="/login" className="navbar__brand--white">Log In</Link>
+            <Link to="/login" className="navbar__brand--white">
+              Log In
+            </Link>
           </li>
           <li>
-            <Link to="/signup" className="navbar__brand--white">Sign Up</Link>
+            <Link to="/signup" className="navbar__brand--white">
+              Sign Up
+            </Link>
           </li>
         </ul>
       )}

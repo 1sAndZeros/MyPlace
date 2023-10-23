@@ -8,16 +8,16 @@ import Map, {
   NavigationControl,
   GeolocateControl,
 } from "react-map-gl";
-import { AddressAutofill, SearchBox } from "@mapbox/search-js-react";
+import { SearchBox } from "@mapbox/search-js-react";
 import "mapbox-gl/dist/mapbox-gl.css";
-import NewCityForm from "../NewCityForm/NewCityForm";
 import { authApi } from "../../utils/api";
 import "./Map.css";
 import { MapboxSearchBox } from "@mapbox/search-js-web";
 import SearchMarker from "./SearchMarker";
 import ClickMarker from "./ClickMarker";
-import MarkerIcon from "../../assets/icons/pin.svg?react";
 import MarkerDetails from "./MarkerDetails";
+import Key from "./Key";
+import keys from "../../data/keys";
 
 // get request for cities / regions https://api.mapbox.com/geocoding/v5/mapbox.places/{searchString}.json?fuzzyMatch=false&limit=10&types=region%2Cdistrict&autocomplete=true&access_token=pk.eyJ1IjoiaW15cGxhY2UiLCJhIjoiY2xudTViMGp3MGNwYTJsbzVtdnNxZ3NvOCJ9.j49LvpTufygf0Cx9HhldIg
 
@@ -34,7 +34,6 @@ const MapView = () => {
     zoom: 4,
   });
   const [marker, setMarker] = useState(null);
-  const [showPopup, setShowPopup] = useState(false);
   const [placeName, setPlaceName] = useState(null);
   const [cityPins, setCityPins] = useState([]);
   const [searchValue, setSearchValue] = useState("");
@@ -44,7 +43,7 @@ const MapView = () => {
   const myMap = useMap();
   const mapRef = useRef();
   const searchRef = useRef();
-  const search = new MapboxSearchBox();
+  // const search = new MapboxSearchBox();
   const markerDetailsPopupRef = useRef();
 
   useEffect(() => {
@@ -62,7 +61,7 @@ const MapView = () => {
           navigate("/");
         }
       });
-  }, []);
+  }, [details]);
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -169,11 +168,17 @@ const MapView = () => {
                 key={cityPin._id}
                 latitude={cityPin.location.lat}
                 longitude={cityPin.location.lng}
-                color={cityPin.visited ? "#007d02" : "#f4f439"}
+                color={
+                  cityPin.visited
+                    ? keys.find((key) => key.text === "Visited").color
+                    : keys.find((key) => key.text === "Want to visit").color
+                }
                 onClick={handleMarkerClick}
                 popup={markerDetailsPopupRef.current}
               >
-                {/* <MarkerIcon /> */}
+                {/* {cityPin.visited
+                  ? keys.find((key) => key.text === "Visited").icon
+                  : keys.find((key) => key.text === "Want to visit").icon} */}
               </Marker>
             );
           })}
@@ -190,6 +195,7 @@ const MapView = () => {
           <h1>Detials</h1>
         </Popup>
         <MarkerDetails details={details} setDetails={setDetails} />
+        <Key />
       </Map>
     </>
   );
