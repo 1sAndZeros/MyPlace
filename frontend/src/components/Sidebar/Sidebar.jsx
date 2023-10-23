@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import LogoutIcon from "../../assets/icons/sign-out.svg?react";
 import FavouritePlaces from "./FavouritePlaces";
 import Friends from "./Friends";
+import FindFriendModal from "./FindFriendModal";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const Sidebar = () => {
         <FavouritePlaces />
         <Friends />
         <div className="home__sidebar__logout">
+          
           <button type="button" onClick={onLogOut}>
             <LogoutIcon />
             Logout

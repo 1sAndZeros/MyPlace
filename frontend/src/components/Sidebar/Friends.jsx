@@ -2,6 +2,7 @@ import TeamIcon from "../../assets/icons/team.svg?react";
 import ChevronIcon from "../../assets/icons/chevron-down.svg?react";
 import SearchIcon from "../../assets/icons/search.svg?react";
 import { useState } from "react";
+import FindFriendModal from "./FindFriendModal";
 
 const Friends = () => {
   const [hidden, setHidden] = useState(true);
@@ -10,6 +11,7 @@ const Friends = () => {
   };
   return (
     <li className={`sidebar__item ${hidden ? "" : "active"}`}>
+      <FindFriendModal />
       <div className="sidebar__item--heading" onClick={handleClick}>
         <TeamIcon />
         <p>Friends</p>

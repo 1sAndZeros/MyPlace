@@ -53,7 +53,7 @@ const MapView = () => {
       .then((data) => {
         localStorage.setItem("token", data.token);
         setCityPins(data.cities);
-        searchRef.current.focus();
+        // searchRef.current.focus();
       })
       .catch((err) => {
         console.log(err);

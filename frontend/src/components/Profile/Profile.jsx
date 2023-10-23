@@ -11,7 +11,8 @@ const Profile = () => {
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
     if (userInfo) {
-      setCurrentUser(JSON.parse(userInfo));
+      console.log("userInfo profile.jsx:", userInfo)
+      setCurrentUser(() => JSON.parse(userInfo));
     }
   }, []);
 
@@ -31,7 +32,7 @@ const Profile = () => {
         return authApi.updateProfile(data.secure_url);
       })
       .then((data) => {
-        setCurrentUser(data.newUser);
+        setCurrentUser(() => data.newUser);
         localStorage.setItem("userInfo", JSON.stringify(data.newUser));
       })
       .catch((err) => {
