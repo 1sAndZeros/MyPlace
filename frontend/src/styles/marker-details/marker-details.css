@@ -79,16 +79,12 @@
     position: absolute;
     right: 0.75em;
     top: 0.5em;
-    display: none;
+    display: flex;
 }
 
-#marker-details:hover .marker-details__options {
-    display: flex;
-    align-items: center;
-    justify-items: center;
-    background-color: rgba(0, 0, 0, 0.1);
-    padding: 0.25em 0.75em;
-    border-radius: 999px;
+.marker-details__heart {
+    width: 2rem;
+    height: 2rem;
 }
 
 .marker-details__options svg {

@@ -1,15 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import StarRating from "../StarRating/StarRating";
 import StarIcon from "../../assets/icons/star.svg?react";
-import heartFilled from "../../assets/icons/heart-filled.svg";
-import heart from "../../assets/icons/heart-notfilled.svg";
-import TrashIcon from "../../assets/icons/trash.svg?react";
-import EditIcon from "../../assets/Edit.svg?react";
+import heartFilled from "../../assets/icons/heartfilled.svg";
+import heart from "../../assets/icons/heartnf.svg";
 import { authApi } from "../../utils/api";
 
 const MarkerDetails = ({ details, setDetails }) => {
   const [isFavourite, setIsFavourite] = useState(false);
   const [visited, setVisited] = useState(false);
+
+  useEffect(() => {
+    if (details) {
+      setIsFavourite(details.favourite);
+    }
+  }, [details]);
+
   const closeDetails = () => {
     setDetails(null);
   };
@@ -20,19 +25,6 @@ const MarkerDetails = ({ details, setDetails }) => {
     const vistedDate = new Date(details.visitedDate).toLocaleDateString(
       "en-gb"
     );
-
-    // const setToVisited = () => {
-    //   const update = { visited: true };
-    //   authApi
-    //     .updateCity(update, details._id)
-    //     .then((data) => {
-    //       console.log("city updated to visited");
-    //       setDetails(data.city);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // };
 
     const handleSave = () => {
       const update = { favourite: isFavourite };
@@ -54,9 +46,8 @@ const MarkerDetails = ({ details, setDetails }) => {
     return (
       <section id="marker-details">
         <div className="marker-details__options">
-          <EditIcon />
-          <img value={favourite} src={isFavourite ? heartFilled : heart} onClick={toggleFavourite} />
-          <TrashIcon />
+          <img className="marker-details__heart" alt="favourite" value={favourite} src={isFavourite ? heartFilled : heart} onClick={toggleFavourite} />
+          {/* <TrashIcon /> */}
         </div>
         <div className="marker-details__user">
           <img
@@ -78,8 +69,32 @@ const MarkerDetails = ({ details, setDetails }) => {
           </h2>
         </div>
         <div className="marker-details--scroll">
+        <label className="checkbox__label">
+          <input
+            type="checkbox"
+            checked={visited}
+            onClick={() => setVisited(true)}
+          />
+          <div className="checkmark"></div>
+        </label>
+        <p>Visited</p>
+        {visited && (
+        <>
+          <StarRating setRating={setRating} />
+          <div className="form__input-box">
+            <label className="form__label">Visited Date</label>
+            <input
+              className="form__input form__date"
+              name="visitedDate"
+              type="date"
+              value={visitedDate}
+              onChange={handleDateChange}
+            />
+          </div>
+        </>
+      )}
           {visited && <h3>Visited: {vistedDate}</h3>}
-          <p className="marker-details__memory">{memory}</p>
+          <p >{memory}</p>
         </div>
         <img
           className="marker-details__photo"
