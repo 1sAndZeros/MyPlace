@@ -4,8 +4,7 @@ const User = require("../models/user");
 const FriendsController = {
    
     Create: async (req, res) => {
-        console.log(req.user_id)
-        console.log(req.body)
+        
         const currentUser = await User.findById(req.user_id);
         if (currentUser.friends.includes(req.body.friendId)) {
         res.status(400).json({ message: "You already have friended this user" });
@@ -30,6 +29,32 @@ const FriendsController = {
             }
         )};
     },
+
+    Delete: async (req,res) => {
+        const currentUser = await User.findById(req.user_id);
+       
+        if (currentUser.friends.includes(req.body.friendId)) {
+            User.findByIdAndUpdate(req.user_id, {
+                $pull: { friends: req.body.friendId },
+            }, { new: true })
+            .populate({
+                path: "friends",
+                model: "User",
+                select: "-password",
+            })
+            .then((updatedUser) => {
+                
+           
+                res.status(201).json({ message: "Friend Removed", user: updatedUser });
+            }
+            )
+            .catch((error) => {
+                console.log(error);
+                res.status(400).json({ message: "Could Not Update Friends List" });
+            }
+        )};
+        }
+
 };
 
 

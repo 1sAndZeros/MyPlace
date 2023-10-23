@@ -90,6 +90,20 @@ class Api {
       return this._getResponseData(res);
     });
   }
+  removeFriend(friendId) {
+    return fetch(`${this._baseUrl}/friends`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        friendId: friendId,
+      }),
+    }).then((res) => {
+      return this._getResponseData(res);
+    });
+  }
 
   getCityPins() {
     return fetch(`${this._baseUrl}/cities`, {
