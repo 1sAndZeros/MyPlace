@@ -1,40 +1,61 @@
+import { useState } from "react";
 import StarRating from "../StarRating/StarRating";
 import StarIcon from "../../assets/icons/star.svg?react";
-import HeartIcon from "../../assets/icons/heart-fill.svg?react";
+import heartFilled from "../../assets/icons/heart-filled.svg";
+import heart from "../../assets/icons/heart-notfilled.svg";
 import TrashIcon from "../../assets/icons/trash.svg?react";
 import EditIcon from "../../assets/Edit.svg?react";
 import { authApi } from "../../utils/api";
 
 const MarkerDetails = ({ details, setDetails }) => {
+  const [isFavourite, setIsFavourite] = useState(false);
+  const [visited, setVisited] = useState(false);
   const closeDetails = () => {
     setDetails(null);
   };
-
+  
   if (details) {
-    let { visited, memory, photos, rating, recommendations, user, location } =
+    let { visited, memory, photos, rating, recommendations, user, location, favourite } =
       details;
     const vistedDate = new Date(details.visitedDate).toLocaleDateString(
       "en-gb"
     );
 
-    const setToVisited = () => {
-      const update = { visited: true };
+    // const setToVisited = () => {
+    //   const update = { visited: true };
+    //   authApi
+    //     .updateCity(update, details._id)
+    //     .then((data) => {
+    //       console.log("city updated to visited");
+    //       setDetails(data.city);
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // };
+
+    const handleSave = () => {
+      const update = { favourite: isFavourite };
       authApi
         .updateCity(update, details._id)
         .then((data) => {
-          console.log("city updated to visited");
           setDetails(data.city);
         })
         .catch((error) => {
           console.log(error);
         });
-    };
+    }
+
+    const toggleFavourite = () => {
+      setIsFavourite(!isFavourite);
+
+    }
 
     return (
       <section id="marker-details">
         <div className="marker-details__options">
           <EditIcon />
-          <HeartIcon />
+          <img value={favourite} src={isFavourite ? heartFilled : heart} onClick={toggleFavourite} />
           <TrashIcon />
         </div>
         <div className="marker-details__user">
@@ -73,11 +94,11 @@ const MarkerDetails = ({ details, setDetails }) => {
             close
           </button>
           <button
-            onClick={setToVisited}
+            onClick={handleSave}
             className="form__button form__button--add"
             type="submit"
           >
-            visited
+            Save
           </button>
         </div>
       </section>
