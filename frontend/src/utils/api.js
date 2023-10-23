@@ -85,7 +85,7 @@ class Api {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-      body: JSON.stringify({ visited: true }),
+      body: JSON.stringify(update),
     }).then((res) => {
       return this._getResponseData(res);
     });

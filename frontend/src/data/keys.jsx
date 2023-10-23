@@ -1,6 +1,6 @@
 import PinIcon from "../assets/icons/map-pin.svg?react";
-import HeartIcon from "../assets/icons/heart-fill.svg?react";
-import TeamIcon from "../assets/icons/team.svg?react";
+// import HeartIcon from "../assets/icons/heart-fill.svg?react";
+// import TeamIcon from "../assets/icons/team.svg?react";
 
 const keys = [
   {
