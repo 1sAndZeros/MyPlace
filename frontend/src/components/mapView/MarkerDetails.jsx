@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import StarRating from "../StarRating/StarRating";
 import StarIcon from "../../assets/icons/star.svg?react";
 import heartFilled from "../../assets/icons/heartfilled.svg";
+import edit from "../../assets/icons/edit.svg";
 import heart from "../../assets/icons/heartnf.svg";
 import { authApi } from "../../utils/api";
 
 const MarkerDetails = ({ details, setDetails }) => {
   const [isFavourite, setIsFavourite] = useState(false);
-  const [newRating, setNewRating] = useState(0);
+  const [newRating, setRating] = useState(0);
+  const [isEdit, setIsEdit] = useState(false);
   const [isVisited, setIsVisited] = useState(false);
   const [visitedDate, setVisitedDate] = useState(
     new Date().toISOString().split("T")[0]
@@ -24,51 +26,75 @@ const MarkerDetails = ({ details, setDetails }) => {
   };
 
   if (details) {
-    let { visited, memory, photos, rating, recommendations, user, location, favourite } =
-      details;
+    let {
+      visited,
+      memory,
+      photos,
+      rating,
+      recommendations,
+      user,
+      location,
+      favourite,
+    } = details;
     const vistedDate = new Date(details.visitedDate).toLocaleDateString(
       "en-gb"
     );
 
-  const handleSave = () => {
-    const update = { favourite: isFavourite, visited: isVisited, visitedDate:  visitedDate };
-    authApi
-      .updateCity(update, details._id)
-      .then((data) => {
-        setDetails(data.city);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+    const handleSave = () => {
+      const update = {
+        favourite: isFavourite,
+        visited: isVisited,
+        visitedDate: visitedDate,
+        rating: newRating,
+      };
+      authApi
+        .updateCity(update, details._id)
+        .then((data) => {
+          setDetails(data.city);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
 
-  const toggleFavourite = () => {
-    setIsFavourite(!isFavourite);
-  }
+    const toggleFavourite = () => {
+      setIsFavourite(!isFavourite);
+    };
 
-  const handleDateChange = (e) => {
-    setVisitedDate(e.target.value);
-  }
+    const toggleEdit = () => {
+      setIsEdit(!isEdit);
+    };
 
-  const toggleVisitedChange = () => {
-    setIsVisited(!isVisited);
-  }
+    const handleDateChange = (e) => {
+      setVisitedDate(e.target.value);
+    };
 
-  // const handleRatingChange = (e) => {
-  //   setNewRating(e.target.value);
-  // }
+    const toggleVisitedChange = () => {
+      setIsVisited(!isVisited);
+    };
+
+    const handleRatingChange = (e) => {
+      setNewRating(e.target.value);
+    };
 
     return (
       <section id="marker-details">
         <div className="marker-details__options">
-          <img className="marker-details__heart" alt="favourite" value={favourite} src={isFavourite ? heartFilled : heart} onClick={toggleFavourite} />
+          <img
+            className="marker-details__heart"
+            alt="favourite"
+            value={favourite}
+            src={isFavourite ? heartFilled : heart}
+            onClick={toggleFavourite}
+          />
         </div>
         <div className="marker-details__user">
           <img
-            src={`${user.profileImage
+            src={`${
+              user.profileImage
                 ? user.profileImage
                 : "https://api.dicebear.com/7.x/avataaars/svg"
-              }`}
+            }`}
             alt="avatar"
           />
           <p className="bold">{details.user.username}</p>
@@ -81,9 +107,49 @@ const MarkerDetails = ({ details, setDetails }) => {
             })}
           </h2>
         </div>
-        <div className="marker-details--scroll">
-        <div className="checkbox__container">
-          <label className="checkbox__label">
+        <img
+          className="marker-details__heart"
+          src={edit}
+          onClick={toggleEdit}
+        />
+        {isEdit ? (
+          <>
+            <div className="checkbox__container">
+              <label className="checkbox__label">
+                <input
+                  type="checkbox"
+                  checked={isVisited}
+                  onClick={toggleVisitedChange}
+                />
+                <div className="checkmark"></div>
+              </label>
+              <p>Visited</p>
+            </div>
+            <StarRating setRating={setRating} value={rating} />
+            <div className="form__input-box">
+              <label className="form__label">Visited Date</label>
+              <input
+                className="form__input form__date"
+                name="visitedDate"
+                type="date"
+                value={visitedDate}
+                onChange={handleDateChange}
+              />
+            </div>
+          </>
+        ) : (
+          <>
+            <h3>{vistedDate}</h3>
+            <p>{memory}</p>
+            <img
+              className="marker-details__photo"
+              src="https://images.unsplash.com/photo-1683009686716-ac2096a5a73b?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            />
+          </>
+        )}
+        {/* <div className="marker-details--scroll"> */}
+          {/* <div className="checkbox__container">
+            <label className="checkbox__label">
               <input
                 type="checkbox"
                 checked={isVisited}
@@ -92,11 +158,11 @@ const MarkerDetails = ({ details, setDetails }) => {
               <div className="checkmark"></div>
             </label>
             <p>Visited</p>
-        </div>
-          
-          {isVisited && (
+          </div> */}
+
+          {/* {isVisited && (
             <>
-              {/* <StarRating setNewRating={setNewRating} value={newRating} /> */}
+              <StarRating setRating={setRating} value={rating} />
               <div className="form__input-box">
                 <label className="form__label">Visited Date</label>
                 <input
@@ -115,7 +181,7 @@ const MarkerDetails = ({ details, setDetails }) => {
         <img
           className="marker-details__photo"
           src="https://images.unsplash.com/photo-1683009686716-ac2096a5a73b?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        />
+        /> */}
         <div className="form__button--container">
           <button
             onClick={closeDetails}
