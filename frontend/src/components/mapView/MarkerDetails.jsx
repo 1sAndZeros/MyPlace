@@ -6,7 +6,7 @@ import edit from "../../assets/icons/edit.svg";
 import heart from "../../assets/icons/heartnf.svg";
 import { authApi } from "../../utils/api";
 
-const MarkerDetails = ({ details, setDetails }) => {
+const MarkerDetails = ({ details, setDetails, setCityPins }) => {
   const [newMemory, setNewMemory] = useState("");
   const [isFavourite, setIsFavourite] = useState(false);
   const [newRating, setRating] = useState(0);
@@ -55,7 +55,12 @@ const MarkerDetails = ({ details, setDetails }) => {
       authApi
         .updateCity(update, details._id)
         .then((data) => {
-          setDetails(data.city);
+          // setDetails(data.city);
+          setCityPins((prevValues) => {
+            let newPins = prevValues.filter((pin) => pin._id !== details._id)
+            console.log([data.city, ...newPins])
+            return [data.city, ...newPins]
+          })
           closeDetails()
         })
         .catch((error) => {
