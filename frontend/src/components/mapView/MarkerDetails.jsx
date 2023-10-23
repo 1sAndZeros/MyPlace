@@ -7,6 +7,7 @@ import heart from "../../assets/icons/heartnf.svg";
 import { authApi } from "../../utils/api";
 
 const MarkerDetails = ({ details, setDetails }) => {
+  const [newMemory, setNewMemory] = useState("");
   const [isFavourite, setIsFavourite] = useState(false);
   const [newRating, setRating] = useState(0);
   const [isEdit, setIsEdit] = useState(false);
@@ -24,7 +25,8 @@ const MarkerDetails = ({ details, setDetails }) => {
 
   const closeDetails = () => {
     setDetails(null);
-    setIsEdit(!isEdit)
+    setIsEdit(!isEdit);
+    setNewMemory("")
   };
 
   if (details) {
@@ -46,6 +48,7 @@ const MarkerDetails = ({ details, setDetails }) => {
       const update = {
         favourite: isFavourite,
         visited: isVisited,
+        memory: newMemory,
         visitedDate: visitedDate,
         rating: newRating,
       };
@@ -76,16 +79,20 @@ const MarkerDetails = ({ details, setDetails }) => {
       setIsVisited(!isVisited);
     };
 
+    const handleMemoryChange = (e) => {
+      setNewMemory(e.target.value);
+    }
+
     return (
       <section id="marker-details">
         <div className="marker-details__options">
           <img
-            className="marker-details__heart"
+            className="marker-details__icon"
             src={edit}
             onClick={toggleEdit}
           />
           <img
-            className="marker-details__heart"
+            className="marker-details__icon"
             alt="favourite"
             value={favourite}
             src={isFavourite ? heartFilled : heart}
@@ -94,13 +101,6 @@ const MarkerDetails = ({ details, setDetails }) => {
         </div>
         <div className="marker-details__user">
           <img src={user.profileImage}/>
-          {/* <img
-            src={`${user.profileImage
-                ? user.profileImage
-                : "https://api.dicebear.com/7.x/avataaars/svg"
-              }`}
-            alt="avatar"
-          /> */}
           <p>{details.user.username}</p>
         </div>
         <div className="marker-details__place">
@@ -138,6 +138,17 @@ const MarkerDetails = ({ details, setDetails }) => {
                 onChange={handleDateChange}
               />
             </div>
+            <textarea
+              className="form__memory__textarea"
+              name="Text1"
+              cols="40"
+              rows="5"
+              placeholder="Tell us more..."
+              id="message"
+              type="text"
+              value={newMemory}
+              onChange={handleMemoryChange}
+            />
           </>
         ) : (
           <div className="marker-details__container">
@@ -149,41 +160,6 @@ const MarkerDetails = ({ details, setDetails }) => {
             />
           </div>
         )}
-        {/* <div className="marker-details--scroll"> */}
-        {/* <div className="checkbox__container">
-            <label className="checkbox__label">
-              <input
-                type="checkbox"
-                checked={isVisited}
-                onClick={toggleVisitedChange}
-              />
-              <div className="checkmark"></div>
-            </label>
-            <p>Visited</p>
-          </div> */}
-
-        {/* {isVisited && (
-            <>
-              <StarRating setRating={setRating} value={rating} />
-              <div className="form__input-box">
-                <label className="form__label">Visited Date</label>
-                <input
-                  className="form__input form__date"
-                  name="visitedDate"
-                  type="date"
-                  value={visitedDate}
-                  onChange={handleDateChange}
-                />
-              </div>
-            </>
-          )}
-          {isVisited && <h3>{vistedDate}</h3>}
-          <p>{memory}</p>
-        </div>
-        <img
-          className="marker-details__photo"
-          src="https://images.unsplash.com/photo-1683009686716-ac2096a5a73b?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        /> */}
         <div className="form__button--container">
           <button
             onClick={closeDetails}
