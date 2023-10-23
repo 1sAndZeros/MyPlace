@@ -7,7 +7,11 @@ import { authApi } from "../../utils/api";
 
 const MarkerDetails = ({ details, setDetails }) => {
   const [isFavourite, setIsFavourite] = useState(false);
-  const [visited, setVisited] = useState(false);
+  const [newRating, setNewRating] = useState(0);
+  const [isVisited, setIsVisited] = useState(false);
+  const [visitedDate, setVisitedDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
 
   useEffect(() => {
     if (details) {
@@ -18,7 +22,7 @@ const MarkerDetails = ({ details, setDetails }) => {
   const closeDetails = () => {
     setDetails(null);
   };
-  
+
   if (details) {
     let { visited, memory, photos, rating, recommendations, user, location, favourite } =
       details;
@@ -26,36 +30,45 @@ const MarkerDetails = ({ details, setDetails }) => {
       "en-gb"
     );
 
-    const handleSave = () => {
-      const update = { favourite: isFavourite };
-      authApi
-        .updateCity(update, details._id)
-        .then((data) => {
-          setDetails(data.city);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+  const handleSave = () => {
+    const update = { favourite: isFavourite, visited: isVisited, visitedDate:  visitedDate };
+    authApi
+      .updateCity(update, details._id)
+      .then((data) => {
+        setDetails(data.city);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
-    const toggleFavourite = () => {
-      setIsFavourite(!isFavourite);
+  const toggleFavourite = () => {
+    setIsFavourite(!isFavourite);
+  }
 
-    }
+  const handleDateChange = (e) => {
+    setVisitedDate(e.target.value);
+  }
+
+  const toggleVisitedChange = () => {
+    setIsVisited(!isVisited);
+  }
+
+  // const handleRatingChange = (e) => {
+  //   setNewRating(e.target.value);
+  // }
 
     return (
       <section id="marker-details">
         <div className="marker-details__options">
           <img className="marker-details__heart" alt="favourite" value={favourite} src={isFavourite ? heartFilled : heart} onClick={toggleFavourite} />
-          {/* <TrashIcon /> */}
         </div>
         <div className="marker-details__user">
           <img
-            src={`${
-              user.profileImage
+            src={`${user.profileImage
                 ? user.profileImage
                 : "https://api.dicebear.com/7.x/avataaars/svg"
-            }`}
+              }`}
             alt="avatar"
           />
           <p className="bold">{details.user.username}</p>
@@ -69,32 +82,35 @@ const MarkerDetails = ({ details, setDetails }) => {
           </h2>
         </div>
         <div className="marker-details--scroll">
-        <label className="checkbox__label">
-          <input
-            type="checkbox"
-            checked={visited}
-            onClick={() => setVisited(true)}
-          />
-          <div className="checkmark"></div>
-        </label>
-        <p>Visited</p>
-        {visited && (
-        <>
-          <StarRating setRating={setRating} />
-          <div className="form__input-box">
-            <label className="form__label">Visited Date</label>
-            <input
-              className="form__input form__date"
-              name="visitedDate"
-              type="date"
-              value={visitedDate}
-              onChange={handleDateChange}
-            />
-          </div>
-        </>
-      )}
-          {visited && <h3>Visited: {vistedDate}</h3>}
-          <p >{memory}</p>
+        <div className="checkbox__container">
+          <label className="checkbox__label">
+              <input
+                type="checkbox"
+                checked={isVisited}
+                onClick={toggleVisitedChange}
+              />
+              <div className="checkmark"></div>
+            </label>
+            <p>Visited</p>
+        </div>
+          
+          {isVisited && (
+            <>
+              {/* <StarRating setNewRating={setNewRating} value={newRating} /> */}
+              <div className="form__input-box">
+                <label className="form__label">Visited Date</label>
+                <input
+                  className="form__input form__date"
+                  name="visitedDate"
+                  type="date"
+                  value={visitedDate}
+                  onChange={handleDateChange}
+                />
+              </div>
+            </>
+          )}
+          {isVisited && <h3>{vistedDate}</h3>}
+          <p>{memory}</p>
         </div>
         <img
           className="marker-details__photo"
