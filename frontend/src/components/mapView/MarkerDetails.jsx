@@ -25,7 +25,7 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
 
   const closeDetails = () => {
     setDetails(null);
-    setIsEdit(!isEdit);
+    setIsEdit(isEdit);
     setNewMemory("")
   };
 
@@ -68,6 +68,17 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
         });
     };
 
+    const handleDelete = () => {
+      authApi.deleteCityEntry(details._id)
+      .then((res) => {
+        console.log(res, 'deleted city')
+        closeDetails()
+      })
+      .catch((error) => {
+        console.log(error, 'error');
+      });
+    }
+
     const toggleFavourite = () => {
       setIsFavourite(!isFavourite);
     };
@@ -103,6 +114,7 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
             src={isFavourite ? heartFilled : heart}
             onClick={toggleFavourite}
           />
+          <button onClick={handleDelete} type="button">delete</button>
         </div>
         <div className="marker-details__user">
           <img src={user.profileImage}/>
@@ -161,7 +173,7 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
             <p className="marker-details__memory">{memory}</p>
             <img
               className="marker-details__photo"
-              src="https://images.unsplash.com/photo-1683009686716-ac2096a5a73b?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              src={photos}
             />
           </div>
         )}

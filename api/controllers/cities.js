@@ -99,6 +99,13 @@ const CitiesController = {
         res.status(400).json({ message: "Error updating city entry" });
       });
   },
+
+  Delete: async (req, res) => {
+    const cityId = req.params.id;
+    await City.findByIdAndDelete(cityId);
+    const token = TokenGenerator.jsonwebtoken(req.user_id);
+    res.status(200).json({ message: "OK", token: token });
+  }
 };
 
 module.exports = CitiesController;
