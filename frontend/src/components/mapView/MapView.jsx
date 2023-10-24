@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
+import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { useNavigate } from "react-router-dom";
 import Map, {
   Marker,
@@ -45,6 +46,8 @@ const MapView = ({ cityPins, setCityPins, friend }) => {
   const searchRef = useRef();
   // const search = new MapboxSearchBox();
   const markerDetailsPopupRef = useRef();
+
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 
   useEffect(() => {
     authApi
@@ -122,7 +125,10 @@ const MapView = ({ cityPins, setCityPins, friend }) => {
 
   return (
     <>
+    { !friend ?
+    <div>{currentUser.username}</div> :
     <div>{`${friend}'s map`}</div>
+    }
       <Map
         ref={myMap}
         id="myMap"
@@ -182,17 +188,6 @@ const MapView = ({ cityPins, setCityPins, friend }) => {
               </Marker>
             );
           })}
-        <Popup
-          ref={markerDetailsPopupRef}
-          longitude={0}
-          latitude={0}
-          anchor="left"
-          className="marker-details"
-          offset={[15, -25]}
-          maxWidth="1000px"
-          closeOnClick={false}
-        >
-        </Popup>
         <MarkerDetails
           details={details}
           setCityPins={setCityPins}

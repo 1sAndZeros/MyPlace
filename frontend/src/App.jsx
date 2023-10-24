@@ -8,28 +8,26 @@ import Homepage from "./components/Homepage/Homepage";
 import WelcomePage from "./components/WelcomePage/WelcomePage";
 import MapComponent from "./components/MapComponent/MapComponent";
 
-
 function App() {
-
   const navigate = useNavigate();
   const [authError, setAuthError] = useState("");
   const [currentUser, setCurrentUser] = useState({
     username: "",
     profileImage: "",
     friends: [],
-    favouriteLocations: []
+    favouriteLocations: [],
   });
-  
-  console.log('added currentUser from app.jsx:', currentUser);
 
-  useEffect(() => { 
+  console.log("added currentUser from app.jsx:", currentUser);
+
+  useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       authApi
         .getInfo()
         .then((data) => {
           let userInfo = data.user;
-          console.log('userInfo from app.jsx:',userInfo)
+          console.log("userInfo from app.jsx:", userInfo);
           setCurrentUser(() => userInfo);
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
         })
@@ -59,13 +57,12 @@ function App() {
         localStorage.setItem("token", res.token);
       })
       .then(() => {
-        authApi.getInfo()
-          .then((data) => {
-            let userInfo = data.user;
-            setCurrentUser(() => userInfo);
-            localStorage.setItem("userInfo", JSON.stringify(userInfo));
-          })
-          navigate("/home");
+        authApi.getInfo().then((data) => {
+          let userInfo = data.user;
+          setCurrentUser(() => userInfo);
+          localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        });
+        navigate("/home");
       })
       .catch((err) => {
         let errMessage = err.message;
