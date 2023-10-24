@@ -191,7 +191,7 @@ const MapView = ({ cityPins, setCityPins }) => {
           maxWidth="1000px"
           closeOnClick={false}
         >
-          <h1>Detials</h1>
+          
         </Popup>
         <MarkerDetails
           details={details}
