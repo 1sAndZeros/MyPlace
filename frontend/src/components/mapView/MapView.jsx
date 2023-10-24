@@ -125,10 +125,7 @@ const MapView = ({ cityPins, setCityPins, friend }) => {
 
   return (
     <>
-    { !friend ?
-    <div>{currentUser.username}</div> :
-    <div>{`${friend}'s map`}</div>
-    }
+      <div>{`${!friend ? currentUser.username : friend}'s map`}</div>
       <Map
         ref={myMap}
         id="myMap"
