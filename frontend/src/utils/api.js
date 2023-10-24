@@ -140,6 +140,17 @@ class Api {
     });
   }
 
+  getCityPinsById(friendId) {
+    return fetch(`${this._baseUrl}/cities/user/${friendId}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }).then((res) => {
+      return this._getResponseData(res);
+    });
+  }
+
   uploadPhoto(image) {
     const formData = new FormData();
     formData.set("sample_file", image);
