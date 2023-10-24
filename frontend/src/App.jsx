@@ -37,6 +37,7 @@ function App() {
         });
     }
   }, []);
+  
   function onSignUp(data) {
     authApi
       .signUp(data)
