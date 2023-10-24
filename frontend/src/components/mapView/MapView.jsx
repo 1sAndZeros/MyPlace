@@ -21,7 +21,7 @@ import keys from "../../data/keys";
 
 // get request for cities / regions https://api.mapbox.com/geocoding/v5/mapbox.places/{searchString}.json?fuzzyMatch=false&limit=10&types=region%2Cdistrict&autocomplete=true&access_token=pk.eyJ1IjoiaW15cGxhY2UiLCJhIjoiY2xudTViMGp3MGNwYTJsbzVtdnNxZ3NvOCJ9.j49LvpTufygf0Cx9HhldIg
 
-const MapView = () => {
+const MapView = ({ cityPins, setCityPins }) => {
   const MAPBOX_ACCESS_TOKEN =
     "pk.eyJ1IjoiaW15cGxhY2UiLCJhIjoiY2xudTViMGp3MGNwYTJsbzVtdnNxZ3NvOCJ9.j49LvpTufygf0Cx9HhldIg";
 
@@ -35,7 +35,7 @@ const MapView = () => {
   });
   const [marker, setMarker] = useState(null);
   const [placeName, setPlaceName] = useState(null);
-  const [cityPins, setCityPins] = useState([]);
+
   const [searchValue, setSearchValue] = useState("");
   const [searchMarker, setSearchMarker] = useState(null);
   const [details, setDetails] = useState(null);
@@ -130,7 +130,7 @@ const MapView = () => {
         onClick={handleClick}
         initialViewState={{ ...viewport }}
         mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
-//         mapStyle="mapbox://styles/mapbox/streets-v9"
+        //         mapStyle="mapbox://styles/mapbox/streets-v9"
         mapStyle="mapbox://styles/mapbox/streets-v12"
         // mapStyle="mapbox://styles/mapbox/dark-v11"
         customAttribution="Brought to you by the MyPlace team"
@@ -160,7 +160,7 @@ const MapView = () => {
         />
         {cityPins.length > 0 &&
           cityPins.map((cityPin) => {
-            console.log("cityPin here")
+            console.log("cityPin here");
             return (
               <Marker
                 test="test"
@@ -193,7 +193,11 @@ const MapView = () => {
         >
           <h1>Detials</h1>
         </Popup>
-        <MarkerDetails details={details} setCityPins={setCityPins} setDetails={setDetails} />
+        <MarkerDetails
+          details={details}
+          setCityPins={setCityPins}
+          setDetails={setDetails}
+        />
         <Key />
       </Map>
     </>
