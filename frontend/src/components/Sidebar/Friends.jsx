@@ -1,31 +1,48 @@
 import TeamIcon from "../../assets/icons/team.svg?react";
 import ChevronIcon from "../../assets/icons/chevron-down.svg?react";
 import SearchIcon from "../../assets/icons/search.svg?react";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import FindFriendModal from "./FindFriendModal";
+import { CurrentUserContext } from '../../context/CurrentUserContext';
 
 const Friends = () => {
   const [hidden, setHidden] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+
   const handleClick = () => {
     setHidden(!hidden);
   };
+
+  const truncate =  (str, maxLength) => {
+    if (str.length <= maxLength) {
+      return str;
+    }
+    return str.slice(0, maxLength) + '...';
+  }
+
+
   return (
     <li className={`sidebar__item ${hidden ? "" : "active"}`}>
+      <FindFriendModal showModal={showModal} setShowModal={setShowModal} />
       <div className="sidebar__item--heading" onClick={handleClick}>
         <TeamIcon />
         <p>Friends</p>
         <ChevronIcon />
       </div>
       <ul className="sidebar__item__menu">
-        <button className="btn-ghost">
+        {currentUser.friends.map(user => {
+                    return(
+                        <li className="user" key={user._id}>
+                            <img className="user-img" src={user.profileImage ? user.profileImage : `https://eu.ui-avatars.com/api/?name=${user.username}&length=1`} alt={user.username} />
+                            <p className="user-name">{truncate(user.username, 15)}</p>
+                        </li>
+                    )}
+                )}
+          <button className="btn-ghost" onClick={() => setShowModal(true)}>
           <SearchIcon />
           Find Friends
-        </button>
-        <li className="sidebar__item__menu--item">
-          <h4>Friend 1</h4>
-        </li>
-        <li className="sidebar__item__menu--item">
-          <h4>Friend 2</h4>
-        </li>
+          </button>
       </ul>
     </li>
   );

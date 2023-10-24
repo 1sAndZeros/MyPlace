@@ -6,6 +6,7 @@
 @import url('../src/styles/error/error.css');
 @import url('../src/styles/form/form.css');
 @import url('../src/styles/sidebar/sidebar.css');
+@import url('../src/styles/sidebar/friends.css');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700&display=swap');
 @import url('../src/styles/welcome-page/welcome-page.css');
 @import url('../src/styles/navbar/navbar.css');
