@@ -25,7 +25,7 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
 
   const closeDetails = () => {
     setDetails(null);
-    setIsEdit(!isEdit);
+    setIsEdit(isEdit);
     setNewMemory("")
   };
 
@@ -161,7 +161,7 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
             <p className="marker-details__memory">{memory}</p>
             <img
               className="marker-details__photo"
-              src="https://images.unsplash.com/photo-1683009686716-ac2096a5a73b?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              src={photos}
             />
           </div>
         )}
