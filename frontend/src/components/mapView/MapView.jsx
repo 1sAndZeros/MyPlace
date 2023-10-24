@@ -59,7 +59,7 @@ const MapView = ({ cityPins, setCityPins, friend }) => {
           navigate("/");
         }
       });
-  }, [details]);
+  }, []);
 
   const handleClick = async (e) => {
     e.preventDefault();
