@@ -47,13 +47,11 @@ const MapView = () => {
   const markerDetailsPopupRef = useRef();
 
   useEffect(() => {
-    console.log(mapRef.current);
     authApi
       .getMyCityPins()
       .then((data) => {
         localStorage.setItem("token", data.token);
         setCityPins(data.cities);
-        // searchRef.current.focus();
       })
       .catch((err) => {
         console.log(err);
@@ -95,8 +93,8 @@ const MapView = () => {
     });
     console.log(cityPin);
     setDetails(cityPin);
-    // setMarker(null);
-    // setSearchMarker(null);
+    setMarker(null);
+    setSearchMarker(null);
   };
 
   const handleSelection = (res) => {
@@ -132,8 +130,8 @@ const MapView = () => {
         onClick={handleClick}
         initialViewState={{ ...viewport }}
         mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
-        mapStyle="mapbox://styles/mapbox/streets-v9"
-        // mapStyle="mapbox://styles/mapbox/streets-v12"
+//         mapStyle="mapbox://styles/mapbox/streets-v9"
+        mapStyle="mapbox://styles/mapbox/streets-v12"
         // mapStyle="mapbox://styles/mapbox/dark-v11"
         customAttribution="Brought to you by the MyPlace team"
       >
@@ -162,6 +160,7 @@ const MapView = () => {
         />
         {cityPins.length > 0 &&
           cityPins.map((cityPin) => {
+            console.log("cityPin here")
             return (
               <Marker
                 test="test"
@@ -194,7 +193,7 @@ const MapView = () => {
         >
           <h1>Detials</h1>
         </Popup>
-        <MarkerDetails details={details} setDetails={setDetails} />
+        <MarkerDetails details={details} setCityPins={setCityPins} setDetails={setDetails} />
         <Key />
       </Map>
     </>

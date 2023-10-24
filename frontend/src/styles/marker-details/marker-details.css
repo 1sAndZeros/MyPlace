@@ -7,22 +7,19 @@
     flex-direction: column;
     background: rgba(244, 244, 244, 0.8);
     width: 300px;
-    height: 600px;
     border-radius: 1em;
     box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.2);
     font-size: 1.2em;
     padding: 1em;
 }
 
-.marker-details--scroll {
-    width: 100%;
-    flex-grow: 1;
+.checkbox__container--edit {
     display: flex;
-    gap: 1em;
-    margin: 1em auto;
-    flex-direction: column;
-    overflow-y: auto;
-    scrollbar-width: none;
+    flex-direction: row;
+    justify-items: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: .5rem;
 }
 
 .marker-details__user {
@@ -46,8 +43,7 @@
 .marker-details__rating {
     display: flex;
     align-items: center;
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: .7rem;
     gap: 0.25em;
 }
 
@@ -55,7 +51,7 @@
     width: 100%;
     flex-grow: 1;
     font-size: 1.25rem;
-    padding: 0.5em;
+    padding: 0.8em 0;
     text-align: left;
     border-radius: 0.5em;
 }
@@ -64,10 +60,12 @@
     display: flex;
     align-items: center;
     gap: 1em;
+    margin-bottom: 1rem;
 }
 
 .marker-details__name {
     flex-grow: 1;
+    font-size: 1.3rem;
 }
 
 .marker-details__photo {
@@ -77,18 +75,14 @@
 .marker-details__options {
     gap: 0.5em;
     position: absolute;
-    right: 0.75em;
-    top: 0.5em;
-    display: none;
+    right: 1em;
+    top: 1.2em;
+    display: flex;
 }
 
-#marker-details:hover .marker-details__options {
-    display: flex;
-    align-items: center;
-    justify-items: center;
-    background-color: rgba(0, 0, 0, 0.1);
-    padding: 0.25em 0.75em;
-    border-radius: 999px;
+.marker-details__icon {
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 .marker-details__options svg {

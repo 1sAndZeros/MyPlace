@@ -24,6 +24,7 @@ const CitySchema = new mongoose.Schema({
   visited: { type: Boolean, required: true },
   visitedDate: { type: Date },
   rating: { type: Number },
+  favourite: { type: Boolean }
 });
 
 const City = mongoose.model("City", CitySchema);
