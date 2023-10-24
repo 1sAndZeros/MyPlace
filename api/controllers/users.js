@@ -34,7 +34,10 @@ const UsersController = {
 
   Index: (req, res) => {
     User.find()
-      .populate('friends')
+      .populate([
+        "friends",
+        "favouriteLocations"
+      ])
       .then(( users) => {
         
         const token = TokenGenerator.jsonwebtoken(req.user_id); // creates a new refresh token
@@ -56,7 +59,10 @@ const UsersController = {
   // },
 
   CurrentUser: (req, res) => {
-    User.findOne({_id: req.user_id}).populate('friends').then((user) => {
+    User.findOne({_id: req.user_id})
+    .populate({path: "favouriteLocations", model: "City"})
+    .populate("friends")
+    .then((user) => {
       if (user) {
         res.status(200).json({user: user})
       } else {
@@ -68,10 +74,13 @@ const UsersController = {
   Update: (req, res) => {
     User.findByIdAndUpdate(
       req.user_id,
-      { profileImage: req.body.profileImage },
+      req.body,
       { new: true })
+      .populate({path: "favouriteLocations", model: "City"})
+      .populate("friends")
       .then((updatedUser) => {
           const token = TokenGenerator.jsonwebtoken(req.user_id);
+          console.log("updated user", updatedUser)
           res.status(200).json({ message: "Avatar photo updated!", token: token, newUser: updatedUser });
       })
       .catch((err) => {

@@ -29,7 +29,7 @@ const Profile = () => {
     authApi
       .uploadPhoto(image)
       .then((data) => {
-        return authApi.updateProfile(data.secure_url);
+        return authApi.updateUser({profileImage: data.secure_url});
       })
       .then((data) => {
         setCurrentUser(() => data.newUser);

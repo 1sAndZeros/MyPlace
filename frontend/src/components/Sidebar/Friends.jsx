@@ -28,12 +28,12 @@ const Friends = ({ setCityPins, setFriend }) => {
     setHidden(!hidden);
   };
 
-  const truncate = (str, maxLength) => {
-    if (str.length <= maxLength) {
-      return str;
-    }
-    return str.slice(0, maxLength) + "...";
-  };
+  // const truncate = (str, maxLength) => {
+  //   if (str.length <= maxLength) {
+  //     return str;
+  //   }
+  //   return str.slice(0, maxLength) + "...";
+  // };
 
   return (
     <li className={`sidebar__item ${hidden ? "" : "active"}`}>
@@ -60,7 +60,8 @@ const Friends = ({ setCityPins, setFriend }) => {
                 }
                 alt={user.username}
               />
-              <p className="user-name">{truncate(user.username, 15)}</p>
+              {/* <p className="user-name">{truncate(user.username, 15)}</p> */}
+              <p className="user-name">{user.username}</p>
             </li>
           );
         })}

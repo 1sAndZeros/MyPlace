@@ -191,14 +191,14 @@ class Api {
     });
   }
 
-  updateProfile(image) {
+  updateUser(update) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-      body: JSON.stringify({ profileImage: image }),
+      body: JSON.stringify(update),
     }).then((res) => {
       return this._getResponseData(res);
     });

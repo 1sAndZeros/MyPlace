@@ -8,7 +8,7 @@ import heart from "../../assets/icons/heartnf.svg";
 import { authApi } from "../../utils/api";
 
 const MarkerDetails = ({ details, setDetails, setCityPins }) => {
-  const { currentUser } = useContext(CurrentUserContext);
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const [newMemory, setNewMemory] = useState("");
   const [isFavourite, setIsFavourite] = useState(false);
   const [newRating, setRating] = useState(0);
@@ -86,18 +86,26 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
     }
 
     const addFavourite = () => {
-      console.log('add fav func run')
       let update = {
         favourites: [...favourites, currentUser._id]
       }
-      authApi.updateCity(update, details._id)
-        .then(data => {
-          setDetails(data.city);
+      let updateUser = {
+        favouriteLocations: [...currentUser.favouriteLocations, details._id]
+      }
+      const promises = [authApi.updateCity(update, details._id), authApi.updateUser(updateUser)]
+      Promise.all(promises)
+        .then(([cityData, userData]) => {
+          setDetails(() => {
+            return cityData.city
+          })
+          setCurrentUser((prevUser) => {
+            return {...prevUser, favouriteLocations: userData.newUser.favouriteLocations}
+          })
         })
         .catch(err => console.log(err))
     }
+
     const removeFavourite = () => {
-      console.log('remove fav func run')
       const newFavourites = favourites.filter((favourite) => {
         return favourite !== currentUser._id
       })

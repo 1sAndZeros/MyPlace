@@ -87,6 +87,11 @@ const CitiesController = {
   Update: (req, res) => {
     console.log("body", req.body);
     City.findByIdAndUpdate(req.params.id, req.body, { new: true })
+      .populate({
+        path: "user",
+        model: "User",
+        select: "-password",
+      })
       .then((updatedCity) => {
         const token = TokenGenerator.jsonwebtoken(req.user_id);
         res.status(200).json({
