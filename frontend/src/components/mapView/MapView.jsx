@@ -188,17 +188,6 @@ const MapView = ({ cityPins, setCityPins, friend }) => {
               </Marker>
             );
           })}
-        <Popup
-          ref={markerDetailsPopupRef}
-          longitude={0}
-          latitude={0}
-          anchor="left"
-          className="marker-details"
-          offset={[15, -25]}
-          maxWidth="1000px"
-          closeOnClick={false}
-        >
-        </Popup>
         <MarkerDetails
           details={details}
           setCityPins={setCityPins}

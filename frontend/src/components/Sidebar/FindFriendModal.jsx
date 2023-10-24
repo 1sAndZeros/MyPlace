@@ -8,15 +8,22 @@ const FindFriendModal = ({showModal, setShowModal}) => {
     const [allUsers, setAllUsers] = useState([]);
     
     
- 
+
 
     useEffect(() => {
-        authApi.getUsers()
-        .then(data =>{
-            setAllUsers(data.users) 
-        } )
-        .catch(err => console.log(err))
-    },[])
+        authApi
+          .getUsers()
+          .then((data) => {
+            // remove ourselves
+            const otherUsers = data.users.filter(
+              (user) => user._id !== currentUser._id
+            );
+            setAllUsers(otherUsers);
+          })
+          .catch((err) => console.log(err));
+      }, []);
+
+        
 
     const addFriend = (friendId) => {
            authApi.addFriend(friendId)
