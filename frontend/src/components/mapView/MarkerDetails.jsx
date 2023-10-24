@@ -2,9 +2,10 @@ import { useState, useEffect, useContext } from "react";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import StarRating from "../StarRating/StarRating";
 import StarIcon from "../../assets/icons/star.svg?react";
-import heartFilled from "../../assets/icons/heartfilled.svg";
+import heartFilled from "../../assets/icons/heart-filled.svg";
 import edit from "../../assets/icons/edit.svg";
-import heart from "../../assets/icons/heartnf.svg";
+import heart from "../../assets/icons/heart-nf.svg";
+import trash from "../../assets/icons/trash.svg"
 import { authApi } from "../../utils/api";
 
 const MarkerDetails = ({ details, setDetails, setCityPins }) => {
@@ -151,8 +152,14 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
             className="marker-details__icon"
             src={edit}
             onClick={toggleEdit}
+            alt="edit"
           />
-          <button onClick={handleDelete} type="button">delete</button>
+          <img
+            className="marker-details__icon"
+            onClick={handleDelete}
+            alt="delete"
+            src={trash}
+          />
           <img
             className="marker-details__icon"
             alt="favourite"
