@@ -5,16 +5,17 @@ import { useState } from "react";
 
 function App() {
   const [cityPins, setCityPins] = useState([]);
-
+  const [friend, setFriend] = useState("");
+  
   return (
     <main id="home" className="bg-main">
       <Navbar />
       <div className="home__container">
         <div className="home__sidebar">
-          <Sidebar setCityPins={setCityPins} />
+          <Sidebar setCityPins={setCityPins} friend={friend} setFriend={setFriend} />
         </div>
         <div className="home__map-container">
-          <MapView cityPins={cityPins} setCityPins={setCityPins} />
+          <MapView cityPins={cityPins} setCityPins={setCityPins} friend={friend}  />
         </div>
       </div>
     </main>
