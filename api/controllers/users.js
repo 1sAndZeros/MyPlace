@@ -34,13 +34,14 @@ const UsersController = {
 
   Index: (req, res) => {
     User.find()
-      .populate()
-      .exec((err, users) => {
-        if (err) {
-          throw err;
-        }
+      .populate('friends')
+      .then(( users) => {
+        
         const token = TokenGenerator.jsonwebtoken(req.user_id); // creates a new refresh token
         res.status(200).json({ token, users });
+      }).catch((error) => {
+        console.log(error)
+        res.status(400).json({ message: "Error here" });
       });
   },
 
@@ -55,7 +56,7 @@ const UsersController = {
   // },
 
   CurrentUser: (req, res) => {
-    User.findOne({_id: req.user_id}).populate().then((user) => {
+    User.findOne({_id: req.user_id}).populate('friends').then((user) => {
       if (user) {
         res.status(200).json({user: user})
       } else {

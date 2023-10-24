@@ -68,6 +68,17 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
         });
     };
 
+    const handleDelete = () => {
+      authApi.deleteCityEntry(details._id)
+      .then((res) => {
+        console.log(res, 'deleted city')
+        closeDetails()
+      })
+      .catch((error) => {
+        console.log(error, 'error');
+      });
+    }
+
     const toggleFavourite = () => {
       setIsFavourite(!isFavourite);
     };
@@ -103,6 +114,7 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
             src={isFavourite ? heartFilled : heart}
             onClick={toggleFavourite}
           />
+          <button onClick={handleDelete} type="button">delete</button>
         </div>
         <div className="marker-details__user">
           <img src={user.profileImage}/>
