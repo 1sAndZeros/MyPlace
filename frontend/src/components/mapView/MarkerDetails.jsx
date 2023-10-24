@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { CurrentUserContext } from "../../context/CurrentUserContext";
 import StarRating from "../StarRating/StarRating";
 import StarIcon from "../../assets/icons/star.svg?react";
 import heartFilled from "../../assets/icons/heartfilled.svg";
@@ -7,6 +8,7 @@ import heart from "../../assets/icons/heartnf.svg";
 import { authApi } from "../../utils/api";
 
 const MarkerDetails = ({ details, setDetails, setCityPins }) => {
+  const { currentUser } = useContext(CurrentUserContext);
   const [newMemory, setNewMemory] = useState("");
   const [isFavourite, setIsFavourite] = useState(false);
   const [newRating, setRating] = useState(0);
@@ -18,10 +20,14 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
 
   useEffect(() => {
     if (details) {
-      setIsFavourite(details.favourite);
+      if (details.favourites.includes(currentUser._id)) {
+        setIsFavourite(true)
+      } else {
+        setIsFavourite(false)
+      }
       setIsVisited(details.visited)
     }
-  }, [details]);
+  }, [details, currentUser]);
 
   const closeDetails = () => {
     setDetails(null);
@@ -39,6 +45,7 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
       user,
       location,
       favourite,
+      favourites
     } = details;
     const vistedDate = new Date(details.visitedDate).toLocaleDateString(
       "en-gb"
@@ -55,7 +62,6 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
       authApi
         .updateCity(update, details._id)
         .then((data) => {
-          // setDetails(data.city);
           setCityPins((prevValues) => {
             let newPins = prevValues.filter((pin) => pin._id !== details._id)
             console.log([data.city, ...newPins])
@@ -70,17 +76,48 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
 
     const handleDelete = () => {
       authApi.deleteCityEntry(details._id)
-      .then((res) => {
-        console.log(res, 'deleted city')
-        closeDetails()
+        .then((res) => {
+          console.log(res, 'deleted city')
+          closeDetails()
+        })
+        .catch((error) => {
+          console.log(error, 'error');
+        });
+    }
+
+    const addFavourite = () => {
+      console.log('add fav func run')
+      let update = {
+        favourites: [...favourites, currentUser._id]
+      }
+      authApi.updateCity(update, details._id)
+        .then(data => {
+          setDetails(data.city);
+        })
+        .catch(err => console.log(err))
+    }
+    const removeFavourite = () => {
+      console.log('remove fav func run')
+      const newFavourites = favourites.filter((favourite) => {
+        return favourite !== currentUser._id
       })
-      .catch((error) => {
-        console.log(error, 'error');
-      });
+      console.log(newFavourites, "newFavourites")
+      let update = {
+        favourites: newFavourites
+      }
+      authApi.updateCity(update, details._id)
+        .then(data => {
+          setDetails(data.city);
+        })
+        .catch(err => console.log(err))
     }
 
     const toggleFavourite = () => {
-      setIsFavourite(!isFavourite);
+      if (!isFavourite) {
+        addFavourite()
+      } else {
+        removeFavourite()
+      }
     };
 
     const toggleEdit = () => {
@@ -107,17 +144,17 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
             src={edit}
             onClick={toggleEdit}
           />
+          <button onClick={handleDelete} type="button">delete</button>
           <img
             className="marker-details__icon"
             alt="favourite"
-            value={favourite}
             src={isFavourite ? heartFilled : heart}
             onClick={toggleFavourite}
           />
-          <button onClick={handleDelete} type="button">delete</button>
+          <p>{(favourites.length >= 1) ? favourites.length : ""}</p>
         </div>
         <div className="marker-details__user">
-          <img src={user.profileImage}/>
+          <img src={user.profileImage} />
           <p>{details.user.username}</p>
         </div>
         <div className="marker-details__place">

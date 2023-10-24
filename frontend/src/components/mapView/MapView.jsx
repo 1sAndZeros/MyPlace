@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
+import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { useNavigate } from "react-router-dom";
 import Map, {
   Marker,
@@ -21,7 +22,7 @@ import keys from "../../data/keys";
 
 // get request for cities / regions https://api.mapbox.com/geocoding/v5/mapbox.places/{searchString}.json?fuzzyMatch=false&limit=10&types=region%2Cdistrict&autocomplete=true&access_token=pk.eyJ1IjoiaW15cGxhY2UiLCJhIjoiY2xudTViMGp3MGNwYTJsbzVtdnNxZ3NvOCJ9.j49LvpTufygf0Cx9HhldIg
 
-const MapView = ({ cityPins, setCityPins }) => {
+const MapView = ({ cityPins, setCityPins, friend }) => {
   const MAPBOX_ACCESS_TOKEN =
     "pk.eyJ1IjoiaW15cGxhY2UiLCJhIjoiY2xudTViMGp3MGNwYTJsbzVtdnNxZ3NvOCJ9.j49LvpTufygf0Cx9HhldIg";
 
@@ -46,6 +47,8 @@ const MapView = ({ cityPins, setCityPins }) => {
   // const search = new MapboxSearchBox();
   const markerDetailsPopupRef = useRef();
 
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+
   useEffect(() => {
     authApi
       .getMyCityPins()
@@ -59,7 +62,7 @@ const MapView = ({ cityPins, setCityPins }) => {
           navigate("/");
         }
       });
-  }, [details]);
+  }, []);
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -122,6 +125,10 @@ const MapView = ({ cityPins, setCityPins }) => {
 
   return (
     <>
+    { !friend ?
+    <div>{currentUser.username}</div> :
+    <div>{`${friend}'s map`}</div>
+    }
       <Map
         ref={myMap}
         id="myMap"
@@ -181,18 +188,6 @@ const MapView = ({ cityPins, setCityPins }) => {
               </Marker>
             );
           })}
-        <Popup
-          ref={markerDetailsPopupRef}
-          longitude={0}
-          latitude={0}
-          anchor="left"
-          className="marker-details"
-          offset={[15, -25]}
-          maxWidth="1000px"
-          closeOnClick={false}
-        >
-          
-        </Popup>
         <MarkerDetails
           details={details}
           setCityPins={setCityPins}
