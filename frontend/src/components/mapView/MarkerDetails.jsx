@@ -21,12 +21,9 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
 
   useEffect(() => {
     if (details) {
-      console.log("details favourites", details.favourites);
       if (details.favourites.includes(currentUser._id)) {
-        console.log("setIsFavourite(true)");
         setIsFavourite(true);
       } else {
-        console.log("setIsFavourite(false)");
         setIsFavourite(false);
       }
       setIsVisited(details.visited);
@@ -35,7 +32,7 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
 
   const closeDetails = () => {
     setDetails(null);
-    setIsEdit(isEdit);
+    setIsEdit(false);
     setNewMemory("");
   };
 
@@ -116,9 +113,6 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
 
     const removeFavourite = () => {
       const filteredFavourites = favourites.filter((favourite) => {
-        console.log("favourite", favourite);
-        console.log("user", currentUser);
-
         return favourite !== currentUser._id;
       });
       let update = {
@@ -203,7 +197,15 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
           <p>{favourites.length >= 1 ? favourites.length : ""}</p>
         </div>
         <div className="marker-details__user">
-          <img src={user.profileImage} />
+          <img
+            className="marker-details__user--name"
+            alt="user image"
+            src={
+              user.profileImage
+                ? user.profileImage
+                : `https://eu.ui-avatars.com/api/?name=${user.username}&length=1`
+            }
+          />
           <p>{details.user.username}</p>
         </div>
         <div className="marker-details__place">

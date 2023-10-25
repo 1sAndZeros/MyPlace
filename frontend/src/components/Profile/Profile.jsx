@@ -42,7 +42,7 @@ const Profile = () => {
     setShowSettings(!showSettings);
     const fileInput = document.getElementById("fileUpload");
     if (fileInput) {
-      fileInput.value = ""; // Reset the input field
+      fileInput.value = "";
     }
   };
 
@@ -55,7 +55,11 @@ const Profile = () => {
             <img
               className="profile__img"
               alt="user pic"
-              src={currentUser.profileImage}
+              src={
+                currentUser.profileImage
+                  ? currentUser.profileImage
+                  : `https://eu.ui-avatars.com/api/?name=${currentUser.username}&length=1`
+              }
             />
             <button
               className="profile__button-edit"

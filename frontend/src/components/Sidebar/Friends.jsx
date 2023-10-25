@@ -9,7 +9,7 @@ import { authApi } from "../../utils/api";
 const Friends = ({ setCityPins, setFriend }) => {
   const [hidden, setHidden] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+  const { currentUser } = useContext(CurrentUserContext);
 
   const showFriendPins = (friendId, friendUsername) => {
     authApi
@@ -26,13 +26,6 @@ const Friends = ({ setCityPins, setFriend }) => {
   const handleClick = () => {
     setHidden(!hidden);
   };
-
-  // const truncate = (str, maxLength) => {
-  //   if (str.length <= maxLength) {
-  //     return str;
-  //   }
-  //   return str.slice(0, maxLength) + "...";
-  // };
 
   return (
     <li className={`sidebar__item ${hidden ? "" : "active"}`}>
@@ -59,7 +52,6 @@ const Friends = ({ setCityPins, setFriend }) => {
                 }
                 alt={user.username}
               />
-              {/* <p className="user-name">{truncate(user.username, 15)}</p> */}
               <p className="user-name">{user.username}</p>
             </li>
           );

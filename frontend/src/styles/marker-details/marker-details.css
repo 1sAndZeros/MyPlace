@@ -26,14 +26,14 @@
     display: flex;
     justify-items: center;
     align-items: center;
-    gap: 1em;
+    gap: .5em;
     margin-bottom: 1em;
-    font-size: 1.25rem;
+    font-size: 1rem;
 }
 
 .marker-details__user img {
-    width: 2.5em;
-    height: 2.5em;
+    width: 2em;
+    height: 2em;
     object-fit: cover;
     object-position: center;
     border-radius: 50%;
@@ -50,7 +50,7 @@
 .marker-details__memory {
     width: 100%;
     flex-grow: 1;
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     padding: 0.8em 0;
     text-align: left;
     border-radius: 0.5em;
@@ -65,7 +65,7 @@
 
 .marker-details__name {
     flex-grow: 1;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 
 .marker-details__photo {
@@ -75,15 +75,15 @@
 .marker-details__options {
     gap: 0.5em;
     position: absolute;
-    right: 1em;
+    right: .2em;
     top: 1.2em;
     display: flex;
     align-items: center;
 }
 
 .marker-details__icon {
-    width: 1.6rem;
-    height: 1.6rem;
+    width: 1.4rem;
+    height: 1.4rem;
 }
 
 .marker-details__options svg {
