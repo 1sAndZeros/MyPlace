@@ -4,6 +4,8 @@ import { authApi } from "../../utils/api";
 import PropTypes from "prop-types";
 import StarRating from "../StarRating/StarRating";
 import addImg from "../../assets/icons/add-image.svg";
+import errorImg from "../../assets/error.svg";
+import errorClose from "../../assets/Close_square.svg";
 
 function NewCityForm({ marker, setMarker, location, setCityPins }) {
   const [rating, setRating] = useState(0);
@@ -11,6 +13,7 @@ function NewCityForm({ marker, setMarker, location, setCityPins }) {
   const [image, setImage] = useState("");
   const [visited, setVisited] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  const [error, setError] = useState("");
   const [visitedDate, setVisitedDate] = useState(
     new Date().toISOString().split("T")[0]
   );
@@ -20,13 +23,13 @@ function NewCityForm({ marker, setMarker, location, setCityPins }) {
   }, [rating]);
 
   useEffect(() => {
-    setMemory("")
+    setMemory("");
     setErrorMessage("");
-    if(!visited) {
-      setRating(0)
-      setVisitedDate(null)
-      setImage("")
-      setMemory("")
+    if (!visited) {
+      setRating(0);
+      setVisitedDate(null);
+      setImage("");
+      setMemory("");
     }
   }, [visited]);
 
@@ -41,8 +44,10 @@ function NewCityForm({ marker, setMarker, location, setCityPins }) {
       .then((data) => {
         return data.secure_url;
       })
-      .catch((err) => {
-        console.log(`Error in uploadPhoto: ${err}`);
+      .catch((error) => {
+        let errMessage = error.message;
+        setError(errMessage);
+        console.log(`Error: ${error.message}`);
       });
 
     const data = {
@@ -66,8 +71,10 @@ function NewCityForm({ marker, setMarker, location, setCityPins }) {
         });
         closeAndResetForm();
       })
-      .catch((err) => {
-        console.log(`Error: ${err.message}`);
+      .catch((error) => {
+        let errMessage = error.message;
+        setError(errMessage);
+        console.log(`Error: ${error.message}`);
       });
   };
 
@@ -96,6 +103,10 @@ function NewCityForm({ marker, setMarker, location, setCityPins }) {
 
   const handleImageChange = (event) => {
     setImage(() => event.target.files[0]);
+  };
+
+  const handleCloseError = () => {
+    setError("");
   };
 
   return (
@@ -147,16 +158,18 @@ function NewCityForm({ marker, setMarker, location, setCityPins }) {
         value={memory}
         onChange={handleMemoryChange}
       />
-      { visited && (<label className="form__button--label" htmlFor="fileUpload">
-        <img className="form__button--img" src={addImg} alt="choose file" />
-        <input
-          id="fileUpload"
-          type="file"
-          accept=".png, .jpg, .jpeg"
-          name="image"
-          onChange={handleImageChange}
-        />
-      </label>)}
+      {visited && (
+        <label className="form__button--label" htmlFor="fileUpload">
+          <img className="form__button--img" src={addImg} alt="choose file" />
+          <input
+            id="fileUpload"
+            type="file"
+            accept=".png, .jpg, .jpeg"
+            name="image"
+            onChange={handleImageChange}
+          />
+        </label>
+      )}
       <div>
         <p className="error__error-message">{errorMessage}</p>
       </div>
@@ -172,6 +185,24 @@ function NewCityForm({ marker, setMarker, location, setCityPins }) {
           add MyPlace
         </button>
       </div>
+      {error ? (
+            <div className="error-auth">
+              <div className="error-auth__box">
+                <img
+                  className="error-auth__icon"
+                  src={errorImg}
+                  alt="error icon"
+                />
+                <p className="error-auth__message">{error}</p>
+              </div>
+              <img
+                className="error-auth__icon error-auth__icon--close"
+                src={errorClose}
+                alt="error close"
+                onClick={handleCloseError}
+              />
+            </div>
+          ) : null}
     </form>
   );
 }
