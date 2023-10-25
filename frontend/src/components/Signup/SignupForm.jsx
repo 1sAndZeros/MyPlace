@@ -251,13 +251,13 @@ const SignupForm = ({
                   alt="error icon"
                 />
                 <p className="error-auth__message">{authError}</p>
-              </div>
-              <img
+                <img
                 className="error-auth__icon error-auth__icon--close"
                 src={errorClose}
                 alt="error close"
                 onClick={handleCloseError}
               />
+              </div>
             </div>
           ) : null}
         </div>

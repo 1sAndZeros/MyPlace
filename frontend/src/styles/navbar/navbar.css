@@ -13,6 +13,10 @@
     text-decoration: none;
 }
 
+.navbar a {
+    width: fit-content;
+}
+
 .navbar--home {
     width: 100%;
     justify-content: space-around;
@@ -48,14 +52,14 @@
     margin-left: 5rem;
 }
 
-.navbar .navbar__brand {
+.navbar__brand {
     display: flex;
-    justify-content: center;
     align-items: center;
     gap: 0.5em;
+    justify-self: center;
 }
 
-.navbar .navbar__brand__logo {
+.navbar__brand__logo {
     width: 2.25em;
 }
 
