@@ -1,5 +1,5 @@
 import Navbar from "../Navbar/Navbar";
-import MapView from "../MapView/MapView";
+import MyMap from "../MyMap/MyMap";
 import Sidebar from "../Sidebar/Sidebar";
 import { useState } from "react";
 
@@ -19,7 +19,7 @@ function HomePage() {
           />
         </div>
         <div className="home__map-container">
-          <MapView
+          <MyMap
             cityPins={cityPins}
             setCityPins={setCityPins}
             friend={friend}

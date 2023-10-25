@@ -25,7 +25,7 @@ import PinIcon from "../../assets/icons/map-pin.svg?react";
 
 // get request for cities / regions https://api.mapbox.com/geocoding/v5/mapbox.places/{searchString}.json?fuzzyMatch=false&limit=10&types=region%2Cdistrict&autocomplete=true&access_token=pk.eyJ1IjoiaW15cGxhY2UiLCJhIjoiY2xudTViMGp3MGNwYTJsbzVtdnNxZ3NvOCJ9.j49LvpTufygf0Cx9HhldIg
 
-const MapView = ({ cityPins, setCityPins, friend }) => {
+const MyMap = ({ cityPins, setCityPins, friend }) => {
   const MAPBOX_ACCESS_TOKEN =
     "pk.eyJ1IjoiaW15cGxhY2UiLCJhIjoiY2xudTViMGp3MGNwYTJsbzVtdnNxZ3NvOCJ9.j49LvpTufygf0Cx9HhldIg";
 
@@ -259,4 +259,4 @@ const MapView = ({ cityPins, setCityPins, friend }) => {
   );
 };
 
-export default MapView;
+export default MyMap;
