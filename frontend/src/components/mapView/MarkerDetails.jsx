@@ -64,7 +64,6 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
         .then((data) => {
           setCityPins((prevValues) => {
             let newPins = prevValues.filter((pin) => pin._id !== details._id)
-            console.log([data.city, ...newPins])
             return [data.city, ...newPins]
           })
           closeDetails()
@@ -139,12 +138,20 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
     return (
       <section id="marker-details">
         <div className="marker-details__options">
+          
+          {currentUser._id === details.user._id ? (
+            <>
           <img
             className="marker-details__icon"
             src={edit}
             onClick={toggleEdit}
           />
           <button onClick={handleDelete} type="button">delete</button>
+          </>
+          ) :
+          ""}
+          {/* {currentUser._id === details.user._id ? <button onClick={handleDelete} type="button">delete</button> :
+          ""} */}
           <img
             className="marker-details__icon"
             alt="favourite"
