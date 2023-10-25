@@ -22,7 +22,9 @@ const FindFriendModal = ({showModal, setShowModal}) => {
             
           })
           .catch((err) => console.log(err));
+
       }, [currentUser]);
+
 
         
 

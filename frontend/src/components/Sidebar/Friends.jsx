@@ -6,17 +6,17 @@ import FindFriendModal from "./FindFriendModal";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { authApi } from "../../utils/api";
 
-const Friends = ({ setCityPins }) => {
+const Friends = ({ setCityPins, setFriend }) => {
   const [hidden, setHidden] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 
-  const showFriendPins = (friendId) => {
+  const showFriendPins = (friendId, friendUsername) => {
     authApi
       .getCityPinsById(friendId)
       .then((data) => {
-        console.log(data.cities);
         setCityPins(data.cities);
+        setFriend(friendUsername);
       })
       .catch((error) => {
         console.log(error);
@@ -46,7 +46,7 @@ const Friends = ({ setCityPins }) => {
         {currentUser.friends.map((user) => {
           return (
             <li
-              onClick={() => showFriendPins(user._id)}
+              onClick={() => showFriendPins(user._id, user.username)}
               className="user"
               key={user._id}
             >

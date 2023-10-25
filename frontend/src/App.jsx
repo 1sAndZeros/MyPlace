@@ -6,29 +6,25 @@ import LoginForm from "./components/Login/LoginForm";
 import SignUpForm from "./components/Signup/SignupForm";
 import Homepage from "./components/Homepage/Homepage";
 import WelcomePage from "./components/WelcomePage/WelcomePage";
-import MapComponent from "./components/MapComponent/MapComponent";
-
+import AboutPage from "./components/About/AboutPage";
 
 function App() {
-
   const navigate = useNavigate();
   const [authError, setAuthError] = useState("");
   const [currentUser, setCurrentUser] = useState({
     username: "",
     profileImage: "",
     friends: [],
-
   });
-  console.log('added currentUser from app.jsx:',currentUser);
-  useEffect(() => { 
-
+  console.log("added currentUser from app.jsx:", currentUser);
+  useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       authApi
         .getInfo()
         .then((data) => {
           let userInfo = data.user;
-          console.log('userInfo from app.jsx:',userInfo)
+          console.log("userInfo from app.jsx:", userInfo);
           setCurrentUser(() => userInfo);
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
         })
@@ -37,6 +33,7 @@ function App() {
         });
     }
   }, []);
+
   function onSignUp(data) {
     authApi
       .signUp(data)
@@ -57,13 +54,12 @@ function App() {
         localStorage.setItem("token", res.token);
       })
       .then(() => {
-        authApi.getInfo()
-          .then((data) => {
-            let userInfo = data.user;
-            setCurrentUser(() => userInfo);
-            localStorage.setItem("userInfo", JSON.stringify(userInfo));
-          })
-          navigate("/home");
+        authApi.getInfo().then((data) => {
+          let userInfo = data.user;
+          setCurrentUser(() => userInfo);
+          localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        });
+        navigate("/home");
       })
       .catch((err) => {
         let errMessage = err.message;
@@ -81,6 +77,7 @@ function App() {
       <Routes>
         <Route path="/" element={<WelcomePage navigate={useNavigate()} />} />
         <Route path="/home" element={<Homepage navigate={useNavigate()} />} />
+        <Route path="/about" element={<AboutPage navigate={useNavigate()} />} />
         <Route
           path="/login"
           element={
@@ -105,7 +102,6 @@ function App() {
             />
           }
         />
-        <Route path="/map" element={<MapComponent />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </CurrentUserContext.Provider>
