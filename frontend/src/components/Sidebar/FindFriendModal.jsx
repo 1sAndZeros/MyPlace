@@ -97,6 +97,7 @@ const FindFriendModal = ({ showModal, setShowModal }) => {
       <h3>Search For Friends</h3>
       {error ? (
             <div className="error-auth">
+              
               <div className="error-auth__box">
                 <img
                   className="error-auth__icon"
@@ -112,6 +113,7 @@ const FindFriendModal = ({ showModal, setShowModal }) => {
                 onClick={handleCloseError}
               />
             </div>
+           
           ) : null}
       <ul className="users">
         {allUsers.map((user) => {
