@@ -17,6 +17,8 @@ import { MapboxSearchBox } from "@mapbox/search-js-web";
 import SearchMarker from "./SearchMarker";
 import ClickMarker from "./ClickMarker";
 import MarkerDetails from "./MarkerDetails";
+import errorImg from "../../assets/error.svg";
+import errorClose from "../../assets/Close_square.svg";
 import Key from "./Key";
 import keys from "../../data/keys";
 
@@ -40,6 +42,7 @@ const MapView = ({ cityPins, setCityPins, friend }) => {
   const [searchValue, setSearchValue] = useState("");
   const [searchMarker, setSearchMarker] = useState(null);
   const [details, setDetails] = useState(null);
+  const [error, setError] = useState("");
 
   const myMap = useMap();
   const mapRef = useRef();
@@ -57,7 +60,9 @@ const MapView = ({ cityPins, setCityPins, friend }) => {
         setCityPins(data.cities);
       })
       .catch((err) => {
-        console.log(err);
+        let errMessage = err.message;
+        setError(errMessage);
+        console.log(`Error: ${err.message}`);
         if (err.message === "auth error") {
           navigate("/");
         }
@@ -104,7 +109,9 @@ const MapView = ({ cityPins, setCityPins, friend }) => {
         setSearchMarker(null);
       })
       .catch((error) => {
-        console.log(error);
+        let errMessage = error.message;
+        setError(errMessage);
+        console.log(`Error: ${error.message}`);
       });
   };
 
@@ -131,9 +138,33 @@ const MapView = ({ cityPins, setCityPins, friend }) => {
     console.log(searchMarker);
   }, [searchMarker]);
 
+  const handleCloseError = () => {
+    setError("");
+  };
+
   return (
     <>
       <div>{`${!friend ? currentUser.username : friend}'s map`}</div>
+      <div className="form__error-container">
+        {error ? (
+            <div className="error-auth">
+              <div className="error-auth__box">
+                <img
+                  className="error-auth__icon"
+                  src={errorImg}
+                  alt="error icon"
+                />
+                <p className="error-auth__message">{error}</p>
+              </div>
+              <img
+                className="error-auth__icon error-auth__icon--close"
+                src={errorClose}
+                alt="error close"
+                onClick={handleCloseError}
+              />
+            </div>
+          ) : null}
+        </div>
       <Map
         ref={myMap}
         id="myMap"
