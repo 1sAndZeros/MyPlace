@@ -169,6 +169,17 @@ class Api {
     });
   }
 
+  findCityById(id) {
+    return fetch(`${this._baseUrl}/cities/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }).then((res) => {
+      return this._getResponseData(res);
+    });
+  }
+
   getCityPinsById(friendId) {
     return fetch(`${this._baseUrl}/cities/user/${friendId}`, {
       method: "GET",
