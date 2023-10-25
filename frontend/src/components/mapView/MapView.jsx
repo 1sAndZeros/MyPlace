@@ -143,6 +143,10 @@ const MapView = ({ cityPins, setCityPins, friend }) => {
         <GeolocateControl />
         <FullscreenControl />
         <SearchBox
+          options={{
+            limit: "10",
+            // types: "country",
+          }}
           accessToken={MAPBOX_ACCESS_TOKEN}
           placeholder="Search Places"
           value={searchValue}

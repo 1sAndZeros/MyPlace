@@ -21,10 +21,15 @@
     display: grid;
     justify-content: center;
     max-width: 1000px;
-    margin: 2em auto auto auto;
+    margin: 5em auto auto auto;
     gap: 1em;
     line-height: 2;
     font-size: 1.125rem;
+}
+
+.about__main h3 {
+    font-size: 2rem;
+    font-weight: 400;
 }
 
 .about__container footer {
@@ -36,7 +41,7 @@
 .about__project-info {
     display: flex;
     gap: 2em;
-    margin: 0 auto;
+    margin: 5em auto;
 }
 
 .about__project-info>a {

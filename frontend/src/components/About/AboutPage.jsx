@@ -8,6 +8,7 @@ function AboutPage() {
       <div className="about__container">
         <Navbar />
         <div className="about__main">
+          <h3>About Us</h3>
           <p className="about__content">
             Welcome to MyPlace. A project born from the creative minds of five
             passionate individuals. <br />
