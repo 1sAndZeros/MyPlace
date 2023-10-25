@@ -1,5 +1,5 @@
 import Navbar from "../Navbar/Navbar";
-import MapView from "../mapView/mapView";
+import MapView from "../MapView/MapView";
 import Sidebar from "../Sidebar/Sidebar";
 import { useState } from "react";
 
