@@ -78,11 +78,12 @@
     right: 1em;
     top: 1.2em;
     display: flex;
+    align-items: center;
 }
 
 .marker-details__icon {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1.6rem;
+    height: 1.6rem;
 }
 
 .marker-details__options svg {

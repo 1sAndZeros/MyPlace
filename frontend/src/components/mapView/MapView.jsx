@@ -86,18 +86,26 @@ const MapView = ({ cityPins, setCityPins, friend }) => {
     setPlaceName(data.features[0].text);
   };
 
-  const handleMarkerClick = (e) => {
+  const handleMarkerClick = (e, id) => {
     e.originalEvent.stopPropagation();
-    const location = e.target._lngLat;
-    const cityPin = cityPins.find((pin) => {
-      return (
-        pin.location.lat === location.lat && pin.location.lng === location.lng
-      );
-    });
-    console.log(cityPin);
-    setDetails(cityPin);
-    setMarker(null);
-    setSearchMarker(null);
+    // const location = e.target._lngLat;
+    // const cityPin = cityPins.find((pin) => {
+    //   return (
+    //     pin.location.lat === location.lat && pin.location.lng === location.lng
+    //   );
+    // });
+    // console.log(cityPin);
+    authApi
+      .findCityById(id)
+      .then((data) => {
+        const cityPin = data.city;
+        setDetails(cityPin);
+        setMarker(null);
+        setSearchMarker(null);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleSelection = (res) => {
@@ -180,7 +188,7 @@ const MapView = ({ cityPins, setCityPins, friend }) => {
                     ? keys.find((key) => key.text === "Visited").color
                     : keys.find((key) => key.text === "Want to visit").color
                 }
-                onClick={handleMarkerClick}
+                onClick={(e) => handleMarkerClick(e, cityPin._id)}
                 popup={markerDetailsPopupRef.current}
               >
                 {/* {cityPin.visited
