@@ -149,13 +149,13 @@ const MapView = ({ cityPins, setCityPins, friend }) => {
                 alt="error icon"
               />
               <p className="error-auth__message">{error}</p>
+              <img
+                className="error-auth__icon error-auth__icon--close"
+                src={errorClose}
+                alt="error close"
+                onClick={handleCloseError}
+              />
             </div>
-            <img
-              className="error-auth__icon error-auth__icon--close"
-              src={errorClose}
-              alt="error close"
-              onClick={handleCloseError}
-            />
           </div>
         ) : null}
       </div>

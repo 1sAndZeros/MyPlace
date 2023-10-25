@@ -110,100 +110,98 @@ function NewCityForm({ marker, setMarker, location, setCityPins }) {
   };
 
   return (
-    <form id="new-city-form" onSubmit={handleSubmit}>
-      <h3 className="form__title form__title-popup">New Place</h3>
-      <div className="checkbox__container">
-        <label className="checkbox__label">
-          <input
-            type="checkbox"
-            checked={visited}
-            onClick={() => setVisited(true)}
-          />
-          <div className="checkmark"></div>
-        </label>
-        <p>Visited</p>
-        <label className="checkbox__label">
-          <input
-            type="checkbox"
-            checked={!visited}
-            onClick={() => setVisited(false)}
-          />
-          <div className="checkmark"></div>
-        </label>
-        <p>Want to visit</p>
-      </div>
-      {visited && (
-        <>
-          <StarRating setRating={setRating} />
-          <div className="form__input-box">
-            <label className="form__label">Visited Date</label>
+    <>
+      <form id="new-city-form" onSubmit={handleSubmit}>
+        <h3 className="form__title form__title-popup">New Place</h3>
+        <div className="checkbox__container">
+          <label className="checkbox__label">
             <input
-              className="form__input form__date"
-              name="visitedDate"
-              type="date"
-              value={visitedDate}
-              onChange={handleDateChange}
+              type="checkbox"
+              checked={visited}
+              onClick={() => setVisited(true)}
             />
-          </div>
-        </>
-      )}
-      <textarea
-        className="form__memory__textarea"
-        name="Text1"
-        cols="40"
-        rows="5"
-        placeholder="Tell us more..."
-        id="message"
-        type="text"
-        value={memory}
-        onChange={handleMemoryChange}
-      />
-      {visited && (
-        <label className="form__button--label" htmlFor="fileUpload">
-          <img className="form__button--img" src={addImg} alt="choose file" />
-          <input
-            id="fileUpload"
-            type="file"
-            accept=".png, .jpg, .jpeg"
-            name="image"
-            onChange={handleImageChange}
-          />
-        </label>
-      )}
-      <div>
-        <p className="error__error-message">{errorMessage}</p>
-      </div>
-      <div className="form__button--container">
-        <button
-          onClick={closeAndResetForm}
-          className="form__button form__button--cancel"
-          type="button"
-        >
-          cancel
-        </button>
-        <button className="form__button form__button--add" type="submit">
-          add MyPlace
-        </button>
-      </div>
-      {error ? (
-            <div className="error-auth">
-              <div className="error-auth__box">
-                <img
-                  className="error-auth__icon"
-                  src={errorImg}
-                  alt="error icon"
-                />
-                <p className="error-auth__message">{error}</p>
-              </div>
-              <img
-                className="error-auth__icon error-auth__icon--close"
-                src={errorClose}
-                alt="error close"
-                onClick={handleCloseError}
+            <div className="checkmark"></div>
+          </label>
+          <p>Visited</p>
+          <label className="checkbox__label">
+            <input
+              type="checkbox"
+              checked={!visited}
+              onClick={() => setVisited(false)}
+            />
+            <div className="checkmark"></div>
+          </label>
+          <p>Want to visit</p>
+        </div>
+        {visited && (
+          <>
+            <StarRating setRating={setRating} />
+            <div className="form__input-box">
+              <label className="form__label">Visited Date</label>
+              <input
+                className="form__input form__date"
+                name="visitedDate"
+                type="date"
+                value={visitedDate}
+                onChange={handleDateChange}
               />
             </div>
-          ) : null}
-    </form>
+          </>
+        )}
+        <textarea
+          className="form__memory__textarea"
+          name="Text1"
+          cols="40"
+          rows="5"
+          placeholder="Tell us more..."
+          id="message"
+          type="text"
+          value={memory}
+          onChange={handleMemoryChange}
+        />
+        {visited && (
+          <label className="form__button--label" htmlFor="fileUpload">
+            <img className="form__button--img" src={addImg} alt="choose file" />
+            <input
+              id="fileUpload"
+              type="file"
+              accept=".png, .jpg, .jpeg"
+              name="image"
+              onChange={handleImageChange}
+            />
+          </label>
+        )}
+        <div>
+          <p className="error__error-message">{errorMessage}</p>
+        </div>
+        <div className="form__button--container">
+          <button
+            onClick={closeAndResetForm}
+            className="form__button form__button--cancel"
+            type="button"
+          >
+            cancel
+          </button>
+          <button className="form__button form__button--add" type="submit">
+            add MyPlace
+          </button>
+        </div>
+      </form>
+      {error ? (
+        <div className="error-auth">
+          <div className="error-auth__box">
+            <img className="error-auth__icon" src={errorImg} alt="error icon" />
+            <p className="error-auth__message">{error}</p>
+            <img
+              className="error-auth__icon error-auth__icon--close"
+              src={errorClose}
+              alt="error close"
+              onClick={handleCloseError}
+            />
+          </div>
+        </div>
+      ) : null}
+    </>
   );
 }
 

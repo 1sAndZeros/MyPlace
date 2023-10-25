@@ -12,7 +12,6 @@ const SignupForm = ({
   setAuthError,
   handleCloseError,
 }) => {
-  
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -175,7 +174,9 @@ const SignupForm = ({
             </div>
             <div className="form__input-box">
               <div className="form__password__label">
-                <label htmlFor="password" className="form__label">Password</label>
+                <label htmlFor="password" className="form__label">
+                  Password
+                </label>
                 <div
                   className="form__password__wrapper"
                   onClick={handleShowPassword}
@@ -200,7 +201,9 @@ const SignupForm = ({
             </div>
             <div className="form__input-box">
               <div className="form__password__label">
-                <label htmlFor="repeat-password" className="form__label">Password</label>
+                <label htmlFor="repeat-password" className="form__label">
+                  Password
+                </label>
                 <div
                   className="form__password__wrapper"
                   onClick={handleShowRepeatPassword}
@@ -251,13 +254,13 @@ const SignupForm = ({
                   alt="error icon"
                 />
                 <p className="error-auth__message">{authError}</p>
+                <img
+                  className="error-auth__icon error-auth__icon--close"
+                  src={errorClose}
+                  alt="error close"
+                  onClick={handleCloseError}
+                />
               </div>
-              <img
-                className="error-auth__icon error-auth__icon--close"
-                src={errorClose}
-                alt="error close"
-                onClick={handleCloseError}
-              />
             </div>
           ) : null}
         </div>
