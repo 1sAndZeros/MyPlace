@@ -109,19 +109,15 @@ const Profile = () => {
                   alt="error icon"
                 />
                 <p className="error-auth__message">{error}</p>
+                <img
+                  className="error-auth__icon error-auth__icon--close"
+                  src={errorClose}
+                  alt="error close"
+                  onClick={handleCloseError}
+                />
               </div>
-              <img
-                className="error-auth__icon error-auth__icon--close"
-                src={errorClose}
-                alt="error close"
-                onClick={handleCloseError}
-              />
             </div>
           ) : null}
-          {/* <div className="profile__settings-element" onClick={onLogOut}>
-                        <img className="profile__settings__icon" src={signOut} />
-                        <p>Sign Out</p>
-                    </div> */}
         </div>
       </section>
     </>

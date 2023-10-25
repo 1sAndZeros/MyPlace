@@ -43,32 +43,28 @@ const Friends = ({ setCityPins, setFriend }) => {
         <TeamIcon />
         <p>Friends</p>
         {error ? (
-
-<div className="error-auth">
-  
-  <div className="error-auth__box">
-    <img
-      className="error-auth__icon"
-      src={errorImg}
-      alt="error icon"
-    />
-    <p className="error-auth__message">{error}</p>
-  </div>
-  <img
-    className="error-auth__icon error-auth__close"
-    src={errorClose}
-    alt="error close"
-    onClick={handleCloseError}
-  />
-</div>
-) : null}
+          <div className="error-auth-pos">
+            <div className="error-auth__box">
+              <img
+                className="error-auth__icon"
+                src={errorImg}
+                alt="error icon"
+              />
+              <p className="error-auth__message">{error}</p>
+              <img
+                className="error-auth__icon error-auth__icon--close"
+                src={errorClose}
+                alt="error close"
+                onClick={handleCloseError}
+              />
+            </div>
+          </div>
+        ) : null}
         <ChevronIcon />
       </div>
       <ul className="sidebar__item__menu">
-      
         {currentUser.friends.map((user) => {
           return (
-            
             <li
               onClick={() => showFriendPins(user._id, user.username)}
               className="user"
@@ -91,7 +87,6 @@ const Friends = ({ setCityPins, setFriend }) => {
           <SearchIcon />
           Find Friends
         </button>
-        
       </ul>
     </li>
   );

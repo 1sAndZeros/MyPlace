@@ -12,3 +12,11 @@ mapbox-search-box {
     display: block;
     width: 300px;
 }
+
+.pin.true {
+    color: #0075C4;
+}
+
+.pin.false {
+    color: #82a139;
+}

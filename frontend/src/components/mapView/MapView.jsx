@@ -21,6 +21,7 @@ import errorImg from "../../assets/error.svg";
 import errorClose from "../../assets/Close_square.svg";
 import Key from "./Key";
 import keys from "../../data/keys";
+import PinIcon from "../../assets/icons/map-pin.svg?react";
 
 // get request for cities / regions https://api.mapbox.com/geocoding/v5/mapbox.places/{searchString}.json?fuzzyMatch=false&limit=10&types=region%2Cdistrict&autocomplete=true&access_token=pk.eyJ1IjoiaW15cGxhY2UiLCJhIjoiY2xudTViMGp3MGNwYTJsbzVtdnNxZ3NvOCJ9.j49LvpTufygf0Cx9HhldIg
 
@@ -85,7 +86,7 @@ const MapView = ({ cityPins, setCityPins, friend }) => {
         longitude: e.lngLat.lng,
       };
     });
-    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.lngLat.lng},${e.lngLat.lat}.json?limit=1&types=region%2Cdistrict&access_token=${MAPBOX_ACCESS_TOKEN}`;
+    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.lngLat.lng},${e.lngLat.lat}.json?limit=1&language=en&types=region%2Cdistrict&access_token=${MAPBOX_ACCESS_TOKEN}`;
     const response = await fetch(url);
     const data = await response.json();
     setPlaceName(data.features[0].text);
@@ -93,13 +94,6 @@ const MapView = ({ cityPins, setCityPins, friend }) => {
 
   const handleMarkerClick = (e, id) => {
     e.originalEvent.stopPropagation();
-    // const location = e.target._lngLat;
-    // const cityPin = cityPins.find((pin) => {
-    //   return (
-    //     pin.location.lat === location.lat && pin.location.lng === location.lng
-    //   );
-    // });
-    // console.log(cityPin);
     authApi
       .findCityById(id)
       .then((data) => {
@@ -147,15 +141,14 @@ const MapView = ({ cityPins, setCityPins, friend }) => {
       <div>{`${!friend ? currentUser.username : friend}'s map`}</div>
       <div className="form__error-container">
         {error ? (
-            <div className="error-auth">
-              <div className="error-auth__box">
-                <img
-                  className="error-auth__icon"
-                  src={errorImg}
-                  alt="error icon"
-                />
-                <p className="error-auth__message">{error}</p>
-              </div>
+          <div className="error-auth">
+            <div className="error-auth__box">
+              <img
+                className="error-auth__icon"
+                src={errorImg}
+                alt="error icon"
+              />
+              <p className="error-auth__message">{error}</p>
               <img
                 className="error-auth__icon error-auth__icon--close"
                 src={errorClose}
@@ -163,8 +156,9 @@ const MapView = ({ cityPins, setCityPins, friend }) => {
                 onClick={handleCloseError}
               />
             </div>
-          ) : null}
-        </div>
+          </div>
+        ) : null}
+      </div>
       <Map
         ref={myMap}
         id="myMap"
@@ -184,7 +178,6 @@ const MapView = ({ cityPins, setCityPins, friend }) => {
         <SearchBox
           options={{
             limit: "10",
-            // types: "country",
           }}
           accessToken={MAPBOX_ACCESS_TOKEN}
           placeholder="Search Places"
@@ -207,24 +200,28 @@ const MapView = ({ cityPins, setCityPins, friend }) => {
         />
         {cityPins.length > 0 &&
           cityPins.map((cityPin) => {
-            console.log("cityPin here");
+            console.log("cityPin here", cityPin);
             return (
               <Marker
                 test="test"
-                key={cityPin._id}
+                key={cityPin._id + "pin"}
                 latitude={cityPin.location.lat}
                 longitude={cityPin.location.lng}
-                color={
-                  cityPin.visited
-                    ? keys.find((key) => key.text === "Visited").color
-                    : keys.find((key) => key.text === "Want to visit").color
-                }
+                // color={
+                //   cityPin.visited === true
+                //     ? "#000"
+                //     : "#fff"
+                // }
+                // style={{fill: "#fff"}}
                 onClick={(e) => handleMarkerClick(e, cityPin._id)}
                 popup={markerDetailsPopupRef.current}
               >
-                {/* {cityPin.visited
-                  ? keys.find((key) => key.text === "Visited").icon
-                  : keys.find((key) => key.text === "Want to visit").icon} */}
+                <div className={`${cityPin.visited} pin`}>
+                  <PinIcon />
+                  {/* {cityPin.visited
+                    ? keys.find((key) => key.text === "Visited").icon
+                    : keys.find((key) => key.text === "Want to visit").icon} */}
+                </div>
               </Marker>
             );
           })}

@@ -1,5 +1,6 @@
 import { Marker, Popup } from "react-map-gl";
 import NewCityForm from "../NewCityForm/NewCityForm";
+import PinIcon from "../../assets/icons/map-pin.svg?react";
 
 const ClickMarker = ({
   clickMarker,
@@ -16,7 +17,9 @@ const ClickMarker = ({
     const lat = clickMarker.latitude;
     return (
       <>
-        <Marker longitude={lng} latitude={lat} color="#ff0000" />
+        <Marker longitude={lng} latitude={lat} color="#ff0000" >
+          <PinIcon />
+        </Marker>
         <Popup
           longitude={lng}
           latitude={lat}
@@ -24,7 +27,7 @@ const ClickMarker = ({
           onClose={handleClose}
           closeButton={false}
           className="popup-container"
-          offset={[15, -25]}
+          offset={[15, 15]}
           maxWidth="1000px"
           closeOnClick={false}
         >
