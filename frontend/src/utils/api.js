@@ -47,10 +47,10 @@ class Api {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
-      }
-    }). then((res) => {
-      return this._getResponseData(res)
-    })
+      },
+    }).then((res) => {
+      return this._getResponseData(res);
+    });
   }
 
   logIn(data) {
