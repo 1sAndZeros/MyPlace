@@ -21,7 +21,7 @@ const FindFriendModal = ({showModal, setShowModal}) => {
             setAllUsers(otherUsers);
           })
           .catch((err) => console.log(err));
-      }, [allUsers]);
+      }, []);
 
         
 
