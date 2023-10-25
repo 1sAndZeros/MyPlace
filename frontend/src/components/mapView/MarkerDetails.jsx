@@ -200,7 +200,15 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
           <p>{favourites.length >= 1 ? favourites.length : ""}</p>
         </div>
         <div className="marker-details__user">
-          <img src={user.profileImage} />
+          <img
+            className="marker-details__user--name"
+            alt="user image"
+            src={
+              user.profileImage
+                ? user.profileImage
+                : `https://eu.ui-avatars.com/api/?name=${user.username}&length=1`
+            }
+          />
           <p>{details.user.username}</p>
         </div>
         <div className="marker-details__place">
