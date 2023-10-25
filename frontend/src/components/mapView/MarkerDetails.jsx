@@ -6,6 +6,8 @@ import heartFilled from "../../assets/icons/heart-filled.svg";
 import edit from "../../assets/icons/edit.svg";
 import heart from "../../assets/icons/heart-nf.svg";
 import trash from "../../assets/icons/trash.svg";
+import errorImg from "../../assets/error.svg";
+import errorClose from "../../assets/Close_square.svg";
 import { authApi } from "../../utils/api";
 
 const MarkerDetails = ({ details, setDetails, setCityPins }) => {
@@ -15,6 +17,7 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
   const [newRating, setRating] = useState(0);
   const [isEdit, setIsEdit] = useState(false);
   const [isVisited, setIsVisited] = useState(false);
+  const [error, setError] = useState("");
   const [visitedDate, setVisitedDate] = useState(
     new Date().toISOString().split("T")[0]
   );
@@ -69,7 +72,9 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
           closeDetails();
         })
         .catch((error) => {
-          console.log(error);
+          let errMessage = error.message;
+          setError(errMessage);
+          console.log(`Error: ${error.message}`);
         });
     };
 
@@ -81,7 +86,9 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
           closeDetails();
         })
         .catch((error) => {
-          console.log(error, "error");
+          let errMessage = error.message;
+          setError(errMessage);
+          console.log(`Error: ${error.message}`);
         });
     };
 
@@ -108,7 +115,11 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
             };
           });
         })
-        .catch((err) => console.log(err));
+        .catch((error) => {
+        let errMessage = error.message;
+        setError(errMessage);
+        console.log(`Error: ${error.message}`);
+    })
     };
 
     const removeFavourite = () => {
@@ -142,7 +153,11 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
             };
           });
         })
-        .catch((err) => console.log(err));
+        .catch((error) => {
+          let errMessage = error.message;
+          setError(errMessage);
+          console.log(`Error: ${error.message}`);
+        });
     };
 
     const toggleFavourite = () => {
@@ -167,6 +182,9 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
 
     const handleMemoryChange = (e) => {
       setNewMemory(e.target.value);
+    };
+    const handleCloseError = () => {
+      setError("");
     };
 
     return (
@@ -278,6 +296,24 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
             Save
           </button>
         </div>
+        {error ? (
+            <div className="error-auth">
+              <div className="error-auth__box">
+                <img
+                  className="error-auth__icon"
+                  src={errorImg}
+                  alt="error icon"
+                />
+                <p className="error-auth__message">{error}</p>
+              </div>
+              <img
+                className="error-auth__icon error-auth__icon--close"
+                src={errorClose}
+                alt="error close"
+                onClick={handleCloseError}
+              />
+            </div>
+          ) : null}
       </section>
     );
   }
