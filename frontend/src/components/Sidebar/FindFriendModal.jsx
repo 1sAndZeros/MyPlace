@@ -31,6 +31,21 @@ const FindFriendModal = ({ showModal, setShowModal }) => {
       .catch((err) => console.log(err));
   };
 
+    useEffect(() => {
+        authApi
+          .getUsers()
+          .then((data) => {
+            // remove ourselves
+            const otherUsers = data.users.filter(
+              (user) => user._id !== currentUser._id
+            );
+            setAllUsers(otherUsers);
+            
+          })
+          .catch((err) => console.log(err));
+
+      }, [currentUser]);
+
   const removeFriend = (friendId) => {
     authApi
       .removeFriend(friendId)

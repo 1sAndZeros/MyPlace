@@ -9,24 +9,28 @@ function Navbar() {
   return (
     <nav
       id="navbar"
-      className={`navbar ${path === "/home" ? "navbar--home" : ""}`}
+      className={`navbar ${
+        path === "/home" || path === "/about" ? "navbar--home" : ""
+      }`}
     >
-      {path === "/home" ? (
+      {path === "/home" || path === "/about" ? (
         <Link
-          to="/signup"
+          to="/about"
           className={
-            path === "/home"
+            path === "/home" || path === "/about"
               ? "navbar__brand--black navbar__brand--right"
               : "navbar__brand--white"
           }
         >
-          F.A.Q
+          About Us
         </Link>
       ) : (
         <Link
           to="/signup"
           className={
-            path === "/home" ? "navbar__brand--black" : "navbar__brand--white"
+            path === "/home" || path === "/about"
+              ? "navbar__brand--black"
+              : "navbar__brand--white"
           }
         >
           About
@@ -35,13 +39,15 @@ function Navbar() {
       <Link
         to="/home"
         className={`navbar__brand ${
-          path === "/home" ? "navbar__brand--black" : "navbar__brand--white"
+          path === "/home" || path === "/about"
+            ? "navbar__brand--black"
+            : "navbar__brand--white"
         }`}
       >
         <Logo className="navbar__brand__heading" />
         <p className="navbar__brand__heading">MyPlace.</p>
       </Link>
-      {path === "/home" ? (
+      {path === "/home" || path === "/about" ? (
         <Profile />
       ) : (
         <ul className="navbar-nav">

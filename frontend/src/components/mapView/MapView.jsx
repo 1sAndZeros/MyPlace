@@ -125,10 +125,7 @@ const MapView = ({ cityPins, setCityPins, friend }) => {
 
   return (
     <>
-    { !friend ?
-    <div>{currentUser.username}</div> :
-    <div>{`${friend}'s map`}</div>
-    }
+      <div>{`${!friend ? currentUser.username : friend}'s map`}</div>
       <Map
         ref={myMap}
         id="myMap"
@@ -146,6 +143,10 @@ const MapView = ({ cityPins, setCityPins, friend }) => {
         <GeolocateControl />
         <FullscreenControl />
         <SearchBox
+          options={{
+            limit: "10",
+            // types: "country",
+          }}
           accessToken={MAPBOX_ACCESS_TOKEN}
           placeholder="Search Places"
           value={searchValue}
