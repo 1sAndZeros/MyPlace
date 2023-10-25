@@ -13,10 +13,36 @@ mapbox-search-box {
     width: 300px;
 }
 
-.pin.true {
+.map-owner {
+    position: absolute;
+    z-index: 99;
+    background-color: white;
+    padding: 0.5em;
+    top: 0.75rem;
+    left: 20rem;
+    font-size: 1rem;
+    border-radius: 0.5em;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.map-owner img {
+    display: inline;
+    border-radius: 50%;
+    object-fit: cover;
+    width: 20px;
+    height: 20px;
+}
+
+.pin.visited {
     color: #0075C4;
 }
 
-.pin.false {
+.pin.to-visit {
     color: #82a139;
+}
+
+.pin.favourite {
+    color: #FF6663;
 }

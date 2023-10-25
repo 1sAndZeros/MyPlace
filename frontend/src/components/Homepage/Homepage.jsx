@@ -5,11 +5,11 @@ import { useState } from "react";
 
 function HomePage() {
   const [cityPins, setCityPins] = useState([]);
-  const [friend, setFriend] = useState("");
+  const [friend, setFriend] = useState(null);
 
   return (
     <main id="home" className="bg-main">
-      <Navbar />
+      <Navbar setFriend={setFriend} setCityPins={setCityPins} />
       <div className="home__container">
         <div className="home__sidebar">
           <Sidebar

@@ -17,7 +17,7 @@ const ClickMarker = ({
     const lat = clickMarker.latitude;
     return (
       <>
-        <Marker longitude={lng} latitude={lat} color="#ff0000" >
+        <Marker longitude={lng} latitude={lat}>
           <PinIcon />
         </Marker>
         <Popup
