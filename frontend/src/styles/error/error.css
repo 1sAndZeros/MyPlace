@@ -23,7 +23,3 @@
 .error-auth__icon--close {
     transform: translateY(-.7rem);
 }
-
-.error-auth__message_centre {
-    text-align: center;
-}
