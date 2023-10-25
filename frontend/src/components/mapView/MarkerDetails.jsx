@@ -21,9 +21,12 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
 
   useEffect(() => {
     if (details) {
+      console.log('details favourites', details.favourites)
       if (details.favourites.includes(currentUser._id)) {
+        console.log('setIsFavourite(true)')
         setIsFavourite(true)
       } else {
+        console.log('setIsFavourite(false)')
         setIsFavourite(false)
       }
       setIsVisited(details.visited)
@@ -107,16 +110,30 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
     }
 
     const removeFavourite = () => {
-      const newFavourites = favourites.filter((favourite) => {
+      const filteredFavourites = favourites.filter((favourite) => {
+        console.log("favourite", favourite)
+        console.log("user", currentUser)
+
         return favourite !== currentUser._id
       })
-      console.log(newFavourites, "newFavourites")
       let update = {
-        favourites: newFavourites
+        favourites: filteredFavourites
       }
-      authApi.updateCity(update, details._id)
-        .then(data => {
-          setDetails(data.city);
+      const filteredUsers = currentUser.favouriteLocations.filter((location) => {
+        return location._id !== details._id
+      })
+      let updateUser = {
+        favouriteLocations: filteredUsers
+      }
+      const promises = [authApi.updateCity(update, details._id), authApi.updateUser(updateUser)]
+      Promise.all(promises)
+        .then(([cityData, userData]) => {
+          setDetails(() => {
+            return cityData.city
+          })
+          setCurrentUser((prevUser) => {
+            return {...prevUser, favouriteLocations: userData.newUser.favouriteLocations}
+          })
         })
         .catch(err => console.log(err))
     }

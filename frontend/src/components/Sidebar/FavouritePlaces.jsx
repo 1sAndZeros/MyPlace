@@ -18,13 +18,13 @@ const FavouritePlaces = () => {
         <ChevronIcon />
       </div>
       <ul className="sidebar__item__menu">
-        {currentUser.favouriteLocations && currentUser.favouriteLocations.map((location)=> {
+        {(currentUser.favouriteLocations.length >= 1) ? currentUser.favouriteLocations.map((location)=> {
           return (
             <li key={location._id} className="sidebar__item__menu--item">
               <p>{location.name}</p>
             </li>
           )
-        })}
+        }) : <p className="sidebar__item--empty">No favourite locations</p>}
       </ul>
     </li>
   );
