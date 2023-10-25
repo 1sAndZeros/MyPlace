@@ -21,12 +21,9 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
 
   useEffect(() => {
     if (details) {
-      console.log("details favourites", details.favourites);
       if (details.favourites.includes(currentUser._id)) {
-        console.log("setIsFavourite(true)");
         setIsFavourite(true);
       } else {
-        console.log("setIsFavourite(false)");
         setIsFavourite(false);
       }
       setIsVisited(details.visited);
@@ -35,7 +32,7 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
 
   const closeDetails = () => {
     setDetails(null);
-    setIsEdit(isEdit);
+    setIsEdit(false);
     setNewMemory("");
   };
 
@@ -67,7 +64,6 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
         .then((data) => {
           setCityPins((prevValues) => {
             let newPins = prevValues.filter((pin) => pin._id !== details._id);
-            console.log([data.city, ...newPins]);
             return [data.city, ...newPins];
           });
           closeDetails();
@@ -117,9 +113,6 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
 
     const removeFavourite = () => {
       const filteredFavourites = favourites.filter((favourite) => {
-        console.log("favourite", favourite);
-        console.log("user", currentUser);
-
         return favourite !== currentUser._id;
       });
       let update = {
@@ -179,18 +172,22 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
     return (
       <section id="marker-details">
         <div className="marker-details__options">
-          <img
-            className="marker-details__icon"
-            src={edit}
-            onClick={toggleEdit}
-            alt="edit"
-          />
-          <img
-            className="marker-details__icon"
-            onClick={handleDelete}
-            alt="delete"
-            src={trash}
-          />
+          {currentUser._id === details.user._id ? (
+            <>
+              <img
+                className="marker-details__icon"
+                src={edit}
+                onClick={toggleEdit}
+                alt="edit"
+              />
+              <img
+                className="marker-details__icon"
+                onClick={handleDelete}
+                alt="delete"
+                src={trash}
+              />
+            </>
+          ) : null}
           <img
             className="marker-details__icon"
             alt="favourite"
