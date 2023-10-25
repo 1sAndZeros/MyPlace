@@ -2,16 +2,18 @@ import { useState, useContext, useEffect } from "react";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { authApi } from "../../utils/api";
 import edit from "../../assets/Edit.svg";
+import errorImg from "../../assets/error.svg";
+import errorClose from "../../assets/Close_square.svg";
 
 const Profile = () => {
   const [showSettings, setShowSettings] = useState(false);
   const [image, setImage] = useState("");
+  const [error, setError] = useState("");
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
     if (userInfo) {
-      console.log("userInfo profile.jsx:", userInfo)
       setCurrentUser(() => JSON.parse(userInfo));
     }
   }, []);
@@ -29,21 +31,26 @@ const Profile = () => {
     authApi
       .uploadPhoto(image)
       .then((data) => {
-        return authApi.updateUser({profileImage: data.secure_url});
+        return authApi.updateUser({ profileImage: data.secure_url });
       })
       .then((data) => {
         setCurrentUser(() => data.newUser);
         localStorage.setItem("userInfo", JSON.stringify(data.newUser));
+        setShowSettings(!showSettings);
+        const fileInput = document.getElementById("fileUpload");
+        if (fileInput) {
+          fileInput.value = "";
+        }
       })
-      .catch((err) => {
-        console.log(err);
-        console.log(`Error in uploadPhoto: ${err.message}`);
+      .catch((error) => {
+        let errMessage = error.message;
+        setError(errMessage);
+        console.log(`Error: ${error.message}`);
       });
-    setShowSettings(!showSettings);
-    const fileInput = document.getElementById("fileUpload");
-    if (fileInput) {
-      fileInput.value = "";
-    }
+  };
+
+  const handleCloseError = () => {
+    setError("");
   };
 
   return (
@@ -93,10 +100,24 @@ const Profile = () => {
               </button>
             </label>
           </div>
-          {/* <div className="profile__settings-element" onClick={onLogOut}>
-                        <img className="profile__settings__icon" src={signOut} />
-                        <p>Sign Out</p>
-                    </div> */}
+          {error ? (
+            <div className="error-auth">
+              <div className="error-auth__box">
+                <img
+                  className="error-auth__icon"
+                  src={errorImg}
+                  alt="error icon"
+                />
+                <p className="error-auth__message">{error}</p>
+                <img
+                  className="error-auth__icon error-auth__icon--close"
+                  src={errorClose}
+                  alt="error close"
+                  onClick={handleCloseError}
+                />
+              </div>
+            </div>
+          ) : null}
         </div>
       </section>
     </>

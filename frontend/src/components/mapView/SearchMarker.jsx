@@ -1,5 +1,6 @@
 import { Marker, Popup } from "react-map-gl";
 import NewCityForm from "../NewCityForm/NewCityForm";
+import PinIcon from "../../assets/icons/map-pin.svg?react";
 
 const SearchMarker = ({ searchMarker, setSearchMarker, setCityPins }) => {
   const handleClose = () => {
@@ -11,7 +12,9 @@ const SearchMarker = ({ searchMarker, setSearchMarker, setCityPins }) => {
     const lat = searchMarker.geometry.coordinates[1];
     return (
       <>
-        <Marker longitude={lng} latitude={lat} color="#9319cc" />
+        <Marker longitude={lng} latitude={lat} color="#9319cc">
+          <PinIcon />
+        </Marker>
         <Popup
           longitude={lng}
           latitude={lat}
@@ -19,7 +22,7 @@ const SearchMarker = ({ searchMarker, setSearchMarker, setCityPins }) => {
           onClose={handleClose}
           closeButton={false}
           className="popup-container"
-          offset={[15, -25]}
+          offset={[15, 15]}
           maxWidth="1000px"
           closeOnClick={false}
         >

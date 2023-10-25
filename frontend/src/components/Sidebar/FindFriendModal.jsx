@@ -1,4 +1,6 @@
 import CrossIcon from "../../assets/icons/cross.svg?react";
+import errorImg from "../../assets/error.svg";
+import errorClose from "../../assets/Close_square.svg";
 import { useState, useEffect, useContext } from "react";
 import { authApi } from "../../utils/api";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
@@ -6,6 +8,7 @@ import { CurrentUserContext } from "../../context/CurrentUserContext";
 const FindFriendModal = ({ showModal, setShowModal }) => {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const [allUsers, setAllUsers] = useState([]);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     authApi
@@ -17,7 +20,11 @@ const FindFriendModal = ({ showModal, setShowModal }) => {
         );
         setAllUsers(otherUsers);
       })
-      .catch((err) => console.log(err));
+      .catch((error) => {
+        let errMessage = error.message;
+        setError(errMessage);
+        console.log(`Error: ${error.message}`);
+      });
   }, []);
 
   const addFriend = (friendId) => {
@@ -28,23 +35,29 @@ const FindFriendModal = ({ showModal, setShowModal }) => {
         setCurrentUser(() => userInfo);
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
       })
-      .catch((err) => console.log(err));
+      .catch((error) => {
+        let errMessage = error.message;
+        setError(errMessage);
+        console.log(`Error: ${error.message}`);
+      });
   };
 
-    useEffect(() => {
-        authApi
-          .getUsers()
-          .then((data) => {
-            // remove ourselves
-            const otherUsers = data.users.filter(
-              (user) => user._id !== currentUser._id
-            );
-            setAllUsers(otherUsers);
-            
-          })
-          .catch((err) => console.log(err));
-
-      }, [currentUser]);
+  useEffect(() => {
+    authApi
+      .getUsers()
+      .then((data) => {
+        // remove ourselves
+        const otherUsers = data.users.filter(
+          (user) => user._id !== currentUser._id
+        );
+        setAllUsers(otherUsers);
+      })
+      .catch((error) => {
+        let errMessage = error.message;
+        setError(errMessage);
+        console.log(`Error: ${error.message}`);
+      });
+  }, [currentUser]);
 
   const removeFriend = (friendId) => {
     authApi
@@ -54,7 +67,11 @@ const FindFriendModal = ({ showModal, setShowModal }) => {
         setCurrentUser(() => userInfo);
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
       })
-      .catch((err) => console.log(err));
+      .catch((error) => {
+        let errMessage = error.message;
+        setError(errMessage);
+        console.log(`Error: ${error.message}`);
+      });
   };
 
   const truncate = (str, maxLength) => {
@@ -68,12 +85,30 @@ const FindFriendModal = ({ showModal, setShowModal }) => {
     return null;
   }
 
+  const handleCloseError = () => {
+    setError("");
+  };
+
   return (
     <div className="friend-modal">
       <div onClick={() => setShowModal(false)}>
         <CrossIcon />
       </div>
       <h3>Search For Friends</h3>
+      {error ? (
+        <div className="error-auth">
+          <div className="error-auth__box">
+            <img className="error-auth__icon" src={errorImg} alt="error icon" />
+            <p className="error-auth__message">{error}</p>
+            <img
+              className="error-auth__icon error-auth__icon--close"
+              src={errorClose}
+              alt="error close"
+              onClick={handleCloseError}
+            />
+          </div>
+        </div>
+      ) : null}
       <ul className="users">
         {allUsers.map((user) => {
           return (

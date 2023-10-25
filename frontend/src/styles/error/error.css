@@ -6,6 +6,7 @@
     background: #FCE8DB;
     border-radius: 8px;
     box-shadow: 0px 0px 5px -3px #111;
+    width: fit-content;
 }
 
 .error-auth__message {
@@ -22,4 +23,16 @@
 
 .error-auth__icon--close {
     transform: translateY(-.7rem);
+}
+
+.error-auth__close {
+    position: absolute;
+    top: 1rem;
+    right: -1rem;
+    z-index: 50;
+}
+
+.error-auth-pos {
+    font-size: .5rem;
+    position: fixed;
 }
