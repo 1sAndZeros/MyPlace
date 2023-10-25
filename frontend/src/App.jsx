@@ -15,8 +15,9 @@ function App() {
     username: "",
     profileImage: "",
     friends: [],
+    favouriteLocations: [],
   });
-  console.log("added currentUser from app.jsx:", currentUser);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {

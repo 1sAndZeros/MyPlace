@@ -2,13 +2,14 @@ import { useState, useEffect, useContext } from "react";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import StarRating from "../StarRating/StarRating";
 import StarIcon from "../../assets/icons/star.svg?react";
-import heartFilled from "../../assets/icons/heartfilled.svg";
+import heartFilled from "../../assets/icons/heart-filled.svg";
 import edit from "../../assets/icons/edit.svg";
-import heart from "../../assets/icons/heartnf.svg";
+import heart from "../../assets/icons/heart-nf.svg";
+import trash from "../../assets/icons/trash.svg";
 import { authApi } from "../../utils/api";
 
 const MarkerDetails = ({ details, setDetails, setCityPins }) => {
-  const { currentUser } = useContext(CurrentUserContext);
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const [newMemory, setNewMemory] = useState("");
   const [isFavourite, setIsFavourite] = useState(false);
   const [newRating, setRating] = useState(0);
@@ -20,19 +21,22 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
 
   useEffect(() => {
     if (details) {
+      console.log("details favourites", details.favourites);
       if (details.favourites.includes(currentUser._id)) {
-        setIsFavourite(true)
+        console.log("setIsFavourite(true)");
+        setIsFavourite(true);
       } else {
-        setIsFavourite(false)
+        console.log("setIsFavourite(false)");
+        setIsFavourite(false);
       }
-      setIsVisited(details.visited)
+      setIsVisited(details.visited);
     }
   }, [details, currentUser]);
 
   const closeDetails = () => {
     setDetails(null);
     setIsEdit(isEdit);
-    setNewMemory("")
+    setNewMemory("");
   };
 
   if (details) {
@@ -44,8 +48,7 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
       recommendations,
       user,
       location,
-      favourite,
-      favourites
+      favourites,
     } = details;
     const vistedDate = new Date(details.visitedDate).toLocaleDateString(
       "en-gb"
@@ -63,10 +66,10 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
         .updateCity(update, details._id)
         .then((data) => {
           setCityPins((prevValues) => {
-            let newPins = prevValues.filter((pin) => pin._id !== details._id)
-            return [data.city, ...newPins]
-          })
-          closeDetails()
+            let newPins = prevValues.filter((pin) => pin._id !== details._id);
+            return [data.city, ...newPins];
+          });
+          closeDetails();
         })
         .catch((error) => {
           console.log(error);
@@ -74,48 +77,85 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
     };
 
     const handleDelete = () => {
-      authApi.deleteCityEntry(details._id)
+      authApi
+        .deleteCityEntry(details._id)
         .then((res) => {
-          console.log(res, 'deleted city')
-          closeDetails()
+          console.log(res, "deleted city");
+          closeDetails();
         })
         .catch((error) => {
-          console.log(error, 'error');
+          console.log(error, "error");
         });
-    }
+    };
 
     const addFavourite = () => {
-      console.log('add fav func run')
       let update = {
-        favourites: [...favourites, currentUser._id]
-      }
-      authApi.updateCity(update, details._id)
-        .then(data => {
-          setDetails(data.city);
+        favourites: [...favourites, currentUser._id],
+      };
+      let updateUser = {
+        favouriteLocations: [...currentUser.favouriteLocations, details._id],
+      };
+      const promises = [
+        authApi.updateCity(update, details._id),
+        authApi.updateUser(updateUser),
+      ];
+      Promise.all(promises)
+        .then(([cityData, userData]) => {
+          setDetails(() => {
+            return cityData.city;
+          });
+          setCurrentUser((prevUser) => {
+            return {
+              ...prevUser,
+              favouriteLocations: userData.newUser.favouriteLocations,
+            };
+          });
         })
-        .catch(err => console.log(err))
-    }
+        .catch((err) => console.log(err));
+    };
+
     const removeFavourite = () => {
-      console.log('remove fav func run')
-      const newFavourites = favourites.filter((favourite) => {
-        return favourite !== currentUser._id
-      })
-      console.log(newFavourites, "newFavourites")
+      const filteredFavourites = favourites.filter((favourite) => {
+        console.log("favourite", favourite);
+        console.log("user", currentUser);
+
+        return favourite !== currentUser._id;
+      });
       let update = {
-        favourites: newFavourites
-      }
-      authApi.updateCity(update, details._id)
-        .then(data => {
-          setDetails(data.city);
+        favourites: filteredFavourites,
+      };
+      const filteredUsers = currentUser.favouriteLocations.filter(
+        (location) => {
+          return location._id !== details._id;
+        }
+      );
+      let updateUser = {
+        favouriteLocations: filteredUsers,
+      };
+      const promises = [
+        authApi.updateCity(update, details._id),
+        authApi.updateUser(updateUser),
+      ];
+      Promise.all(promises)
+        .then(([cityData, userData]) => {
+          setDetails(() => {
+            return cityData.city;
+          });
+          setCurrentUser((prevUser) => {
+            return {
+              ...prevUser,
+              favouriteLocations: userData.newUser.favouriteLocations,
+            };
+          });
         })
-        .catch(err => console.log(err))
-    }
+        .catch((err) => console.log(err));
+    };
 
     const toggleFavourite = () => {
       if (!isFavourite) {
-        addFavourite()
+        addFavourite();
       } else {
-        removeFavourite()
+        removeFavourite();
       }
     };
 
@@ -133,32 +173,34 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
 
     const handleMemoryChange = (e) => {
       setNewMemory(e.target.value);
-    }
+    };
 
     return (
       <section id="marker-details">
         <div className="marker-details__options">
-          
           {currentUser._id === details.user._id ? (
             <>
-          <img
-            className="marker-details__icon"
-            src={edit}
-            onClick={toggleEdit}
-          />
-          <button onClick={handleDelete} type="button">delete</button>
-          </>
-          ) :
-          ""}
-          {/* {currentUser._id === details.user._id ? <button onClick={handleDelete} type="button">delete</button> :
-          ""} */}
+              <img
+                className="marker-details__icon"
+                src={edit}
+                onClick={toggleEdit}
+                alt="edit"
+              />
+              <img
+                className="marker-details__icon"
+                onClick={handleDelete}
+                alt="delete"
+                src={trash}
+              />
+            </>
+          ) : null}
           <img
             className="marker-details__icon"
             alt="favourite"
             src={isFavourite ? heartFilled : heart}
             onClick={toggleFavourite}
           />
-          <p>{(favourites.length >= 1) ? favourites.length : ""}</p>
+          <p>{favourites.length >= 1 ? favourites.length : ""}</p>
         </div>
         <div className="marker-details__user">
           <img src={user.profileImage} />
@@ -215,10 +257,7 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
           <div className="marker-details__container">
             <p>Visited: {vistedDate}</p>
             <p className="marker-details__memory">{memory}</p>
-            <img
-              className="marker-details__photo"
-              src={photos}
-            />
+            <img className="marker-details__photo" src={photos} />
           </div>
         )}
         <div className="form__button--container">

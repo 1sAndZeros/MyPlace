@@ -65,6 +65,25 @@ const CitiesController = {
       });
   },
 
+  IndexCityById: async (req, res) => {
+    City.findById(req.params.id)
+      .populate({
+        path: "user",
+        model: "User",
+        select: "-password",
+      })
+      .then((city) => {
+        const token = TokenGenerator.jsonwebtoken(req.user_id); // creates a new refresh token
+        res.status(200).json({ token, city });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(400).json({
+          message: "Something went wrong. Please contact the MyPlace Team.",
+        });
+      });
+  },
+
   IndexUserCities: async (req, res) => {
     City.find({ user: req.params.id })
       .populate({
@@ -87,6 +106,11 @@ const CitiesController = {
   Update: (req, res) => {
     console.log("body", req.body);
     City.findByIdAndUpdate(req.params.id, req.body, { new: true })
+      .populate({
+        path: "user",
+        model: "User",
+        select: "-password",
+      })
       .then((updatedCity) => {
         const token = TokenGenerator.jsonwebtoken(req.user_id);
         res.status(200).json({
@@ -105,7 +129,7 @@ const CitiesController = {
     await City.findByIdAndDelete(cityId);
     const token = TokenGenerator.jsonwebtoken(req.user_id);
     res.status(200).json({ message: "OK", token: token });
-  }
+  },
 };
 
 module.exports = CitiesController;

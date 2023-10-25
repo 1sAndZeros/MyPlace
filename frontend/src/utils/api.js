@@ -169,6 +169,17 @@ class Api {
     });
   }
 
+  findCityById(id) {
+    return fetch(`${this._baseUrl}/cities/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }).then((res) => {
+      return this._getResponseData(res);
+    });
+  }
+
   getCityPinsById(friendId) {
     return fetch(`${this._baseUrl}/cities/user/${friendId}`, {
       method: "GET",
@@ -191,14 +202,14 @@ class Api {
     });
   }
 
-  updateProfile(image) {
+  updateUser(update) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-      body: JSON.stringify({ profileImage: image }),
+      body: JSON.stringify(update),
     }).then((res) => {
       return this._getResponseData(res);
     });
