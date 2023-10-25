@@ -64,6 +64,8 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
         .then((data) => {
           setCityPins((prevValues) => {
             let newPins = prevValues.filter((pin) => pin._id !== details._id);
+            console.log("new pins", newPins)
+            console.log('data new city', data.city)
             return [data.city, ...newPins];
           });
           closeDetails();
@@ -76,8 +78,11 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
     const handleDelete = () => {
       authApi
         .deleteCityEntry(details._id)
-        .then((res) => {
-          console.log(res, "deleted city");
+        .then(() => {
+          setCityPins((prevValues) => {
+            let newPins = prevValues.filter((pin) => pin._id !== details._id);
+            return newPins
+          });
           closeDetails();
         })
         .catch((error) => {
@@ -257,7 +262,7 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
           </>
         ) : (
           <div className="marker-details__container">
-            <p>Visited: {vistedDate}</p>
+            {visited && <p>Visited: {vistedDate}</p>}
             <p className="marker-details__memory">{memory}</p>
             <img className="marker-details__photo" src={photos} />
           </div>

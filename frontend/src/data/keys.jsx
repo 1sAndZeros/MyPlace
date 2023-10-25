@@ -16,7 +16,7 @@ const keys = [
   {
     icon: <PinIcon />,
     text: "Want to visit",
-    color: "#A7C957",
+    color: "#82a139",
   },
   {
     icon: <PinIcon />,
