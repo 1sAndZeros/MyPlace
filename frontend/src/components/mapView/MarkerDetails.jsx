@@ -220,15 +220,17 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
           <p>{favourites.length >= 1 ? favourites.length : ""}</p>
         </div>
         <div className="marker-details__user">
-          <img
-            className="marker-details__user--name"
-            alt="user image"
-            src={
-              user.profileImage
-                ? user.profileImage
-                : `https://eu.ui-avatars.com/api/?name=${user.username}&length=1`
-            }
-          />
+          <div className="marker-details__user--container">
+            <img
+              className="marker-details__user--img"
+              alt="user image"
+              src={
+                user.profileImage
+                  ? user.profileImage
+                  : `https://eu.ui-avatars.com/api/?name=${user.username}&length=1`
+              }
+            />
+          </div>
           <p>{details.user.username}</p>
         </div>
         <div className="marker-details__place">
@@ -267,7 +269,7 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
               />
             </div>
             <textarea
-              className="form__memory__textarea"
+              className="form__memory__textarea form__memory--edit"
               name="Text1"
               cols="40"
               rows="5"
@@ -293,13 +295,15 @@ const MarkerDetails = ({ details, setDetails, setCityPins }) => {
           >
             close
           </button>
-          <button
-            onClick={handleSave}
-            className="form__button form__button--add"
-            type="submit"
-          >
-            Save
-          </button>
+          {isEdit ? (
+            <button
+              onClick={handleSave}
+              className="form__button form__button--add"
+              type="submit"
+            >
+              Save
+            </button>
+          ) : null}
         </div>
         {error ? (
           <div className="error-auth">

@@ -70,15 +70,17 @@ const Friends = ({ setCityPins, setFriend }) => {
               className="user"
               key={user._id}
             >
-              <img
-                className="user-img"
-                src={
-                  user.profileImage
-                    ? user.profileImage
-                    : `https://eu.ui-avatars.com/api/?name=${user.username}&length=1`
-                }
-                alt={user.username}
-              />
+              <div className="marker-details__user--container">
+                <img
+                  className="marker-details__user--img"
+                  src={
+                    user.profileImage
+                      ? user.profileImage
+                      : `https://eu.ui-avatars.com/api/?name=${user.username}&length=1`
+                  }
+                  alt={user.username}
+                />
+              </div>
               <p className="user-name">{user.username}</p>
             </li>
           );

@@ -1,6 +1,6 @@
 import { Marker, Popup } from "react-map-gl";
 import NewCityForm from "../NewCityForm/NewCityForm";
-import PinIcon from "../../assets/icons/map-pin.svg?react";
+import PinIcon from "../../assets/icons/chubby-pin.svg?react";
 
 const ClickMarker = ({
   clickMarker,

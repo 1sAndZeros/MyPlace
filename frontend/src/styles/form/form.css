@@ -10,6 +10,14 @@
     padding-bottom: 1.4rem;
 }
 
+.form__input-box:last-of-type {
+    margin-bottom: 1.3rem;
+}
+
+.form__link {
+    margin-top: 1rem;
+}
+
 .form__input {
     padding: 12px 16px;
     border: 1.5px solid #ecedec;
@@ -39,7 +47,7 @@
 }
 
 .form__button {
-    margin: 2rem 0 1rem;
+    /* margin: 2rem 0 1rem; */
     width: fit-content;
     cursor: pointer;
     border-radius: 20px;
@@ -103,17 +111,8 @@
 .form__title-popup {
     font-size: 1.2rem;
     text-align: center;
-    margin: 1em 0;
+    margin: 0.6em 0 0.5em;
 }
-
-/* .form__memory {
-    position: relative;
-    width: 34rem;
-    padding: 1rem 2rem;
-    background-color: #fff;
-    border-radius: 2rem;
-    margin-top: 2rem;
-} */
 
 .form__memory__textarea {
     width: 100%;
@@ -123,6 +122,10 @@
     padding: 1em;
     border-radius: 1em;
     margin: 1em 0 1em;
+}
+
+.form__memory--edit {
+    margin-bottom: 1.2em;
 }
 
 .form__date {
