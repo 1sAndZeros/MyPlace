@@ -31,14 +31,24 @@
     font-size: 1rem;
 }
 
-.marker-details__user img {
-    width: 2em;
-    height: 2em;
-    object-fit: cover;
-    object-position: center;
+.marker-details__user--container {
+    position: relative;
+    display: inline-block;
+    box-sizing: content-box;
     border-radius: 50%;
+    overflow: hidden;
+    width: 2rem;
+    height: 2rem;
     border: 1px solid rgba(0, 0, 0, 0.8);
 }
+
+.marker-details__user--img {
+    width: 2rem;
+    height: 2rem;
+    object-fit: cover;
+    transform: scale(1.1);
+}
+
 
 .marker-details__rating {
     display: flex;

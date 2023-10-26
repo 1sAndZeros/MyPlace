@@ -21,7 +21,7 @@ import errorImg from "../../assets/error.svg";
 import errorClose from "../../assets/Close_square.svg";
 import Key from "./Key";
 import keys from "../../data/keys";
-import PinIcon from "../../assets/icons/map-pin.svg?react";
+import PinIcon from "../../assets/icons/chubby-pin.svg?react";
 
 // get request for cities / regions https://api.mapbox.com/geocoding/v5/mapbox.places/{searchString}.json?fuzzyMatch=false&limit=10&types=region%2Cdistrict&autocomplete=true&access_token=pk.eyJ1IjoiaW15cGxhY2UiLCJhIjoiY2xudTViMGp3MGNwYTJsbzVtdnNxZ3NvOCJ9.j49LvpTufygf0Cx9HhldIg
 

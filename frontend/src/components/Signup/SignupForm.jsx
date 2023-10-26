@@ -238,7 +238,7 @@ const SignupForm = ({
             >
               Sign Up
             </button>
-            <p>
+            <p className="form__link">
               Already have an account?{" "}
               <Link to="/login" className="form__link">
                 Log In

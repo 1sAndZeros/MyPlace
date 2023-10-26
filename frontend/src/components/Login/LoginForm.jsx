@@ -84,7 +84,7 @@ const LoginForm = ({
             <button className="form__button" id="submit" type="submit">
               Log In
             </button>
-            <p>
+            <p className="form__link">
               Don`t have an account? Please,{" "}
               <Link to="/signup" className="form__link">
                 Sign up
