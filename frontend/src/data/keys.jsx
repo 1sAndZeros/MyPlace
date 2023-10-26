@@ -18,16 +18,16 @@ const keys = [
     text: "Want to visit",
     color: "#82a139",
   },
-  {
-    icon: <PinIcon />,
-    text: "Recommendations",
-    color: "#4B6858",
-  },
-  {
-    icon: <PinIcon />,
-    text: "Friends",
-    color: "#F4AC45",
-  },
+  // {
+  //   icon: <PinIcon />,
+  //   text: "Recommendations",
+  //   color: "#4B6858",
+  // },
+  // {
+  //   icon: <PinIcon />,
+  //   text: "Friends",
+  //   color: "#F4AC45",
+  // },
 ];
 
 export default keys;

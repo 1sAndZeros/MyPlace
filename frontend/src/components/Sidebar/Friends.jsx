@@ -14,12 +14,12 @@ const Friends = ({ setCityPins, setFriend }) => {
   const [error, setError] = useState("");
   const { currentUser } = useContext(CurrentUserContext);
 
-  const showFriendPins = (friendId, friendUsername) => {
+  const showFriendPins = (friend) => {
     authApi
-      .getCityPinsById(friendId)
+      .getCityPinsById(friend._id)
       .then((data) => {
         setCityPins(data.cities);
-        setFriend(friendUsername);
+        setFriend(friend);
       })
       .catch((error) => {
         let errMessage = error.message;
@@ -66,7 +66,7 @@ const Friends = ({ setCityPins, setFriend }) => {
         {currentUser.friends.map((user) => {
           return (
             <li
-              onClick={() => showFriendPins(user._id, user.username)}
+              onClick={() => showFriendPins(user)}
               className="user"
               key={user._id}
             >

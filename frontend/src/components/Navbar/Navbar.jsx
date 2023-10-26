@@ -1,10 +1,23 @@
 import { Link, useLocation } from "react-router-dom";
 import Logo from "../../assets/icons/pin.svg?react";
 import Profile from "../Profile/Profile";
+import { authApi } from "../../utils/api";
 
-function Navbar() {
+function Navbar({ setFriend, setCityPins }) {
   const location = useLocation();
   const path = location.pathname;
+
+  const reset = () => {
+    authApi
+      .getMyCityPins()
+      .then((data) => {
+        setCityPins(data.cities);
+        setFriend(null);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <nav
@@ -38,6 +51,7 @@ function Navbar() {
       )}
       <Link
         to="/home"
+        onClick={reset}
         className={`navbar__brand ${
           path === "/home" || path === "/about"
             ? "navbar__brand--black"

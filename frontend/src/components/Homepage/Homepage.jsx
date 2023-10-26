@@ -1,15 +1,15 @@
 import Navbar from "../Navbar/Navbar";
-import MapView from "../mapView/mapView";
+import MyMap from "../MyMap/MyMap";
 import Sidebar from "../Sidebar/Sidebar";
 import { useState } from "react";
 
 function HomePage() {
   const [cityPins, setCityPins] = useState([]);
-  const [friend, setFriend] = useState("");
+  const [friend, setFriend] = useState(null);
 
   return (
     <main id="home" className="bg-main">
-      <Navbar />
+      <Navbar setFriend={setFriend} setCityPins={setCityPins} />
       <div className="home__container">
         <div className="home__sidebar">
           <Sidebar
@@ -19,7 +19,7 @@ function HomePage() {
           />
         </div>
         <div className="home__map-container">
-          <MapView
+          <MyMap
             cityPins={cityPins}
             setCityPins={setCityPins}
             friend={friend}

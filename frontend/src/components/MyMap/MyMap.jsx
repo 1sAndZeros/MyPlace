@@ -25,7 +25,7 @@ import PinIcon from "../../assets/icons/chubby-pin.svg?react";
 
 // get request for cities / regions https://api.mapbox.com/geocoding/v5/mapbox.places/{searchString}.json?fuzzyMatch=false&limit=10&types=region%2Cdistrict&autocomplete=true&access_token=pk.eyJ1IjoiaW15cGxhY2UiLCJhIjoiY2xudTViMGp3MGNwYTJsbzVtdnNxZ3NvOCJ9.j49LvpTufygf0Cx9HhldIg
 
-const MapView = ({ cityPins, setCityPins, friend }) => {
+const MyMap = ({ cityPins, setCityPins, friend }) => {
   const MAPBOX_ACCESS_TOKEN =
     "pk.eyJ1IjoiaW15cGxhY2UiLCJhIjoiY2xudTViMGp3MGNwYTJsbzVtdnNxZ3NvOCJ9.j49LvpTufygf0Cx9HhldIg";
 
@@ -137,8 +137,48 @@ const MapView = ({ cityPins, setCityPins, friend }) => {
   };
 
   return (
-    <>
-      <div>{`${!friend ? currentUser.username : friend}'s map`}</div>
+    <Map
+      ref={myMap}
+      id="myMap"
+      padding={{ top: 50, left: 50, right: 50, bottom: 50 }}
+      onViewportChange={setViewport}
+      onClick={handleClick}
+      initialViewState={{ ...viewport }}
+      mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
+      //         mapStyle="mapbox://styles/mapbox/streets-v9"
+      mapStyle="mapbox://styles/mapbox/streets-v12"
+      // mapStyle="mapbox://styles/mapbox/dark-v11"
+      customAttribution="Brought to you by the MyPlace team"
+    >
+      <div className="map-owner">
+        {!friend ? (
+          <>
+            <img
+              className="profile__img"
+              alt="user pic"
+              src={
+                currentUser.profileImage
+                  ? currentUser.profileImage
+                  : `https://eu.ui-avatars.com/api/?name=${currentUser.username}&length=1`
+              }
+            />
+            <p>{`${currentUser.username}'s Map`}</p>
+          </>
+        ) : (
+          <>
+            <img
+              className="profile__img"
+              alt="user pic"
+              src={
+                friend.profileImage
+                  ? friend.profileImage
+                  : `https://eu.ui-avatars.com/api/?name=${friend.username}&length=1`
+              }
+            />
+            <p>{`${friend.username}'s Map`}</p>
+          </>
+        )}
+      </div>
       <div className="form__error-container">
         {error ? (
           <div className="error-auth">
@@ -159,81 +199,64 @@ const MapView = ({ cityPins, setCityPins, friend }) => {
           </div>
         ) : null}
       </div>
-      <Map
-        ref={myMap}
-        id="myMap"
-        padding={{ top: 50, left: 50, right: 50, bottom: 50 }}
-        onViewportChange={setViewport}
-        onClick={handleClick}
-        initialViewState={{ ...viewport }}
-        mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
-        //         mapStyle="mapbox://styles/mapbox/streets-v9"
-        mapStyle="mapbox://styles/mapbox/streets-v12"
-        // mapStyle="mapbox://styles/mapbox/dark-v11"
-        customAttribution="Brought to you by the MyPlace team"
-      >
-        <NavigationControl />
-        <GeolocateControl />
-        <FullscreenControl />
-        <SearchBox
-          options={{
-            limit: "10",
-          }}
-          accessToken={MAPBOX_ACCESS_TOKEN}
-          placeholder="Search Places"
-          value={searchValue}
-          onRetrieve={handleSelection}
-          onChange={(value) => searchValue(value)}
-          mapboxgl={mapRef}
-          ref={searchRef}
-        />
-        <SearchMarker
-          searchMarker={searchMarker}
-          setSearchMarker={setSearchMarker}
-          setCityPins={setCityPins}
-        />
-        <ClickMarker
-          clickMarker={marker}
-          setClickMarker={setMarker}
-          setCityPins={setCityPins}
-          placeName={placeName}
-        />
-        {cityPins.length > 0 &&
-          cityPins.map((cityPin) => {
-            console.log("cityPin here", cityPin);
-            return (
-              <Marker
-                test="test"
-                key={cityPin._id + "pin"}
-                latitude={cityPin.location.lat}
-                longitude={cityPin.location.lng}
-                // color={
-                //   cityPin.visited === true
-                //     ? "#000"
-                //     : "#fff"
-                // }
-                // style={{fill: "#fff"}}
-                onClick={(e) => handleMarkerClick(e, cityPin._id)}
-                popup={markerDetailsPopupRef.current}
+      <NavigationControl />
+      <GeolocateControl />
+      <FullscreenControl />
+      <SearchBox
+        options={{
+          limit: "10",
+        }}
+        accessToken={MAPBOX_ACCESS_TOKEN}
+        placeholder="Search Places"
+        value={searchValue}
+        onRetrieve={handleSelection}
+        onChange={(value) => searchValue(value)}
+        mapboxgl={mapRef}
+        ref={searchRef}
+      />
+      <SearchMarker
+        searchMarker={searchMarker}
+        setSearchMarker={setSearchMarker}
+        setCityPins={setCityPins}
+      />
+      <ClickMarker
+        clickMarker={marker}
+        setClickMarker={setMarker}
+        setCityPins={setCityPins}
+        placeName={placeName}
+      />
+      {cityPins.length > 0 &&
+        cityPins.map((cityPin) => {
+          console.log("cityPin here", cityPin);
+          return (
+            <Marker
+              test="test"
+              key={cityPin._id + "pin"}
+              latitude={cityPin.location.lat}
+              longitude={cityPin.location.lng}
+              onClick={(e) => handleMarkerClick(e, cityPin._id)}
+              popup={markerDetailsPopupRef.current}
+            >
+              <div
+                className={`${
+                  cityPin.favourites.includes(currentUser._id)
+                    ? "favourite"
+                    : ""
+                } ${cityPin.visited ? "visited" : "to-visit"} pin`}
               >
-                <div className={`${cityPin.visited} pin`}>
-                  <PinIcon />
-                  {/* {cityPin.visited
-                    ? keys.find((key) => key.text === "Visited").icon
-                    : keys.find((key) => key.text === "Want to visit").icon} */}
-                </div>
-              </Marker>
-            );
-          })}
-        <MarkerDetails
-          details={details}
-          setCityPins={setCityPins}
-          setDetails={setDetails}
-        />
-        <Key />
-      </Map>
-    </>
+                <PinIcon />
+              </div>
+            </Marker>
+          );
+        })}
+      <MarkerDetails
+        details={details}
+        setCityPins={setCityPins}
+        setDetails={setDetails}
+      />
+      <Key />
+    </Map>
   );
 };
 
-export default MapView;
+export default MyMap;

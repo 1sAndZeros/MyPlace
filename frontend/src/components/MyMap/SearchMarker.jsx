@@ -12,7 +12,7 @@ const SearchMarker = ({ searchMarker, setSearchMarker, setCityPins }) => {
     const lat = searchMarker.geometry.coordinates[1];
     return (
       <>
-        <Marker longitude={lng} latitude={lat} color="#9319cc">
+        <Marker longitude={lng} latitude={lat}>
           <PinIcon />
         </Marker>
         <Popup

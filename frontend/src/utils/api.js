@@ -227,7 +227,7 @@ class Api {
 }
 
 export const authApi = new Api({
-  baseUrl: "http://localhost:8080",
+  baseUrl: import.meta.env.VITE_API_URL || "http://localhost:8080",
   headers: {
     "Content-Type": "application/json",
   },

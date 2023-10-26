@@ -1,0 +1,49 @@
+#myMap {
+    z-index: 1;
+    padding: 1em !important;
+    font-family: 'Poppins', sans-serif;
+}
+
+.mapboxgl-popup-content {
+    width: 300px;
+}
+
+mapbox-search-box {
+    display: block;
+    width: 300px;
+}
+
+.map-owner {
+    position: absolute;
+    z-index: 99;
+    background-color: white;
+    padding: 0.25em 0.75em;
+    top: 0.75rem;
+    left: 20rem;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    height: 36px;
+}
+
+.map-owner img {
+    display: inline;
+    border-radius: 50%;
+    object-fit: cover;
+    width: 25px;
+    height: 25px;
+}
+
+.pin.visited {
+    color: #0075C4;
+}
+
+.pin.to-visit {
+    color: #82a139;
+}
+
+.pin.favourite {
+    color: #FF6663;
+}
