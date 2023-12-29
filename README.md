@@ -1,16 +1,18 @@
-# MyPlace
-
-## Your Personal Travel Companion
+# MyPlace - Your Personal Travel Companion
 
 MyPlace is your go-to app for tracking and sharing your travel experiences with friends and fellow adventurers. With MyPlace, you can effortlessly pin your visited and dream destinations on an interactive map, creating a visual travelogue that tells your unique story. Whether you're a globetrotter, a weekend explorer, or just planning your next getaway, MyPlace has you covered.
 
+![My Place](./myplace-welcome.png)
+
+![Map](./myplace-map.png)
+
 ## Our Team
 
-* **[Rikie Patrick](https://github.com/1sAndZeros)**
-* **[Roberto Quadraccia](https://github.com/super-robbin)**
-* **[Alina Ermakova](https://github.com/alalinaermakova)**
-* **[Claudia Alves](https://github.com/claudiasalves)**
-* **[Yasien Watkin](https://github.com/originalbinaryhustler)**
+- **[Rikie Patrick](https://github.com/1sAndZeros)**
+- **[Roberto Quadraccia](https://github.com/super-robbin)**
+- **[Alina Ermakova](https://github.com/alalinaermakova)**
+- **[Claudia Alves](https://github.com/claudiasalves)**
+- **[Yasien Watkin](https://github.com/originalbinaryhustler)**
 
 ## Tech stack
 
@@ -22,7 +24,9 @@ MyPlace is your go-to app for tracking and sharing your travel experiences with 
 ![Mapbox](https://img.shields.io/badge/Mapbox-000000.svg?style=for-the-badge&logo=Mapbox&logoColor=white)
 
 **Backend:**
-![MongoDB](https://img.shields.io/badge/MongoDB-green?logo=MongoDB) ![Express](https://img.shields.io/badge/Express-black?logo=Express) ![Node](https://img.shields.io/badge/Node-darkgreen?logo=Node)
+![MongoDB](https://img.shields.io/badge/MongoDB-green?logo=MongoDB)
+![Express](https://img.shields.io/badge/Express-black?logo=Express)
+![Node](https://img.shields.io/badge/Node-darkgreen?logo=Node)
 
 ## Card wall
 

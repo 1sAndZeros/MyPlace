@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/1sAndZeros/PinMap.git"
+    "url": "git+https://github.com/1sAndZeros/MyPlace.git"
   },
   "keywords": [
     "travel"
@@ -23,9 +23,9 @@
   "author": "Rikie Patrick",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/1sAndZeros/PinMap/issues"
+    "url": "https://github.com/1sAndZeros/MyPlace/issues"
   },
-  "homepage": "https://github.com/1sAndZeros/PinMap#readme",
+  "homepage": "https://github.com/1sAndZeros/MyPlace#readme",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cloudinary": "^1.41.0",
