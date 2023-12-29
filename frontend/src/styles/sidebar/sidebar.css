@@ -1,8 +1,9 @@
 .home__sidebar {
-    height: 100%;
     width: 300px;
     border-right: 1px solid rgba(231, 231, 242, 0.8);
     padding: 1em;
+    overflow: scroll;
+    max-height: calc(100vh - 4rem);
 }
 
 .home__sidebar>ul {
@@ -12,6 +13,10 @@
     position: relative;
     height: 100%;
     list-style: none;
+}
+
+.sidebar__item:nth-last-of-type(1) {
+    flex-grow: 1;
 }
 
 .sidebar__item--heading {
@@ -32,8 +37,6 @@
 }
 
 .home__sidebar__logout {
-    position: absolute;
-    inset: auto 0 0 0;
     display: grid;
     place-items: center;
 }
@@ -74,8 +77,8 @@
     justify-items: center;
     padding: 0.5em;
     display: none;
-    max-height: 500px;
-    overflow-y: auto;
+    max-height: 300px;
+    overflow: scroll;
 }
 
 .sidebar__item.active .sidebar__item__menu {
