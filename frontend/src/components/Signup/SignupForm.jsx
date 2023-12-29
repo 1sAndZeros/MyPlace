@@ -129,8 +129,12 @@ const SignupForm = ({
       username,
       email,
       password,
+    }).then(() => {
+      resetForm();
     });
+  };
 
+  const resetForm = () => {
     setUsername('');
     setEmail('');
     setPassword('');

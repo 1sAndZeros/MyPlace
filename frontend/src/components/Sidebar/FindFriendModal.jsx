@@ -1,14 +1,14 @@
-import CrossIcon from "../../assets/icons/cross.svg?react";
-import errorImg from "../../assets/error.svg";
-import errorClose from "../../assets/Close_square.svg";
-import { useState, useEffect, useContext } from "react";
-import { authApi } from "../../utils/api";
-import { CurrentUserContext } from "../../context/CurrentUserContext";
+import CrossIcon from '../../assets/icons/cross.svg?react';
+import errorImg from '../../assets/error.svg';
+import errorClose from '../../assets/Close_square.svg';
+import { useState, useEffect, useContext } from 'react';
+import { authApi } from '../../utils/api';
+import { CurrentUserContext } from '../../context/CurrentUserContext';
 
 const FindFriendModal = ({ showModal, setShowModal }) => {
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const [allUsers, setAllUsers] = useState([]);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   useEffect(() => {
     authApi
@@ -16,7 +16,7 @@ const FindFriendModal = ({ showModal, setShowModal }) => {
       .then((data) => {
         // remove ourselves
         const otherUsers = data.users.filter(
-          (user) => user._id !== currentUser._id
+          (user) => user._id !== currentUser._id,
         );
         setAllUsers(otherUsers);
       })
@@ -33,7 +33,7 @@ const FindFriendModal = ({ showModal, setShowModal }) => {
       .then((data) => {
         let userInfo = data.user;
         setCurrentUser(() => userInfo);
-        localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        localStorage.setItem('userInfo', JSON.stringify(userInfo));
       })
       .catch((error) => {
         let errMessage = error.message;
@@ -48,7 +48,7 @@ const FindFriendModal = ({ showModal, setShowModal }) => {
       .then((data) => {
         // remove ourselves
         const otherUsers = data.users.filter(
-          (user) => user._id !== currentUser._id
+          (user) => user._id !== currentUser._id,
         );
         setAllUsers(otherUsers);
       })
@@ -65,7 +65,7 @@ const FindFriendModal = ({ showModal, setShowModal }) => {
       .then((data) => {
         let userInfo = data.user;
         setCurrentUser(() => userInfo);
-        localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        localStorage.setItem('userInfo', JSON.stringify(userInfo));
       })
       .catch((error) => {
         let errMessage = error.message;
@@ -78,7 +78,7 @@ const FindFriendModal = ({ showModal, setShowModal }) => {
     if (str.length <= maxLength) {
       return str;
     }
-    return str.slice(0, maxLength) + "...";
+    return str.slice(0, maxLength) + '...';
   };
 
   if (!showModal) {
@@ -86,35 +86,35 @@ const FindFriendModal = ({ showModal, setShowModal }) => {
   }
 
   const handleCloseError = () => {
-    setError("");
+    setError('');
   };
 
   return (
-    <div className="friend-modal">
+    <div className='friend-modal' style={{}}>
       <div onClick={() => setShowModal(false)}>
         <CrossIcon />
       </div>
       <h3>Search For Friends</h3>
       {error ? (
-        <div className="error-auth">
-          <div className="error-auth__box">
-            <img className="error-auth__icon" src={errorImg} alt="error icon" />
-            <p className="error-auth__message">{error}</p>
+        <div className='error-auth'>
+          <div className='error-auth__box'>
+            <img className='error-auth__icon' src={errorImg} alt='error icon' />
+            <p className='error-auth__message'>{error}</p>
             <img
-              className="error-auth__icon error-auth__icon--close"
+              className='error-auth__icon error-auth__icon--close'
               src={errorClose}
-              alt="error close"
+              alt='error close'
               onClick={handleCloseError}
             />
           </div>
         </div>
       ) : null}
-      <ul className="users">
+      <ul className='users' style={{ maxHeight: '200px', overflowY: 'scroll' }}>
         {allUsers.map((user) => {
           return (
-            <li className="user" key={user._id}>
+            <li className='user' key={user._id}>
               <img
-                className="user-img"
+                className='user-img'
                 src={
                   user.profileImage
                     ? user.profileImage
@@ -122,17 +122,17 @@ const FindFriendModal = ({ showModal, setShowModal }) => {
                 }
                 alt={user.username}
               />
-              <p className="user-name">{truncate(user.username, 15)}</p>
+              <p className='user-name'>{truncate(user.username, 15)}</p>
               {currentUser.friends.find((friend) => friend._id === user._id) ? (
                 <button
-                  className="add-friend"
+                  className='add-friend'
                   onClick={() => removeFriend(user._id)}
                 >
                   Unfriend
                 </button>
               ) : (
                 <button
-                  className="add-friend"
+                  className='add-friend'
                   onClick={() => addFriend(user._id)}
                 >
                   Friend

@@ -26,12 +26,12 @@ app.use(
 app.use(logger('dev')); // logs HTTP request in terminal
 app.use(express.static(path.join(__dirname, 'public'))); // folder path for static/public files
 
-// slow response
-app.use((_, __, next) => {
-  setTimeout(() => {
-    next();
-  }, 6000);
-});
+// slow response for testing purposes
+// app.use((_, __, next) => {
+//   setTimeout(() => {
+//     next();
+//   }, 6000);
+// });
 
 // route setup
 app.use('/tokens', authenticationRouter);

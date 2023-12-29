@@ -41,15 +41,27 @@ const LoginForm = ({
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (isFormBlank()) {
+      setAuthError('Please fill in all fields');
+      return;
+    }
 
     onLogIn({
       email,
       password,
+    }).then(() => {
+      resetForm();
     });
+  };
 
+  const resetForm = () => {
     setEmail('');
     setPassword('');
     setAuthError('');
+  };
+
+  const isFormBlank = () => {
+    return !email || !password;
   };
 
   return (
